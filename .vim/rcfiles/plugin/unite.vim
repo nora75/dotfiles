@@ -23,7 +23,7 @@ if neobundle#is_installed("unite.vim")
     " registers
     nnoremap <silent> [unite]r :<C-u>Unite -buffer-name=register register<CR>
     " mru
-    nnoremap <silent> [unite]m :<C-u>Unite file_mru<CR>
+    nnoremap <silent> [unite]u :<C-u>Unite file_mru<CR>
     " bookmarks
     nnoremap <silent> [unite]c :<C-u>Unite bookmark<CR>
     " add bookmark
@@ -33,9 +33,11 @@ if neobundle#is_installed("unite.vim")
     " unite output
     " it provide command output with unite interface
     nnoremap [unite]o :<C-u>Unite output:
-    " output variables(let) on unite output
+    " output variables(:let) on unite output
     nnoremap <silent> [unite]l :<C-u>Unite output:let<CR>
-    " output set on unite output
+    " output mapping(:map) on unite output
+    nnoremap <silent> [unite]m :<C-u>Unite output:map<CR>
+    " output vim setting(:set) on unite output
     nnoremap <silent> [unite]s :<C-u>Unite output:set<CR>
     augroup unite
         au!

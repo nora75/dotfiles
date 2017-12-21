@@ -5,6 +5,8 @@ call neobundle#begin(expand('~/.vim/colorscheme'))
 NeoBundle 'vim-scripts/twilight'
 " 大杉
 NeoBundle 'flazz/vim-colorschemes'
+" soso
+NeoBundle 'reedes/vim-colors-pencil'
 
 NeoBundleCheck
 

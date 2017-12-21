@@ -32,7 +32,8 @@ if has('gui') " {{{2
     syntax enable
     set background=dark
     " colorscheme wombat256mod
-    colorscheme twilight
+    colorscheme iceberg
+    " colorscheme twilight
 
     if has('win32')
         " Windows用
@@ -49,7 +50,7 @@ if has('gui') " {{{2
         set guifontset=a14,r14,k14
     endif
 
-elseif " {{{2
+else " {{{2
 
     set showtabline=2
     syntax on
