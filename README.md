@@ -9,13 +9,8 @@ Now I use Windows, only this repository has related Vim.
 
     + ftplugin
 
-        filetype plugins.  
-        Vim default filetype plugin.  
+        Vim default filetype plugins.  
 
-        + markdown.vim
-
-            setlocal commentstring for commentary.vim.  
-        
     + rcfiles
 
         + default
