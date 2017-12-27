@@ -31,9 +31,14 @@ if has('gui') " {{{2
 
     syntax enable
     set background=dark
-    " colorscheme wombat256mod
-    colorscheme iceberg
-    " colorscheme twilight
+    " if とかにしてもいいかも
+    try
+        " colorscheme wombat256mod
+        colorscheme iceberg
+        " colorscheme twilight
+    catch
+        colorscheme default
+    endtry
 
     if has('win32')
         " Windows用
@@ -49,6 +54,33 @@ if has('gui') " {{{2
         " UNIX用 (xfontsetを使用)
         set guifontset=a14,r14,k14
     endif
+
+    function! GuiTabLabel() " guitablabel setting func {{{3
+        let label = ''
+        let bufnrlist = tabpagebuflist(v:lnum)
+        " このタブページに変更のあるバッファがるときには '+' を追加する
+        for bufnr in bufnrlist
+            if getbufvar(bufnr, "&modified")
+                let label = '+'
+                break
+            endif
+        endfor
+
+        " ウィンドウが複数あるときにはその数を追加する
+        let wincount = tabpagewinnr(v:lnum, '$')
+        if wincount > 1
+            let label .= wincount
+        endif
+        if label != ''
+            let label .= ' '
+        endif
+
+        " バッファ名を追加する
+        return label . 
+        \substitute(bufname(bufnrlist[tabpagewinnr(v:lnum) - 1]),'^.*\\', '', '')
+    endfunction
+
+    set guitablabel=%{GuiTabLabel()}
 
 else " {{{2
 
@@ -83,5 +115,8 @@ else " {{{2
     let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
     " }}}
 endif
+" タブページ自体を左右に移動させる
+" command! -bar TabMoveNext :execute "tabmove " tabpagenr() % tabpagenr("$") + (tabpagenr("$") == tabpagenr() ? 0 : 1)
+" command! -bar TabMovePrev :execute "tabmove" (tabpagenr() + tabpagenr("$") - 2) % tabpagenr("$") + (tabpagenr() == 1 ? 1 : 0)
 
 " vim: set fdm=marker fmr={{{,}}} fdl=1 :

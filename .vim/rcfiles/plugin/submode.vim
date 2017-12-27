@@ -34,13 +34,20 @@ if neobundle#is_installed("vim-submode")
     call submode#map('WinMove', 'n', '', 'k', '<C-w>k')
     call submode#map('WinMove', 'n', '', 'l', '<C-w>l')
 
-    " TabWidth {{{3
-    call submode#enter_with('TabWidth', 'n', '', '>>', '>>')
-    call submode#enter_with('TabWidth', 'n', '', '<<', '<<')
-    call submode#map('TabWidth', 'n', '', '>', '>>')
-    call submode#map('TabWidth', 'n', '', '.', '>>')
-    call submode#map('TabWidth', 'n', '', '<', '<<')
-    call submode#map('TabWidth', 'n', '', ',', '<<')
+    " TabWidth normal {{{3
+    call submode#enter_with('TabWidthn', 'n', '', '>>', '>>')
+    call submode#enter_with('TabWidthn', 'n', '', '<<', '<<')
+    call submode#map('TabWidthn', 'n', '', '>', '>>')
+    call submode#map('TabWidthn', 'n', '', '.', '>>')
+    call submode#map('TabWidthn', 'n', '', '<', '<<')
+    call submode#map('TabWidthn', 'n', '', ',', '<<')
+    " TabWidth visual {{{3
+    call submode#enter_with('TabWidthv', 'v', '', '>', '>')
+    call submode#enter_with('TabWidthv', 'v', '', '<', '<')
+    call submode#map('TabWidthv', 'n', '', '>', 'gv>')
+    call submode#map('TabWidthv', 'n', '', '.', 'gv>')
+    call submode#map('TabWidthv', 'n', '', '<', 'gv<')
+    call submode#map('TabWidthv', 'n', '', ',', 'gv<')
     " TabPageMove {{{2
     call submode#enter_with('TabPageMove', 'n', '', 'gt', 'gt')
     call submode#enter_with('TabPageMove', 'n', '', 'gT', 'gT')
@@ -49,10 +56,10 @@ if neobundle#is_installed("vim-submode")
     call submode#map('TabPageMove', 'n', '', 'T', 'gT')
     call submode#map('TabPageMove', 'n', '', 'h', 'gT')
     " TabMove {{{2
-    call submode#enter_with('TabMove', 'n','[TabG]h','[TabG]h')
-    call submode#enter_with('TabMove', 'n','[TabG]l','[TabG]l')
-    call submode#map('TabMove', 'n', '', 'h', '[TabG]h')
-    call submode#map('TabMove', 'n', '', 'l', '[TabG]h')
+    call submode#enter_with('TabMove', 'n', 'r', '[TabG]h','[TabG]h')
+    call submode#enter_with('TabMove', 'n', 'r', '[TabG]l','[TabG]l')
+    call submode#map('TabMove', 'n', 'r', 'h', '[TabG]h')
+    call submode#map('TabMove', 'n', 'r', 'l', '[TabG]h')
     " LineMove {{{2
     " swap current line to up or down
     call submode#enter_with('LineMove', 'n', 'r',  '<Space>lj', '[LineMove]j')

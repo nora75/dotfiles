@@ -1,8 +1,10 @@
 " ノーマルコマンドの実行後カーソル位置の復元 {{{2
 fu! DoNormal(com)
-    let save_cursor = getcurpos()
+    let l:save_search = @/
+    let l:save_win = winsaveview()
     execute "normal "a:com
-    call setpos('.', save_cursor)
+    let @/ = l:save_search
+    call winrestview(l:save_win)
 endfunction
 
 " move mode switch over buffer {{{2
@@ -29,10 +31,11 @@ fu! SwitchMoves()
     endtry
 endfunc
 
-" ToList (markdown) {{{ 2
-" func! Tolist
+" :Cde completion
+func! Cdcomp(...)
+    return split(substitute(substitute(glob('%:p:h'.'**'),'\M'.substitute(expand('%:p:h'),'\\','\\\\','g'),'','g'),'\\','','g'), '\n')
+endfunc
 
-" endfunc
 " その他 {{{2
 " move mode switch only current buffer with augroup {{{3
 " augroup SwitchMoves

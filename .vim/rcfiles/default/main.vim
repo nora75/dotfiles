@@ -17,7 +17,11 @@ set ignorecase
 set smartcase
 set autoindent
 set smartindent
-set clipboard+=unnamed
+if has("unnamedplus")
+    set clipboard+=unnamed,unnamedplus
+else
+    set clipboard+=unnamed
+endif
 set wrapscan
 set linebreak
 set backup

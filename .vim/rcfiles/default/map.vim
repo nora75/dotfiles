@@ -21,8 +21,8 @@ nnoremap <Space>cd          :<C-u>CdCurrent<CR>
 nnoremap <Space>e           :<C-u>echo<Space>
 " map to <Space>o + j,k
 nmap     <Space>o           [BlankLine]
-nnoremap <silent> [BlankLine]j :<C-u>for i in range(1, v:count1) <Bar> call append(line('.'), '') <Bar> endfor <CR>
-nnoremap <silent> [BlankLine]k :<C-u>for i in range(1, v:count1) <Bar> call append(line('.')-1, '') <Bar> endfor <CR>
+nnoremap <silent> [BlankLine]j :<C-u>for i in range(1, v:count1) <Bar> call append(line('.'), '') <Bar> endfor <Bar> <CR>
+nnoremap <silent> [BlankLine]k :<C-u>for i in range(1, v:count1) <Bar> call append(line('.')-1, '') <Bar> endfor <Bar> <CR>
 " LineMove {{{3
 nmap     <Space>l           [LineMove]
 nnoremap [LineMove]         <Nop>

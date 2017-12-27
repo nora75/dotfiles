@@ -11,11 +11,11 @@ nnoremap [TabG]   <Nop>
 nmap     <Space>t [TabG]
 
 " tI make new tab at last
-nnoremap <silent> [TabG]I :<C-u>tablast <bar> tabnew<CR>
-" tx close current tab
-nnoremap <silent> [TabG]x :<C-u>tabclose<CR>
+nnoremap <silent> [TabG]I :<C-u>tabl <bar> tabnew<CR>
+" tx close! current tab
+nnoremap <silent> [TabG]x :<C-u>tabc!<CR>
 " tc same as above one
-nnoremap <silent> [TabG]c :<C-u>tabclose<CR>
+nnoremap <silent> [TabG]c :<C-u>tabc<CR>
 " tn go to next tab
 " nnoremap <silent> [TabG]n :<C-u>tabnext<CR>
 " tp go to previous tab
@@ -23,12 +23,12 @@ nnoremap <silent> [TabG]c :<C-u>tabclose<CR>
 " ti make tab at next by current tab
 nnoremap <silent> [TabG]i :<C-u>tabnew<CR>
 " th move tab to left
-nnoremap <silent> [TabG]h :<C-u>tabmove-<CR>
+nnoremap <silent> [TabG]h :<C-u>tabm-<CR>
 " tl move tab to right
-nnoremap <silent> [TabG]l :<C-u>tabmove+<CR>
+nnoremap <silent> [TabG]l :<C-u>tabm+<CR>
 " tj move tab to first
-nnoremap <silent> [TabG]j :<C-u>tabmove0<CR>
+nnoremap <silent> [TabG]j :<C-u>tabm0<CR>
 " tk move tab to last
-nnoremap <silent> [TabG]k :<C-u>tabmove<CR>
+nnoremap <silent> [TabG]k :<C-u>tabm<CR>
 
 " vim:set fmr={{{,}}} fdl=1 fdm=marker :
