@@ -41,6 +41,7 @@ nnoremap x                  "_x
 nnoremap X                  "_X
 nnoremap <silent><C-p>      "0p
 nnoremap <silent><C-S-p>    "0P
+nnoremap <F12> tabnew<Bar>e $vim\file<CR>
 
 " helpファイル {{{3
 augroup  helpf
