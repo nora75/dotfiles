@@ -37,6 +37,7 @@ I use these plugins now.
 + [nerdtree](https://github.com/scrooloose/nerdtree)
 + [open-browser.vim](https://github.com/tyru/open-browser.vim)
 + [previm](https://github.com/kannokanno/previm)
++ [skk.vim](https://github.com/tyru/skk.vim)
 + [twilight](https://github.com/vim-scripts/twilight)
 + [unite-colorscheme](https://github.com/ujihisa/unite-colorscheme)
 + [unite.vim](https://github.com/Shougo/unite.vim)
