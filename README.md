@@ -22,8 +22,10 @@ Now I use Windows, only this repository has related Vim.
             plugins setting such as easy-align, unite ...  
 
 .vimrc  
-
 My Vim setting.  
+
+link.bat/link.sh  
+make link file  
 
 ## Thanks for these funtastic Vim plugins!
 
