@@ -31,7 +31,7 @@ NeoBundle 'xolox/vim-session', {
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'tyru/skk.vim'
+" NeoBundle 'tyru/eskk.vim'
 
 " unite {{{3
 NeoBundle 'Shougo/vimproc', {

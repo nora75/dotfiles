@@ -37,7 +37,6 @@ I use these plugins now.
 + [nerdtree](https://github.com/scrooloose/nerdtree)
 + [open-browser.vim](https://github.com/tyru/open-browser.vim)
 + [previm](https://github.com/kannokanno/previm)
-+ [skk.vim](https://github.com/tyru/skk.vim)
 + [twilight](https://github.com/vim-scripts/twilight)
 + [unite-colorscheme](https://github.com/ujihisa/unite-colorscheme)
 + [unite.vim](https://github.com/Shougo/unite.vim)
@@ -55,9 +54,4 @@ I use these plugins now.
 + [vim-surround](https://github.com/tpope/vim-surround)
 + [vim-table-mode](https://github.com/dhruvasagar/vim-table-mode)
 + [vimproc](https://github.com/Shougo/vimproc.vim)
-
-I try these plugins, these are very good plugins.
-But I can't use well or don't match for me.
-
-+ [vim-quickrun](https://github.com/thinca/vim-quickrun)
 
