@@ -12,6 +12,7 @@ if has('vim_starting')
         set runtimepath+=~\.vim\bundle\neobundle.vim
     endif
 endif
+
 " add plugin {{{2
 call neobundle#begin(expand('~/.vim/bundle'))
 
@@ -61,6 +62,14 @@ NeoBundle 'kannokanno/previm', {
             \ }
 NeoBundle 'alvan/vim-closetag'
 " NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'nora75/MarkdownTable'
+
+" colorscheme {{{3
+NeoBundle 'vim-scripts/twilight'
+" 大杉
+NeoBundle 'flazz/vim-colorschemes'
+" soso
+NeoBundle 'reedes/vim-colors-pencil'
 
 NeoBundleCheck
 

@@ -31,7 +31,69 @@ fu! SwitchMoves()
     endtry
 endfunc
 
-" :Cde completion
+" function to :Windom {{{2
+" separate all args with bar
+func! WinDo(...) abort
+    let l:cuwinid = win_getid()
+    let l:save_search = @/
+    let l:save_win = winsaveview()
+    windo let b:reload_save_fold = &fdl
+    let l:do = ''
+    for l:cm in a:000
+        let l:do .= ' '.l:cm
+    endfor
+    exe 'silent! windo '.l:do
+    redraw!
+    windo let &fdl = b:reload_save_fold
+    windo unlet b:reload_save_fold
+    call win_gotoid(l:cuwinid)
+    let @/ = l:save_search
+    call winrestview(l:save_win)
+endfunc
+
+" function for debugging {{{2
+" do command and catch output in commandline
+func! Comcap(com) abort
+    let result = ''
+    redir => result
+    silent exe a:com
+    redir end
+    new
+    let fname = 'output:'.a:com
+    silent file`=fname`
+    silent put =result
+    silent delete _
+    setl nonu bt=nofile noswf nobl bh=wipe ft=vim
+endfunc
+
+" function for memo {{{2
+" make new tab for memo
+func! NewTabScratch() abort
+    tabnew
+    let fname = 'memo'
+    silent file`=fname`
+    setl nonu bt=nofile noswf nobl bh=wipe ft=vim
+endfunc
+
+" function for memo {{{2
+" make new buffer for memo
+func! NewBufScratch() abort
+    new
+    let fname = 'memo'
+    silent file`=fname`
+    setl nonu bt=nofile noswf noma nobl bh=wipe ft=vim
+endfunc
+
+" :ReloadVimrc
+" save current window and restore current winodow after reloading .vimrc
+" func! ReloadVimrc() abort
+"     let l:save_win = winsaveview()
+"     source $MYVIMRC
+"     set nohlsearch
+"     call winrestview(l:save_win)
+" endfunc
+
+" :Cde completion {{{2
 func! Cdcomp(...)
     return split(substitute(substitute(glob('%:p:h'.'**'),'\M'.substitute(expand('%:p:h'),'\\','\\\\','g'),'','g'),'\\','','g'), '\n')
 endfunc

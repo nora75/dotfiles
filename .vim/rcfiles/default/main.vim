@@ -11,12 +11,14 @@ set autoindent
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,sjis
 set fileencoding=utf-8
+set fileformats=unix,dos,mac
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
 set autoindent
 set smartindent
+set whichwrap=b,s,h,l
 if has("unnamedplus")
     set clipboard+=unnamed,unnamedplus
 else
@@ -58,16 +60,15 @@ endif
 " 日本語入力に関する設定:
 "
 if has('multi_byte_ime') || has('xim')
-  " IME ON時のカーソルの色を設定(設定例:紫)
-  highlight CursorIM guibg=Purple guifg=NONE
-  " 挿入モード・検索モードでのデフォルトのIME状態設定
-  set iminsert=0 imsearch=0
-  " if has('xim') && has('GUI_GTK')
+    " IME ON時のカーソルの色を設定(設定例:紫)
+    highlight CursorIM guibg=Purple guifg=NONE
+    " 挿入モード・検索モードでのデフォルトのIME状態設定
+    set iminsert=0 imsearch=0
+    " if has('xim') && has('GUI_GTK')
     " XIMの入力開始キーを設定:
     " 下記の s-space はShift+Spaceの意味でkinput2+canna用設定
     "set imactivatekey=s-space
-  " endif
-  " 挿入モードでのIME状態を記憶させない場合、次行のコメントを解除
+    " endif
 endif
 
 " vim: set fdm=marker fdl=1 fmr={{{,}}} :

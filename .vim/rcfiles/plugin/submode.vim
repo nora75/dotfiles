@@ -56,10 +56,12 @@ if neobundle#is_installed("vim-submode")
     call submode#map('TabPageMove', 'n', '', 'T', 'gT')
     call submode#map('TabPageMove', 'n', '', 'h', 'gT')
     " TabMove {{{2
-    call submode#enter_with('TabMove', 'n', 'r', '[TabG]h','[TabG]h')
-    call submode#enter_with('TabMove', 'n', 'r', '[TabG]l','[TabG]l')
+    call submode#enter_with('TabMove', 'n', 'r', '<Space>th','[TabG]h')
+    call submode#enter_with('TabMove', 'n', 'r', '<Space>tl','[TabG]l')
     call submode#map('TabMove', 'n', 'r', 'h', '[TabG]h')
-    call submode#map('TabMove', 'n', 'r', 'l', '[TabG]h')
+    call submode#map('TabMove', 'n', 'r', 'l', '[TabG]l')
+    call submode#map('TabMove', 'n', 'r', 'j', '[TabG]j')
+    call submode#map('TabMove', 'n', 'r', 'k', '[TabG]k')
     " LineMove {{{2
     " swap current line to up or down
     call submode#enter_with('LineMove', 'n', 'r',  '<Space>lj', '[LineMove]j')

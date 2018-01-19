@@ -16,37 +16,35 @@ if neobundle#is_installed("vim-markdown")
         " au BufWinLeave *.md,*.mdown,*.markdown 
     augroup END
 
-    " augroup MdToc
-    "     au!
-    "     " markdownの時に保存時自動でTocする用のgr
-    " aug END
-
-    " keybind {{{2
+    " mapping {{{2
     func! Markd()
-        func! MarkToc() " TocToggle {{{ 3
-            if exists("#BufWritePost#<buffer>")
-                silent! au!  BufWritePost <buffer>
-            else
-                " markdownの時に保存時自動でToc
-                au BufWritePost <buffer> Toc
+        nnoremap <buffer> [Markdown]  <Nop>
+        nmap     <buffer> <Space>m    [Markdown]
+
+        nnoremap <buffer><silent> [Markdown]t :<C-u>Toc<CR>
+        nnoremap <buffer><silent> [Markdown]i :<C-u>HeaderIncrease<CR>
+        nnoremap <buffer><silent> [Markdown]d :<C-u>HeaderDecrease<CR>
+        nnoremap <buffer><silent> [Markdown]w :<C-u>call MarkToc()<CR>
+        nnoremap <buffer> <Space>p    :<C-u>PrevimOpen<CR>
+
+        vnoremap <buffer> [Markdown]  <Nop>
+        vmap     <buffer> <Space>m    [Markdown]
+
+        vnoremap <buffer><silent> [Markdown]i :HeaderIncrease<CR>
+        vnoremap <buffer><silent> [Markdown]d :HeaderDecrease<CR>
+        let b:Markdown_AuToc = 0
+        silent call MarkToc()
+    endfunc
+    func! MarkToc() " TocToggle {{{ 2
+        " markdownの時に保存時自動でToc
+        if b:Markdown_AuToc
+            au! BufWritePost <buffer>
+            let b:Markdown_AuToc = 0
+        else
+            au BufWritePost <buffer> silent! Toc
+            let b:Markdown_AuToc = 1
         endif
     endfunc
-    nnoremap <buffer> [Markdown]  <Nop>
-    nmap     <buffer> <Space>m    [Markdown]
-
-    nnoremap <buffer> [Markdown]t :<C-u>Toc<CR>
-    nnoremap <buffer> [Markdown]i :<C-u>HeaderIncrease<CR>
-    nnoremap <buffer> [Markdown]d :<C-u>HeaderDecrease<CR>
-    nnoremap <buffer> [Markdown]w :<C-u>call MarkToc()<CR>
-    nnoremap <buffer> <Space>p    :<C-u>PrevimOpen<CR>
-
-    vnoremap <buffer> [Markdown]  <Nop>
-    vmap     <buffer> <Space>m    [Markdown]
-
-    vnoremap <buffer> [Markdown]i :HeaderIncrease<CR>
-    vnoremap <buffer> [Markdown]d :HeaderDecrease<CR>
-    call MarkToc()
-endfunc
 endif
 
 " vim:set fdm=marker fdl=1 :

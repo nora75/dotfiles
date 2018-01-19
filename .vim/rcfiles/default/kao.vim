@@ -66,3 +66,20 @@ endif
 if kaoriya#switch#enabled('disable-go-extra')
   let &rtp = join(filter(split(&rtp, ','), 'v:val !~ "[/\\\\]plugins[/\\\\]golang$"'), ',')
 endif
+
+command! -nargs=* -range Transform <line1>,<line2>call Transform(<f-args>)
+function! Transform(from_str, to_str, ...)
+  if a:0 | let string = a:1 | else | let string = getline(".") | endif
+  let from_ptr = 0 | let to_ptr = 0
+  while 1
+    let from_char = matchstr(a:from_str, '^.', from_ptr)
+    if from_char == ''
+      break
+    endif
+    let to_char = matchstr(a:to_str, '^.', to_ptr)
+    let from_ptr = from_ptr + strlen(from_char)
+    let to_ptr = to_ptr + strlen(to_char)
+    let string = substitute(string, from_char, to_char, 'g')
+  endwhile
+  if a:0 | return string | else | call setline(".", string) | endif
+endfunction

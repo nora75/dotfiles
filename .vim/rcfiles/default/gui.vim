@@ -40,6 +40,9 @@ if has('gui') " {{{2
         colorscheme default
     endtry
 
+    " メニューの消去
+    source $VIMRUNTIME/delmenu.vim
+
     if has('win32')
         " Windows用
         set guifont=MS_Gothic:h12:cSHIFTJIS
