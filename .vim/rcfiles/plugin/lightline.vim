@@ -14,7 +14,7 @@ if neobundle#is_installed("lightline.vim")
     \ 'tab' : {
     \ 'active' : [ 'tabnum' , 'filename' , 'modified' ] ,
     \ 'inactive' : [ 'tabnum' , 'filename' , 'modified' ] } ,
-    \ 'colorscheme' : 'Tommorow_Night' ,
+    \ 'colorscheme' : 'Default' ,
     \ 'component_function' : {
     \ 'mycurfiledir' : 'LightlineCurFileDir' ,
     \ 'mycwd' : 'LightlineCwd' ,
@@ -46,8 +46,8 @@ if neobundle#is_installed("lightline.vim")
     " If base directory is different by current directory show where
     func! LightlineCwd() abort
         return strcharpart(getcwd(),-1,2)!='C'?
-        \ strcharpart(getcwd(),-1,2).'-':
-        \ ''.matchstr(getcwd(),'[^\\]\+\\[^\\]\+$')
+        \ strcharpart(getcwd(),-1,2).matchstr(getcwd(),'[^\\]\+\\[^\\]\+$'):
+        \ matchstr(getcwd(),'[^\\]\+\\[^\\]\+$')
     endfunc
     " return file encoding {{{2
     " Upeer and is bomb or no bomb
