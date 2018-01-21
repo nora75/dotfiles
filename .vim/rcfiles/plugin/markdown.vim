@@ -33,7 +33,6 @@ if neobundle#is_installed("vim-markdown")
         vnoremap <buffer><silent> [Markdown]i :HeaderIncrease<CR>
         vnoremap <buffer><silent> [Markdown]d :HeaderDecrease<CR>
         let b:Markdown_AuToc = 0
-        silent call MarkToc()
     endfunc
     func! MarkToc() " TocToggle {{{ 2
         " markdownの時に保存時自動でToc

@@ -4,7 +4,11 @@ command! -nargs=0 CdCurrent cd %:p:h
 
 " :ReloadVimrc {{{2
 " Reload .vimrc files
-command! -nargs=0 ReloadVimrc let g:reload_save_win = winsaveview()|
+command! -nargs=0 ReloadVimrc try|
+\ exe 'NoHiMatch'|
+\ exe 'HiMatchOff'|
+\ endtry|
+\ let g:reload_save_win = winsaveview()|
 \ let g:reload_save_cuwinid = win_getid()|
 \ exe 'windo let b:reload_save_fold = &fdl'|
 \ source $MYVIMRC|
@@ -14,7 +18,12 @@ command! -nargs=0 ReloadVimrc let g:reload_save_win = winsaveview()|
 \ call win_gotoid(g:reload_save_cuwinid)|
 \ call winrestview(g:reload_save_win)|
 \ unlet g:reload_save_win|
-\ unlet g:reload_save_cuwinid
+\ unlet g:reload_save_cuwinid|
+\ try|
+\ exe 'HiMatchOn'|
+\ endtry
+
+command! -nargs=1 Renamef file <args>|call delete(expand('#'))|w
 
 " :Cde {{{2
 " edit file in current directory with don't move current directory.

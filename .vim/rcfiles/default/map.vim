@@ -33,11 +33,11 @@ nnoremap [LineMove]         <Nop>
 nmap     [LineMove]j        dd]p
 nmap     [LineMove]k        ddk[p
 " search {{{3
-nnoremap <silent><Esc><Esc> :<C-u>set          nohlsearch!<CR>
-nnoremap /                  :<C-u>set          hlsearch<CR>/
-nnoremap ?                  :<C-u>set          hlsearch<CR>?
-nnoremap *                  :<C-u>set          hlsearch<CR>*
-nnoremap #                  :<C-u>set          hlsearch<CR>#
+nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
+nnoremap /                  :<C-u>set hlsearch<CR>/
+nnoremap ?                  :<C-u>set hlsearch<CR>?
+nnoremap *                  :<C-u>set hlsearch<CR>*
+nnoremap #                  :<C-u>set hlsearch<CR>#
 nnoremap <C-h>              :<C-u>help<Space>
 " else {{{3
 nmap     gw                 <C-W>
@@ -47,6 +47,9 @@ nnoremap dl                 d2l
 nnoremap yy                 y$
 nnoremap <silent> <C-p>     "0p
 nnoremap <silent> <C-S-p>   "0P
+nnoremap J gJ
+nnoremap gJ J
+" funcion key
 nnoremap <F11>              :tabnew<bar>e $vim\file<bar>setl bt=nofile noswf noma nobl bh=wipe<bar><CR>
 vnoremap <F11>              :<C-u>tabnew<bar>e $vim\file<bar>setl bt=nofile noswf noma nobl bh=wipe<bar><CR>
 nnoremap     <F1>               :ReloadVimrc<CR>
@@ -82,8 +85,8 @@ vnoremap gk       k
 " switch move {{{4
 vnoremap <silent> <Space>sm  :<C-u>call SwitchMoves()<CR>gv
 " else {{{3
-vnoremap <silent> <C-p>   "0p<CR>
-vnoremap <silent> <C-S-p> "0P<CR>
+vnoremap <silent> <C-p>   "0p
+vnoremap <silent> <C-S-p> "0P
 
 " command {{{2
 cnoreabbre w]      w
@@ -96,14 +99,16 @@ cnoreabbre new]    new
 inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
 
 " no CursorKey {{{2
+nnoremap <Up>    :qa!<CR>
+nnoremap <Down>  :qa!<CR>
+nnoremap <Left>  :qa!<CR>
+nnoremap <Right> :qa!<CR>
+nnoremap <BS>    :qa!<CR>
 vnoremap <Up>    :<C-u>qa!<CR>
 vnoremap <Down>  :<C-u>qa!<CR>
 vnoremap <Left>  :<C-u>qa!<CR>
 vnoremap <Right> :<C-u>qa!<CR>
-nnoremap <Up>    :<C-u>qa!<CR>
-nnoremap <Down>  :<C-u>qa!<CR>
-nnoremap <Left>  :<C-u>qa!<CR>
-nnoremap <Right> :<C-u>qa!<CR>
+vnoremap <BS>    :<C-u>qa!<CR>
 inoremap <Up>    <ESC>:<C-u>qa!<CR>
 inoremap <Down>  <ESC>:<C-u>qa!<CR>
 inoremap <Left>  <ESC>:<C-u>qa!<CR>

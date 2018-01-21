@@ -27,12 +27,30 @@ NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-session', {
-            \ 'depends' : 'xolox/vim-misc',
-          \ }
+\ 'depends' : 'xolox/vim-misc',
+\ }
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'itchyny/lightline.vim'
 " NeoBundle 'tyru/eskk.vim'
+
+" highlight {{{3
+NeoBundle 't9md/vim-quickhl'
+NeoBundle 'osyo-manga/vim-brightest'
+NeoBundle 'tmhedberg/matchit'
+NeoBundle 'vimtaku/hl_matchit.vim', {
+\ 'depends' : 'tmhedberg/matchit',
+\ }
+
+" operator and textobj {{{3
+NeoBundle 'kana/vim-operator-user'
+NeoBundle 'kana/vim-operator-replace'
+NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'sgur/vim-textobj-parameter'
+NeoBundle 'osyo-manga/vim-jplus'
+NeoBundle 'osyo-manga/vim-operator-stay-cursor'
+NeoBundle 'osyo-manga/vim-textobj-blockwise'
+NeoBundle 'h1mesuke/textobj-wiw'
 
 " unite {{{3
 NeoBundle 'Shougo/vimproc', {
@@ -58,8 +76,8 @@ NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'kannokanno/previm', {
-            \ 'depends' :  'tyru/open-browser.vim',
-            \ }
+\ 'depends' :  'tyru/open-browser.vim',
+\ }
 NeoBundle 'alvan/vim-closetag'
 " NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'nora75/MarkdownTable'
@@ -68,8 +86,6 @@ NeoBundle 'nora75/MarkdownTable'
 NeoBundle 'vim-scripts/twilight'
 " 大杉
 NeoBundle 'flazz/vim-colorschemes'
-" soso
-NeoBundle 'reedes/vim-colors-pencil'
 
 NeoBundleCheck
 
