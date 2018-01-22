@@ -14,7 +14,7 @@ if neobundle#is_installed("lightline.vim")
     \ 'tab' : {
     \ 'active' : [ 'tabnum' , 'filename' , 'modified' ] ,
     \ 'inactive' : [ 'tabnum' , 'filename' , 'modified' ] } ,
-    \ 'colorscheme' : 'Default' ,
+    \ 'colorscheme' : 'default' ,
     \ 'component_function' : {
     \ 'mycurfiledir' : 'LightlineCurFileDir' ,
     \ 'mycwd' : 'LightlineCwd' ,

@@ -83,6 +83,34 @@ func! NewBufScratch() abort
     silent file`=fname`
     setl nonu bt=nofile noswf noma nobl bh=wipe ft=vim
 endfunc
+" function for :GetCom {{{2
+" get command content and return
+func! GetCom(com) abort
+    let comst = 'No such a command'
+    redir => result
+    exe 'silent com '.a:com
+    redir end
+    let result = split(result,"\n")[1]
+    " let i = len(result)
+    " let j = -1
+    " while 1
+    "     let i = strridx(result,'|',i-1)
+    "     if i < 0
+    "         break
+    "     else
+    "         let j = i
+    "     endif
+    " endwhile
+    " if j > 0
+    let i = stridx(result,a:com)
+    let i = stridx(result,"  ",i)
+    let result = strcharpart(result,i,len(result)-i+1)
+    let result = matchstr(result,'\M\S\.\+$')
+    " let i = stridx(result,"\a",i)
+    " echomsg i
+    " endif
+    return result
+endfunc
 
 " :ReloadVimrc
 " save current window and restore current winodow after reloading .vimrc

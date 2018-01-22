@@ -1,9 +1,9 @@
 " map {{{1
 " normal {{{2
 " command (ex) {{{3
-nnoremap ;                  :
-nnoremap :                  ;
-nmap     q;                 q:
+nnoremap ;                  :<C-u>
+nnoremap :<C-u>                  ;
+nmap     q;                 q:<C-u>
 " movement {{{3
 nnoremap j                  gj
 nnoremap k                  gk
@@ -15,18 +15,18 @@ nnoremap <S-Tab>            gT
 nnoremap <Space>            <Nop>
 " yank select all {{{4
 nnoremap <Space>a           ggVG
-nnoremap <Space>y           :<C-u>call         DoNormal('ggVGy')<CR>
-nnoremap <Space>=           :<C-u>call         DoNormal('gg=G')<CR>
+nnoremap <Space>y           :<C-u>call DoNormal('ggVGy')<CR>
+nnoremap <Space>=           :<C-u>call DoNormal('gg=G')<CR>
 " switch movement {{{4
-nnoremap <silent>           <Space>sm          :<C-u>call SwitchMoves()<CR>
+nnoremap <silent>           <Space>sm :<C-u>call SwitchMoves()<CR>
 " commands {{{4
 nnoremap <Space>cd          :<C-u>CdCurrent<CR>
 nnoremap <Space>e           :<C-u>echo<Space>
 nnoremap <Space>r           :<C-u>Comcap<Space>
 " map to <Space>o + j,k
 nmap     <Space>o           [BlankLine]
-nnoremap <silent>           [BlankLine]j       :<C-u>for i in range(1, v:count1)<Bar>call append(line('.'),   '')<Bar>endfor<CR>
-nnoremap <silent>           [BlankLine]k       :<C-u>for i in range(1, v:count1)<Bar>call append(line('.')-1, '')<Bar>endfor<CR>
+nnoremap <silent>           [BlankLine]j       :<C-u>for i in range(1, v:<C-u>count1)<Bar>call append(line('.'),   '')<Bar>endfor<CR>
+nnoremap <silent>           [BlankLine]k       :<C-u>for i in range(1, v:<C-u>count1)<Bar>call append(line('.')-1, '')<Bar>endfor<CR>
 " LineMove {{{3
 nmap     <Space>l           [LineMove]
 nnoremap [LineMove]         <Nop>
@@ -50,19 +50,19 @@ nnoremap <silent> <C-S-p>   "0P
 nnoremap J gJ
 nnoremap gJ J
 " funcion key
-nnoremap <F11>              :tabnew<bar>e $vim\file<bar>setl bt=nofile noswf noma nobl bh=wipe<bar><CR>
+nnoremap <F11>              :<C-u>tabnew<bar>e $vim\file<bar>setl bt=nofile noswf noma nobl bh=wipe<bar><CR>
 vnoremap <F11>              :<C-u>tabnew<bar>e $vim\file<bar>setl bt=nofile noswf noma nobl bh=wipe<bar><CR>
-nnoremap     <F1>               :ReloadVimrc<CR>
+nnoremap     <F1>               :<C-u>ReloadVimrc<CR>
 vnoremap     <F1>               :<C-u>ReloadVimrc<CR>
 if has('gui')
-    nnoremap     <F2>               :RestartVim<CR>
+    nnoremap     <F2>               :<C-u>RestartVim<CR>
     vnoremap     <F2>               :<C-u>RestartVim<CR>
 endif
-nnoremap     <F3>               :Windom norm zR<CR>
+nnoremap     <F3>               :<C-u>Windom norm zR<CR>
 vnoremap     <F3>               :<C-u>Windom norm zR<CR>
-nnoremap     <F5>               :e!<CR>
+nnoremap     <F5>               :<C-u>e!<CR>
 vnoremap     <F5>               :<C-u>e!<CR>
-nnoremap <F12>              :tabe $MYVIMRC<CR>
+nnoremap <F12>              :<C-u>tabe $MYVIMRC<CR>
 vnoremap <F12>              :<C-u>tabe $MYVIMRC<CR>
 
 " helpファイル {{{3
@@ -99,16 +99,14 @@ cnoreabbre new]    new
 inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
 
 " no CursorKey {{{2
-nnoremap <Up>    :qa!<CR>
-nnoremap <Down>  :qa!<CR>
-nnoremap <Left>  :qa!<CR>
-nnoremap <Right> :qa!<CR>
-nnoremap <BS>    :qa!<CR>
+nnoremap <Up>    :<C-u>qa!<CR>
+nnoremap <Down>  :<C-u>qa!<CR>
+nnoremap <Left>  :<C-u>qa!<CR>
+nnoremap <Right> :<C-u>qa!<CR>
 vnoremap <Up>    :<C-u>qa!<CR>
 vnoremap <Down>  :<C-u>qa!<CR>
 vnoremap <Left>  :<C-u>qa!<CR>
 vnoremap <Right> :<C-u>qa!<CR>
-vnoremap <BS>    :<C-u>qa!<CR>
 inoremap <Up>    <ESC>:<C-u>qa!<CR>
 inoremap <Down>  <ESC>:<C-u>qa!<CR>
 inoremap <Left>  <ESC>:<C-u>qa!<CR>
