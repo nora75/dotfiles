@@ -16,27 +16,26 @@ if neobundle#is_installed("vim-markdown")
         " au BufWinLeave *.md,*.mdown,*.markdown 
     augroup END
 
-    " mapping {{{2
+    " mapping function {{{2
     func! Markd()
+        " normal {{{3
         nnoremap <buffer> [Markdown]  <Nop>
         nmap     <buffer> <Space>m    [Markdown]
-
         nnoremap <buffer><silent> [Markdown]t :<C-u>Toc<CR>
         nnoremap <buffer><silent> [Markdown]i :<C-u>HeaderIncrease<CR>
         nnoremap <buffer><silent> [Markdown]d :<C-u>HeaderDecrease<CR>
         nnoremap <buffer><silent> [Markdown]w :<C-u>call MarkToc()<CR>
         nnoremap <buffer> <Space>p    :<C-u>PrevimOpen<CR>
-
+        " visual {{{3
         vnoremap <buffer> [Markdown]  <Nop>
         vmap     <buffer> <Space>m    [Markdown]
-
         vnoremap <buffer><silent> [Markdown]i :HeaderIncrease<CR>
         vnoremap <buffer><silent> [Markdown]d :HeaderDecrease<CR>
         let b:Markdown_AuToc = 0
     endfunc
     func! MarkToc() " TocToggle {{{ 2
         " markdownの時に保存時自動でToc
-        if b:Markdown_AuToc
+        if (b:Markdown_AuToc)
             au! BufWritePost <buffer>
             let b:Markdown_AuToc = 0
         else

@@ -34,6 +34,7 @@ if neobundle#is_installed("vim-submode")
     call submode#map('WinMove', 'n', '', 'k', '<C-w>k')
     call submode#map('WinMove', 'n', '', 'l', '<C-w>l')
 
+    " TabWidth {{{2
     " TabWidth normal {{{3
     call submode#enter_with('TabWidthn', 'n', '', '>>', '>>')
     call submode#enter_with('TabWidthn', 'n', '', '<<', '<<')
@@ -42,6 +43,7 @@ if neobundle#is_installed("vim-submode")
     call submode#map('TabWidthn', 'n', '', '<', '<<')
     call submode#map('TabWidthn', 'n', '', ',', '<<')
     " TabWidth visual {{{3
+    " can't move must fix it
     call submode#enter_with('TabWidthv', 'v', '', '>', '>')
     call submode#enter_with('TabWidthv', 'v', '', '<', '<')
     call submode#map('TabWidthv', 'n', '', '>', 'gv>')

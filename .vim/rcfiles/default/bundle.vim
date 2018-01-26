@@ -31,6 +31,7 @@ NeoBundle 'xolox/vim-session', {
 \ }
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'junegunn/vim-easy-align'
+" NeoBundle 'powerline/powerline', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'itchyny/lightline.vim'
 " NeoBundle 'tyru/eskk.vim'
 
@@ -78,7 +79,7 @@ NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'kannokanno/previm', {
 \ 'depends' :  'tyru/open-browser.vim',
 \ }
-NeoBundle 'alvan/vim-closetag'
+" NeoBundle 'alvan/vim-closetag'
 " NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'nora75/MarkdownTable'
 

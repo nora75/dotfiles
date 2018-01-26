@@ -2,7 +2,7 @@
 " normal {{{2
 " command (ex) {{{3
 nnoremap ;                  :<C-u>
-nnoremap :<C-u>                  ;
+nnoremap :                  ;
 nmap     q;                 q:<C-u>
 " movement {{{3
 nnoremap j                  gj
@@ -14,13 +14,13 @@ nnoremap <S-Tab>            gT
 " <Space>map {{{3
 nnoremap <Space>            <Nop>
 " yank select all {{{4
-nnoremap <Space>a           ggVG
-nnoremap <Space>y           :<C-u>call DoNormal('ggVGy')<CR>
-nnoremap <Space>=           :<C-u>call DoNormal('gg=G')<CR>
+nnoremap <silent> <Space>a           ggVG
+nnoremap <silent> <Space>y           :<C-u>call DoNormal('ggVGy')<CR>
+nnoremap <silent> <Space>=           :<C-u>call DoNormal('gg=G')<CR>
 " switch movement {{{4
-nnoremap <silent>           <Space>sm :<C-u>call SwitchMoves()<CR>
+nnoremap <silent> <Space>sm :<C-u>call SwitchMoves()<CR>
 " commands {{{4
-nnoremap <Space>cd          :<C-u>CdCurrent<CR>
+nnoremap <silent> <Space>cd          :<C-u>CdCurrent<CR>
 nnoremap <Space>e           :<C-u>echo<Space>
 nnoremap <Space>r           :<C-u>Comcap<Space>
 " map to <Space>o + j,k
@@ -34,10 +34,10 @@ nmap     [LineMove]j        dd]p
 nmap     [LineMove]k        ddk[p
 " search {{{3
 nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
-nnoremap /                  :<C-u>set hlsearch<CR>/
-nnoremap ?                  :<C-u>set hlsearch<CR>?
-nnoremap *                  :<C-u>set hlsearch<CR>*
-nnoremap #                  :<C-u>set hlsearch<CR>#
+nnoremap /          :<C-u>set hlsearch<CR>/
+nnoremap ?          :<C-u>set hlsearch<CR>?
+nnoremap <silent>*          :<C-u>set hlsearch<CR>*
+nnoremap <silent>#          :<C-u>set hlsearch<CR>#
 nnoremap <C-h>              :<C-u>help<Space>
 " else {{{3
 nmap     gw                 <C-W>
@@ -87,6 +87,8 @@ vnoremap <silent> <Space>sm  :<C-u>call SwitchMoves()<CR>gv
 " else {{{3
 vnoremap <silent> <C-p>   "0p
 vnoremap <silent> <C-S-p> "0P
+silent! vunmap <C-X>
+vnoremap x                  "_x
 
 " command {{{2
 cnoreabbre w]      w

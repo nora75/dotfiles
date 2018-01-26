@@ -37,10 +37,12 @@ set fdm=marker
 set title
 " movement over line wrap in this char
 set whichwrap=b,s,h,l
-
 " when change on out of Vim auto reload
 set autoread
-
+" when split or close window, set all window size equal 'ea'
+set equalalways
+" save command history more (default:50)
+set history=100
 " \を前の行と同じインデントにする
 let g:vim_indent_cont=0
 

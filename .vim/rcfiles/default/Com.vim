@@ -24,9 +24,13 @@ command! -nargs=0 ReloadVimrc let g:reload_save_win = winsaveview()|
 \ unlet g:reload_save_win|
 \ unlet g:reload_save_cuwinid
 
-" :Renamef {{{3
+" :Renamefn {{{3
 " rename current file
-command! -nargs=1 Renamef file <args>|call delete(expand('#'))|w
+command! -nargs=1 Renamefn exe 'file '.<f-args>|call delete(expand('#'))|filetype detect|w
+
+" :Renamet {{{3
+" change current filename entension
+command! -nargs=1 Renamefe exe 'file '.expand('%:r').'.'.<f-args>|call delete(expand('#'))|filetype detect|w
 
 " :Windom {{{2
 " don't move with do command to all windows

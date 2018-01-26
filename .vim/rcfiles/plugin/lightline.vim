@@ -1,101 +1,142 @@
 if neobundle#is_installed("lightline.vim")
-    " show always
+    " options {{{2
     set laststatus=2
+    let g:unite_force_overwrite_statusline = 0
+
     " g:lightline {{{2
-    let g:lightline = { 'active' : { 'left' : [ [ 'mycwd' , 'mycurfiledir' ] ,
-    \ [ 'myfilename', 'modified' , 'readonly' ] ],
-    \ 'right' : [ [ 'myfileformat', 'myfileencoding', 'myfiletype' ] , [ 'myunite' ] , [ 'mymovement' , 'mymdtoc' ] , [ 'mylastsearch' ] ] } ,
-    \ 'inactive' : {
-    \ 'left' : [ [ 'mycurfiledir' , 'myfilename', 'modified' , 'readonly' ] ] ,
-    \ 'right' : [ [ 'lineinfo' ] , [ 'percent' ] ] } ,
-    \ 'tabline' : {
+    let g:lightline = {}
+
+    " active {{{3
+    let g:lightline.active = { 'left' : [ [ 'mycwd' , 'mycurfiledir' ] ,
+    \ [ 'myfname', 'modified' , 'readonly' ] ],
+    \ 'right' : [ [ 'myff', 'myfenc', 'filetype' ] , [ 'myunite' ] , [ 'mymove' , 'mymdtoc' ] , [ 'mysearch' ] ] }
+
+    " inactive {{{3
+    let g:lightline.inactive = {
+    \ 'left' : [ [ 'mycurfiledir' , 'myfname', 'modified' , 'readonly' ] ] ,
+    \ 'right' : [ [ 'lineinfo' ] , [ 'percent' ] ] }
+
+    " tabline {{{3
+    let g:lightline.tabline = {
     \ 'left' : [ [ 'tabs' ] ] ,
-    \ 'right' : [ [ 'close' ] ] } ,
-    \ 'tab' : {
+    \ 'right' : [ [ 'close' ] ] }
+
+    " tab {{{3
+    let g:lightline.tab = {
     \ 'active' : [ 'tabnum' , 'filename' , 'modified' ] ,
-    \ 'inactive' : [ 'tabnum' , 'filename' , 'modified' ] } ,
-    \ 'colorscheme' : 'default' ,
-    \ 'component_function' : {
+    \ 'inactive' : [ 'tabnum' , 'filename' , 'modified' ] }
+
+    " colorscheme {{{3
+    let g:lightline.colorscheme = 'default'
+
+    " component {{{3
+    let g:lightline.component = {
+    \ 'modified': '%M',
+    \ 'bufnum': '%n',
+    \ 'readonly': '%R',
+    \ 'filetype': '%{(&ft!="unite")?(&ft!=#""?&ft:"NONE"):""}',
+    \ 'percent': '%3p%%',
+    \ 'lineinfo': '%3l:%-2v',
+    \ 'close': '%999X X ',
+    \ 'myff' : '%{(&ft!="help")&&(&ft!="unite")?toupper(strcharpart(&ff,-1,2)):""}' ,
+    \ 'myfname' : '%{expand("%:t")!~"unite"?expand("%:t"):strpart(unite#get_status_string(),0,stridx(unite#get_status_string()," "))}' ,
+    \ 'mysearch' : '%{@/}' ,
+    \ 'mymdtoc' : '%{(&ft=="markdown")&&(b:Markdown_AuToc)?"T":""}' ,
+    \ 'mymove' : '%{hasmapto("j")&&(&ft!="unite")?"M":""}' ,
+    \ 'myunite' : '%{(&ft!="unite")?matchstr(unite#get_status_string(),"\M|\.\+$"):""}' }
+
+    " componet function {{{3
+    let g:lightline.component_function = {
     \ 'mycurfiledir' : 'LightlineCurFileDir' ,
     \ 'mycwd' : 'LightlineCwd' ,
-    \ 'myfileencoding' : 'LightlineFileEncoding' ,
-    \ 'myfileformat' : 'LightlineFileFormat' ,
-    \ 'myfilename' : 'LightlineFileName' ,
-    \ 'myfiletype' : 'LightlineFileType' ,
-    \ 'mylastsearch' : 'LightlineLastSearch' ,
-    \ 'mymdtoc' : 'LightlineMdtoc' ,
-    \ 'myunite' : 'LightlineUnite' ,
-    \ 'mymovement' : 'LightlineMovement' }
+    \ 'myfenc' : 'LightlineFenc' }
+
+
+    " component visible {{{3
+    let g:lightline.component_visible_condition = {
+    \ 'mymove': '(&ft=="markdown")&&(b:Markdown_AuToc)' ,
+    \ 'myfname': 'v:true' ,
+    \ 'myff' : '(&ft!="help")&&(&ft!="unite")' ,
+    \ 'modified': '&modified||!&modifiable' ,
+    \ 'readonly': '&readonly' }
+    " \ 'mycwd' : '' ,
+    " \ 'mycurfiledir' : '' ,
+    " \ 'myfname' : '' ,
+    " \ 'mylastsearch' : '' ,
+    " \ 'mymdtoc' : '' ,
+    " \ 'mymove' : '' ,
+    " \ 'myunite' : '' ,
+    " \ 'filetype' : '' ,
+
+    " component function visible {{{3
+    let g:lightline.component_function_visible_condition = {
+    \ 'myfenc' : '(&ft!="help")&&(&ft!="unite")' ,
+    \ 'mycurfiledir' : '(getcwd()!=expand("%:p:h"))&&(&ft!="help")&&(&ft!="unite")'
     \ }
+
+    " separator and subseparator {{{3
+    " let g:lightline.separator = { 'left': '', 'right': '' }
+    " let g:lightline.subseparator = { 'left': '|', 'right': '|' }
+
+    " comment {{{2
     " \ 'mydrive' : 'LightlineDrive' ,
-    " return current file dir {{{2
+    " \ &ft == 'unite' ? unite#get_status_string() :
+
+    " lightline functions {{{2
+    " return current file dir {{{3
     " only up two directory
     " when different by current directory
     " If base directory isn't C directory show whre
     func! LightlineCurFileDir() abort
-        return (getcwd()!=expand('%:p:h'))&&(&ft!='help')&&(&ft!='unite')?
-        \ ((strcharpart(getcwd(),-1,2)!=strcharpart(expand('%:p:h'),-1,2))
-        \ &&(expand('%:p:h')!~'\M^'.strcharpart(expand('%:p:h'),-1,2))
-        \ ?(strcharpart(expand('%:p:h'),-1,2).matchstr(expand('%:p:h'),'[^\\]\+\\[^\\]\+$')):
-        \ matchstr(expand('%:p:h'),'[^\\]\+\\[^\\]\+$')):
-        \ ''
-        return ret
+        if (getcwd()==expand("%:p:h"))||(ft=="help")||(&ft=="unite")
+            return ''
+        endif
+        let cdr = strcharpart(expand('%:p:h'),-1,2)
+        let cfd = matchstr(expand('%:p:h'),'[^\\]\+\\[^\\]\+$')
+        if (strcharpart(getcwd(),-1,2)!=cdr) && (expand('%:p:h')!~'\M^'.cdr)
+            let cdr = cdr.':'.cfd
+        endif
+        let licwd = split(cwd, '\')
+        let i = 0
+        while i < len(licwd)
+            if len(licwd[i]) > 5
+                let licwd[i] = strcharpart(licwd[i],0,5)
+            endif
+            let i += 1
+        endwhile
+        let cwd = join(licwd, '\')
+        return cfd
     endfunc
-    " return current dir {{{2
+    " return current dir {{{3
     " only up two directory
     " If base directory is different by current directory show where
     func! LightlineCwd() abort
-        return strcharpart(getcwd(),-1,2)!='C'?
-        \ strcharpart(getcwd(),-1,2).matchstr(getcwd(),'[^\\]\+\\[^\\]\+$'):
-        \ matchstr(getcwd(),'[^\\]\+\\[^\\]\+$')
+        let cd = strcharpart(getcwd(),-1,2)
+        let cwd = matchstr(getcwd(),'[^\\]\+\\[^\\]\+$')
+        let licwd = split(cwd, '\')
+        let i = 0
+        while i < len(licwd)
+            if len(licwd[i]) > 5
+                let licwd[i] = strcharpart(licwd[i],0,5)
+            endif
+            let i += 1
+        endwhile
+        let cwd = join(licwd, '\')
+        if cd !='C'
+            let cd .= ':'
+        endif
+        let cwd = cd.cwd
+        return cwd
     endfunc
-    " return file encoding {{{2
+    " return file encoding {{{3
     " Upeer and is bomb or no bomb
-    func! LightlineFileEncoding() abort
-        return (&ft!='help')&&(&ft!='unite')?
-        \ (substitute(toupper(&fenc),'\M-','','g')=~'UTF'?
-        \ (&bomb?
-        \ substitute(toupper(&fenc),'\M-','','g').'B':
-        \ substitute(toupper(&fenc),'\M-','','g').'N'):
-        \ substitute(toupper(&fenc),'\M-','','g')):
-        \ ''
+    func! LightlineFenc() abort
+        let en = substitute(toupper(&fenc!=''?&fenc:&enc),'\M-','','g')
+        if en =~ 'UTF'
+            let en .= &bomb ? 'B': 'N'
+        endif
+        return en
     endfunc
-    " return file format {{{2
-    " Upeer and only first arphabet
-    func! LightlineFileFormat() abort
-        return toupper(strcharpart(&ff,-1,2))
-    endfunc
-    " return file name {{{2
-    " when unit return unite file status
-    func! LightlineFileName() abort
-        return expand('%:t')!~'unite'?expand('%:t'):
-        \ strpart(unite#get_status_string(),0,stridx(unite#get_status_string(),' '))
-    endfunc
-    " return file type {{{2
-    " no return when help file
-    func! LightlineFileType() abort
-        return (&ft!='help')&&(&ft!='unite')?&ft:''
-    endfunc
-    " return last search {{{2
-    func! LightlineLastSearch() abort
-        return @/
-    endfunc
-    " return auto Toc enable {{{2
-    " enable = 'T' disable = ''
-    func! LightlineMdtoc() abort
-        return &ft=='markdown' ? (b:Markdown_AuToc ? 'T' : '') : ''
-    endfunc
-    " return movement switch enable {{{2
-    " enable = 'M' disable = ''
-    func! LightlineMovement() abort
-        return hasmapto('j') ? 'M' : ''
-    endfunc
-    func! LightlineMdtoc() abort
-        return (&ft=='unite')?matchstr(unite#get_status_string(),'\M|\.\+$'):''
-    endfunc
-    " other options {{{2
-    let g:unite_force_overwrite_statusline = 0
-    " \ &ft == 'unite' ? unite#get_status_string() :
 endif
 
 " vim: set fdm=marker fdl=1 fmr={{{,}}} :
