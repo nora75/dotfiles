@@ -10,11 +10,12 @@ func! MyStl() abort
     let ro = s:ro()
     let third = '%#None#%='
     let waf = '%#StlLeft0# '.StlWafu().'  '
-    let move = '%{hasmapto("j")&&(&ft!="unite")?"M":""}'
-    let ff = '%#StlRight0#%{(&ft!="help")?'' ''.toupper(strcharpart(&ff,-1,2)).'' '':""}'
+    let forth = '%#StlRight0#'
+    let move = '%{hasmapto("j")?" M ":""}'
+    let ff = '%{(&ft!="help")?''| ''.toupper(strcharpart(&ff,-1,2)).'' '':""}'
     let fenc = s:fenc()
     let ft =  '%{"| ".&ft." "}'
-    return first.cwd.second.mo.ro.third.waf.move.ff.fenc.ft
+    return first.cwd.second.mo.ro.third.waf.forth.move.ff.fenc.ft
 endfunc
 
 func! s:cwd() abort
@@ -50,12 +51,24 @@ let s:wafustr = [
 \ wafun ,
 \ wafun ,
 \ wafun ,
+\ wafun ,
+\ wafun ,
+\ wafuw ,
+\ wafuw ,
 \ wafuw ,
 \ wafuw ,
 \ wafuw ,
 \ wafuw ,
 \ ]
 let s:wafuerr = [ 
+\ wafun ,
+\ wafun ,
+\ wafun ,
+\ wafun ,
+\ wafun ,
+\ wafun ,
+\ wafue ,
+\ wafue ,
 \ wafue ,
 \ wafue ,
 \ wafue ,
