@@ -41,7 +41,7 @@ if has('gui') " {{{2
     endtry
 
     " メニューの消去
-    source $VIMRUNTIME/delmenu.vim
+    " source $VIMRUNTIME/delmenu.vim
 
     if has('win32')
         " Windows用

@@ -7,7 +7,7 @@ if neobundle#is_installed("lightline.vim")
     let g:lightline = {}
 
     " active {{{3
-    let g:lightline.active = { 'left' : [ [ 'mycwd' , 'mycurfiledir' ] ,
+    let g:lightline.active = { 'left' : [ [ 'mycwd' , 'mycurfiledir' , 'mywafu' ] ,
     \ [ 'myfname', 'modified' , 'readonly' ] ],
     \ 'right' : [ [ 'myff', 'myfenc', 'filetype' ] , [ 'myunite' ] , [ 'mymove' , 'mymdtoc' ] , [ 'mysearch' ] ] }
 
@@ -40,7 +40,7 @@ if neobundle#is_installed("lightline.vim")
     \ 'close': '%999X X ',
     \ 'myff' : '%{(&ft!="help")&&(&ft!="unite")?toupper(strcharpart(&ff,-1,2)):""}' ,
     \ 'myfname' : '%{expand("%:t")!~"unite"?expand("%:t"):strpart(unite#get_status_string(),0,stridx(unite#get_status_string()," "))}' ,
-    \ 'mysearch' : '%{@/}' ,
+    \ 'mysearch' : '%{strcharpart(@/,0,5)}' ,
     \ 'mymdtoc' : '%{(&ft=="markdown")&&(b:Markdown_AuToc)?"T":""}' ,
     \ 'mymove' : '%{hasmapto("j")&&(&ft!="unite")?"M":""}' ,
     \ 'myunite' : '%{(&ft!="unite")?matchstr(unite#get_status_string(),"\M|\.\+$"):""}' }
@@ -49,6 +49,7 @@ if neobundle#is_installed("lightline.vim")
     let g:lightline.component_function = {
     \ 'mycurfiledir' : 'LightlineCurFileDir' ,
     \ 'mycwd' : 'LightlineCwd' ,
+    \ 'mywafu' : 'StlWafu' ,
     \ 'myfenc' : 'LightlineFenc' }
 
 
