@@ -34,7 +34,7 @@ if neobundle#is_installed("lightline.vim")
     \ 'modified': '%M',
     \ 'bufnum': '%n',
     \ 'readonly': '%R',
-    \ 'filetype': '%{(&ft!="unite")?(&ft!=#""?&ft:"NONE"):""}',
+    \ 'filetype': '%{(&ft!="unite")?&ft:""}',
     \ 'percent': '%3p%%',
     \ 'lineinfo': '%3l:%-2v',
     \ 'close': '%999X X ',
@@ -88,7 +88,7 @@ if neobundle#is_installed("lightline.vim")
     " when different by current directory
     " If base directory isn't C directory show whre
     func! LightlineCurFileDir() abort
-        if (getcwd()==expand("%:p:h"))||(ft=="help")||(&ft=="unite")
+        if (getcwd()==expand("%:p:h"))||(&ft=="help")||(&ft=="unite")
             return ''
         endif
         let cdr = strcharpart(expand('%:p:h'),-1,2)
@@ -96,7 +96,7 @@ if neobundle#is_installed("lightline.vim")
         if (strcharpart(getcwd(),-1,2)!=cdr) && (expand('%:p:h')!~'\M^'.cdr)
             let cdr = cdr.':'.cfd
         endif
-        let licwd = split(cwd, '\')
+        let licwd = split(cdr, '\')
         let i = 0
         while i < len(licwd)
             if len(licwd[i]) > 5
@@ -124,6 +124,8 @@ if neobundle#is_installed("lightline.vim")
         let cwd = join(licwd, '\')
         if cd !='C'
             let cd .= ':'
+        else
+            let cd = ''
         endif
         let cwd = cd.cwd
         return cwd

@@ -34,20 +34,22 @@ endfunc
 " function to :Windom {{{2
 " separate all args with bar
 func! WinDo(...) abort
-    let l:cuwinid = win_getid()
-    let l:save_search = @/
-    let l:save_win = winsaveview()
+    let cuwinid = win_getid()
+    let save_search = @/
+    let save_win = winsaveview()
     windo let b:reload_save_fold = &fdl
-    let l:do = ''
-    for l:cm in a:000
-        let l:do .= ' '.l:cm
+    let do = ''
+    for cm in a:000
+        let do .= ' '.cm
     endfor
-    exe 'silent! windo '.l:do
+    exe 'silent! windo '.do
     redraw!
-    windo if exists('b:reload_save_fold')|let &fdl = b:reload_save_fold|unlet! b:reload_save_fold|endif
-    call win_gotoid(l:cuwinid)
-    let @/ = l:save_search
-    call winrestview(l:save_win)
+    if do=~'\Mnorm\[^z]\*z\[^hjkl]'|unlet save_win|exe 'windo unlet b:reload_save_fold'|endif
+    windo if exists("b:reload_save_fold")|let &fdl = b:reload_save_fold|unlet b:reload_save_fold|endif
+    call win_gotoid(cuwinid)
+    let @/ = save_search
+    if exists('save_win')|call winrestview(save_win)|unlet save_win|endif
+    unlet cuwinid
 endfunc
 
 " function for debugging {{{2
