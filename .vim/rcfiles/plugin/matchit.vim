@@ -11,8 +11,8 @@ if neobundle#is_installed("hl_matchit.vim")
     \ exe 'HiMatchOff'|
     \ source $MYVIMRC|
     \ set nohlsearch|
-    \ exe 'silent! windo let &fdl = b:reload_save_fold'|
     \ exe 'HiMatchOn'|
+    \ exe 'silent! windo let &fdl = b:reload_save_fold'|
     \ exe 'silent! windo unlet b:reload_save_fold'|
     \ call win_gotoid(g:reload_save_cuwinid)|
     \ call winrestview(g:reload_save_win)|

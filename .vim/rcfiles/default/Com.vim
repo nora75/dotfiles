@@ -10,6 +10,10 @@ command! -nargs=1 -complete=customlist,Cdcomp Cde e %:p:h\<args>
 " Get command content by input command name
 command! -nargs=1 -complete=command CheckCom echo GetCom(<f-args>)
 
+" :EFFC {{{2
+" Edit File From Clipboard
+command! -nargs=0 -complete=file EFFC exe 'e '.Effc()
+
 " :ReloadVimrc {{{2
 " Reload .vimrc files
 command! -nargs=0 ReloadVimrc let g:reload_save_win = winsaveview()|

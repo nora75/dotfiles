@@ -31,6 +31,16 @@ fu! SwitchMoves()
     endtry
 endfunc
 
+" function to :EFFC {{{2
+" if clipboard is file name return it. not file name return empty
+func! Effc()
+    let ret = getreg('*')
+    if type(ret)!=1||getftype(ret)!='file'
+        let ret = ''
+    endif
+    return ret
+endfunc
+
 " function to :Windom {{{2
 " separate all args with bar
 func! WinDo(...) abort
@@ -46,33 +56,30 @@ func! WinDo(...) abort
     redraw!
     if do=~'\Mnorm\[^z]\*z\[^hjkl]'|unlet save_win|exe 'windo unlet b:reload_save_fold'|endif
     windo if exists("b:reload_save_fold")|let &fdl = b:reload_save_fold|unlet b:reload_save_fold|endif
-    call win_gotoid(cuwinid)
-    let @/ = save_search
-    if exists('save_win')|call winrestview(save_win)|unlet save_win|endif
-    unlet cuwinid
+call win_gotoid(cuwinid)
+let @/ = save_search
+if exists('save_win')|call winrestview(save_win)|unlet save_win|endif
+unlet cuwinid
 endfunc
 
 " function for debugging {{{2
 " do command and catch output in commandline
 func! Comcap(com) abort
-    let result = ''
-    redir => result
-    silent exe a:com
-    redir end
+    let result = GetCom(a:com)
     new
     let fname = 'output:'.a:com
     silent file`=fname`
     silent put =result
-    silent delete _
+    silent 1d_
     setl nonu bt=nofile noswf nobl bh=wipe ft=vim
+    return
 endfunc
 
 " function for memo {{{2
 " make new tab for memo
 func! NewTabScratch() abort
     tabnew
-    let fname = 'memo'
-    silent file`=fname`
+    silent file memo
     setl nonu bt=nofile noswf nobl bh=wipe ft=vim
 endfunc
 
@@ -80,23 +87,33 @@ endfunc
 " make new buffer for memo
 func! NewBufScratch() abort
     new
-    let fname = 'memo'
-    silent file`=fname`
+    silent file memo
     setl nonu bt=nofile noswf noma nobl bh=wipe ft=vim
 endfunc
 
 " function for :GetCom {{{2
 " get command content and return
+" if setted command is not declared, return error message
 func! GetCom(com) abort
-    let comst = 'No such a command'
+    if exists(':'.a:com)!=2
+        return 'No such a command'
+    endif
     redir => result
-    exe 'silent com '.a:com
+    silent exe 'com '.a:com
     redir end
-    let result = split(result,"\n")[-1]
+    " let result = matchstr(split(result,"\n")[-1],'\M\S\.\*\s\*')
+    " let i = stridx(result,'\M\(\S\+\\\@<!|\.\*\)\|\(\S\+(\.\*)\)')
+    " while true
+    "     " stridx(result,'\M0\|1\|?\|+\|*',stridx(result,a:com)+len(a:com)-1)+1
+    "     stridx(result,a:com)+len(a:com)-1)+1
+    "     let i = stridx(result,a:com,stridx(result,'\s',i))
+    "     if exists(':'.matchstr(result,,i))>0
+    "     endif
+    " endwhile
     let i = stridx(result,a:com)
     let i = stridx(result,"  ",i)
     let result = strcharpart(result,i,len(result)-i+1)
-    let result = matchstr(result,'\M\S\.\+$')
+    " let result = matchstr(result,'\M\S\.\+$')
     return result
 endfunc
 

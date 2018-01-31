@@ -50,8 +50,8 @@ nnoremap <silent> <C-S-p>   "0P
 nnoremap J gJ
 nnoremap gJ J
 " funcion key
-nnoremap <F11>              :<C-u>tabnew<bar>e $vim\file<bar>setl bt=nofile noswf noma nobl bh=wipe<bar><CR>
-vnoremap <F11>              :<C-u>tabnew<bar>e $vim\file<bar>setl bt=nofile noswf noma nobl bh=wipe<bar><CR>
+nnoremap <F11>              :<C-u>tabnew<bar>e $vim\file1<Bar>silent! exe 'vs $vim\file2'<Bar>windo setl bt=nofile noswf noma nobl bh=wipe<bar><CR>
+vnoremap <F11>              :<C-u>tabnew<bar>e $vim\file1<Bar>silent! exe 'vs $vim\file2'<Bar>setl bt=nofile noswf noma nobl bh=wipe<bar><CR>
 nnoremap     <F1>               :<C-u>ReloadVimrc<CR>
 vnoremap     <F1>               :<C-u>ReloadVimrc<CR>
 if has('gui')
@@ -87,7 +87,11 @@ vnoremap <silent> <Space>sm  :<C-u>call SwitchMoves()<CR>gv
 " else {{{3
 vnoremap <silent> <C-p>   "0p
 vnoremap <silent> <C-S-p> "0P
-silent! vunmap <C-X>
+" don't show message and don't set v:errmsg
+try
+    vunmap <C-X>
+catch
+endtry
 vnoremap x                  "_x
 
 " command {{{2
