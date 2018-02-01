@@ -28,12 +28,6 @@ endfunc
 " if readlink is supported, return actually dir
 func! StlCwd() abort
     let fcwd = getcwd()
-    if executable('readlink')
-        try
-            let fcwd = system('readlink',fcwd)
-        catch
-        endtry
-    endif
     let cd = strcharpart(fcwd,-1,2)
     let cwd = matchstr(fcwd,'[^\\]\+\\[^\\]\+$')
     let licwd = split(cwd, '\')
