@@ -48,7 +48,7 @@ if neobundle#is_installed("lightline.vim")
     " componet function {{{3
     let g:lightline.component_function = {
     \ 'mycurfiledir' : 'LightlineCurFileDir' ,
-    \ 'mycwd' : 'LightlineCwd' ,
+    \ 'mycwd' : 'StlCwd' ,
     \ 'mywafu' : 'StlWafu' ,
     \ 'myfenc' : 'LightlineFenc' }
 
@@ -58,7 +58,7 @@ if neobundle#is_installed("lightline.vim")
     \ 'mymove': '(&ft=="markdown")&&(b:Markdown_AuToc)' ,
     \ 'myfname': 'v:true' ,
     \ 'myff' : '(&ft!="help")&&(&ft!="unite")' ,
-    \ 'modified': '&modified||!&modifiable' ,
+    \ 'modified': '(expand("%:t:r")!=#"")&&(&modified||!&modifiable)' ,
     \ 'readonly': '&readonly' }
     " \ 'mycwd' : '' ,
     " \ 'mycurfiledir' : '' ,
@@ -107,29 +107,6 @@ if neobundle#is_installed("lightline.vim")
         endwhile
         let cwd = join(licwd, '\')
         return cfd
-    endfunc
-    " return current dir {{{3
-    " only up two directory
-    " If base directory is different by current directory show where
-    func! LightlineCwd() abort
-        let cd = strcharpart(getcwd(),-1,2)
-        let cwd = matchstr(getcwd(),'[^\\]\+\\[^\\]\+$')
-        let licwd = split(cwd, '\')
-        let i = 0
-        while i < len(licwd)
-            if len(licwd[i]) > 5
-                let licwd[i] = strcharpart(licwd[i],0,5)
-            endif
-            let i += 1
-        endwhile
-        let cwd = join(licwd, '\')
-        if cd !='C'
-            let cd .= ':'
-        else
-            let cd = ''
-        endif
-        let cwd = cd.cwd
-        return cwd
     endfunc
     " return file encoding {{{3
     " Upeer and is bomb or no bomb

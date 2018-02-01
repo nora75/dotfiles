@@ -1,10 +1,13 @@
 set ls=2
 set statusline=%!MyStl()
 
+" functions {{{2
+" function of setting statusline value {{{3
+" number name variable is separator (colorscheme or alignment)
 func! MyStl() abort
     call s:col()
     let first = '%<%#StlLeft0# '
-    let cwd = s:cwd()
+    let cwd = StlCwd()
     let waf = ' | '.StlWafu().'  '
     let second = ' %#StlLeft1# %f '
     let mo = s:mod()
@@ -18,9 +21,21 @@ func! MyStl() abort
     return first.cwd.waf.second.mo.ro.third.forth.move.ff.fenc.ft
 endfunc
 
-func! s:cwd() abort
-    let cd = strcharpart(getcwd(),-1,2)
-    let cwd = matchstr(getcwd(),'[^\\]\+\\[^\\]\+$')
+" functino of cwd {{{3
+" return current dir
+" only up two directory
+" if base directory is different by current directory show where
+" if readlink is supported, return actually dir
+func! StlCwd() abort
+    let fcwd = getcwd()
+    if executable('readlink')
+        try
+            let fcwd = system('readlink',fcwd)
+        catch
+        endtry
+    endif
+    let cd = strcharpart(fcwd,-1,2)
+    let cwd = matchstr(fcwd,'[^\\]\+\\[^\\]\+$')
     let licwd = split(cwd, '\')
     let i = 0
     while i < len(licwd)
@@ -39,6 +54,7 @@ func! s:cwd() abort
     return cwd
 endfunc
 
+" declation of wafu {{{3
 let wafun = '(>ω<)'
 " let wafun = '(>ω<)           '
 let wafuw = '(>ω<)/ わふーっ！'
@@ -74,7 +90,8 @@ let s:wafuerr = [
 \ wafue ,
 \ wafue ,
 \ ]
-
+" function of wafu {{{3
+" return some variation of wafu
 function! StlWafu()
     let wafuenc = get(s:, "wafuenc", &encoding)
     if wafuenc != &encoding
@@ -99,6 +116,7 @@ function! StlWafu()
     endif
 endfunction
 
+" function of declation colorscheme {{{3
 func! s:col() abort
     hi StlLeft0 term=bold gui=bold ctermfg=22 ctermbg=148 guifg=#005f00 guibg=#afdf00
     hi StlLeft1 ctermfg=231 ctermbg=240 guifg=#ffffff guibg=#585858
@@ -106,6 +124,7 @@ func! s:col() abort
     hi StlRight1 term=bold gui=bold ctermfg=231 ctermbg=240 guifg=#ffffff guibg=#585858
 endfunc
 
+" function of modified {{{3
 func! s:mod() abort
     return (&mod)?'| + ':''
 endfunc
@@ -114,6 +133,7 @@ func! s:ro() abort
     return (&ro)?'| - ':''
 endfunc
 
+" function of fenc {{{3
 func! s:fenc() abort
     let en = substitute(toupper(&fenc!=''?&fenc:&enc),'\M-','','g')
     if en =~ 'UTF'
@@ -121,3 +141,13 @@ func! s:fenc() abort
     endif
     return '| '.en.' '
 endfunc
+
+" function to return erromsgs {{{3
+func! s:RetError() abort
+    return get(s:, 'lasterrormsg', '')
+endfunc
+
+" Commands {{{2
+" :ShowError {{{3
+" show last errors
+command! -nargs=0 ShowError echo s:RetError()

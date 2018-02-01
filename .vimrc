@@ -7,6 +7,10 @@ if has('vim_starting')
         " let &rtp += '~/.vim/'
         set runtimepath+=~/.vim/
     endif
+    if has('gui')
+        " don't load default menu
+        set guioptions& guioptions+=M
+    endif
 endif
 
 runtime! rcfiles/default/*.vim

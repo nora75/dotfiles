@@ -1,24 +1,21 @@
-if has('gui') " {{{2
-
-    " 起動時にフォークをしない
+if has('gui') " options for gvim {{2
+    " don't fork when start
     set guioptions+=f
-
-    " ツールバー非表示
+    " don't show tool bar
     set guioptions-=T
-    " メニューバー非表示
+    " don't show menu bar
     set guioptions-=m
-    " 左右スクロールバー非表示
+    " don't show any scroll bar
     set guioptions-=r
     set guioptions-=R
     set guioptions-=l
     set guioptions-=L
     set guioptions-=b
+    " don't show gui tab label
+    " set guioptions+=e
+    " set guitablabel=""
 
-    " guiのタブバー非表示
-    set guioptions+=e
-    set guitablabel=""
-
-    " カーソルが点滅しないようにする
+    " don't blink coursor
     set guicursor=a:blinkon0
     "  no mouse
     set mouse+=a
@@ -39,9 +36,6 @@ if has('gui') " {{{2
     catch
         colorscheme default
     endtry
-
-    " メニューの消去
-    " source $VIMRUNTIME/delmenu.vim
 
     if has('win32')
         " Windows用
