@@ -58,6 +58,7 @@ if neobundle#is_installed("lightline.vim")
     \ 'mymove': '(&ft=="markdown")&&(b:Markdown_AuToc)' ,
     \ 'myfname': 'v:true' ,
     \ 'myff' : '(&ft!="help")&&(&ft!="unite")' ,
+    \ 'filetype' : '(&ft!="")&&(&ft!="unite")' ,
     \ 'modified': '(expand("%:t:r")!=#"")&&(&modified||!&modifiable)' ,
     \ 'readonly': '&readonly' }
     " \ 'mycwd' : '' ,
@@ -67,12 +68,11 @@ if neobundle#is_installed("lightline.vim")
     " \ 'mymdtoc' : '' ,
     " \ 'mymove' : '' ,
     " \ 'myunite' : '' ,
-    " \ 'filetype' : '' ,
 
     " component function visible {{{3
     let g:lightline.component_function_visible_condition = {
     \ 'myfenc' : '(&ft!="help")&&(&ft!="unite")' ,
-    \ 'mycurfiledir' : '(getcwd()!=expand("%:p:h"))&&(&ft!="help")&&(&ft!="unite")'
+    \ 'mycurfiledir' : '(getcwd()!=expand("%:p:h"))||(expand("%:p:h")=="")&&(&ft!="help")&&(&ft!="unite")'
     \ }
 
     " separator and subseparator {{{3
@@ -85,37 +85,14 @@ if neobundle#is_installed("lightline.vim")
 
     " lightline functions {{{2
     " return current file dir {{{3
-    " only up two directory
-    " when different by current directory
-    " If base directory isn't C directory show whre
+    " only end two directory
+    " when current file dir is different by current directory
+    " if base directory isn't C directory show whre
     func! LightlineCurFileDir() abort
-        if (getcwd()==expand("%:p:h"))||(&ft=="help")||(&ft=="unite")
+        if (&ft=="unite")
             return ''
         endif
-        let cdr = strcharpart(expand('%:p:h'),-1,2)
-        let cfd = matchstr(expand('%:p:h'),'[^\\]\+\\[^\\]\+$')
-        if (strcharpart(getcwd(),-1,2)!=cdr) && (expand('%:p:h')!~'\M^'.cdr)
-            let cdr = cdr.':'.cfd
-        endif
-        let licwd = split(cdr, '\')
-        let i = 0
-        while i < len(licwd)
-            if len(licwd[i]) > 5
-                let licwd[i] = strcharpart(licwd[i],0,5)
-            endif
-            let i += 1
-        endwhile
-        let cwd = join(licwd, '\')
-        return cfd
-    endfunc
-    " return file encoding {{{3
-    " Upeer and is bomb or no bomb
-    func! LightlineFenc() abort
-        let en = substitute(toupper(&fenc!=''?&fenc:&enc),'\M-','','g')
-        if en =~ 'UTF'
-            let en .= &bomb ? 'B': 'N'
-        endif
-        return en
+        return StlCurFileDir()
     endfunc
 endif
 

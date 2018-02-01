@@ -2,12 +2,14 @@ set ls=2
 set statusline=%!MyStl()
 
 " functions {{{2
-" function of setting statusline value {{{3
+" MyStl() {{{3
+" function of setting statusline value
 " number name variable is separator (colorscheme or alignment)
 func! MyStl() abort
     call s:col()
     let first = '%<%#StlLeft0# '
     let cwd = StlCwd()
+    let cfd = StlCurFileDir()
     let waf = ' | '.StlWafu().'  '
     let second = ' %#StlLeft1# %f '
     let mo = s:mod()
@@ -18,18 +20,21 @@ func! MyStl() abort
     let ff = '%{(&ft!="help")?''| ''.toupper(strcharpart(&ff,-1,2)).'' '':""}'
     let fenc = s:fenc()
     let ft =  '%{"| ".&ft." "}'
-    return first.cwd.waf.second.mo.ro.third.forth.move.ff.fenc.ft
+    return first.cwd.cfd.waf.second.mo.ro.third.forth.move.ff.fenc.ft
 endfunc
 
-" functino of cwd {{{3
+" StlCwd() {{{3
+" functino of cwd
 " return current dir
-" only up two directory
+" only end two directory
 " if base directory is different by current directory show where
-" if readlink is supported, return actually dir
 func! StlCwd() abort
     let fcwd = getcwd()
     let cd = strcharpart(fcwd,-1,2)
     let cwd = matchstr(fcwd,'[^\\]\+\\[^\\]\+$')
+    if cwd == ''
+        let cwd = fcwd
+    endif
     let licwd = split(cwd, '\')
     let i = 0
     while i < len(licwd)
@@ -39,14 +44,42 @@ func! StlCwd() abort
         let i += 1
     endwhile
     let cwd = join(licwd, '\')
-    if cd !='C'
+    if (cd!='C')
         let cd .= ':'
     else
         let cd = ''
     endif
-    let cwd = cd.cwd
+    if cwd!~'^'.cd
+        let cwd = cd.cwd
+    endif
     return cwd
 endfunc
+
+" StlCurFileDir() {{{3
+" if current file dir isn't match current working directory return current
+" file directory
+func! StlCurFileDir() abort
+    let cwd = getcwd()
+    let cfd = expand('%:p:h')
+    if cwd==cfd
+        return ''
+    endif
+    let cdr = strcharpart(cfd,-1,2)
+    let cfd = matchstr(cfd,'[^\\]\+\\[^\\]\+$')
+    if (strcharpart(cwd,-1,2)!=cdr) && (cfd!~'\M^'.cdr)
+        let cdr = cdr.':'.cfd
+    endif
+    let licwd = split(cdr, '\')
+    let i = 0
+    while i < len(licwd)
+        if len(licwd[i]) > 5
+            let licwd[i] = strcharpart(licwd[i],0,5)
+        endif
+        let i += 1
+    endwhile
+    let cwd = join(licwd, '\')
+    return cwd
+endfun
 
 " declation of wafu {{{3
 let wafun = '(>ω<)'
@@ -84,7 +117,8 @@ let s:wafuerr = [
 \ wafue ,
 \ wafue ,
 \ ]
-" function of wafu {{{3
+" StlWafu() {{{3
+" function of wafu
 " return some variation of wafu
 function! StlWafu()
     let wafuenc = get(s:, "wafuenc", &encoding)
@@ -110,7 +144,8 @@ function! StlWafu()
     endif
 endfunction
 
-" function of declation colorscheme {{{3
+" s:col() {{{3
+" function of declation colorscheme
 func! s:col() abort
     hi StlLeft0 term=bold gui=bold ctermfg=22 ctermbg=148 guifg=#005f00 guibg=#afdf00
     hi StlLeft1 ctermfg=231 ctermbg=240 guifg=#ffffff guibg=#585858
@@ -118,7 +153,8 @@ func! s:col() abort
     hi StlRight1 term=bold gui=bold ctermfg=231 ctermbg=240 guifg=#ffffff guibg=#585858
 endfunc
 
-" function of modified {{{3
+" s:mod() {{{3
+" function of modified
 func! s:mod() abort
     return (&mod)?'| + ':''
 endfunc
@@ -127,7 +163,8 @@ func! s:ro() abort
     return (&ro)?'| - ':''
 endfunc
 
-" function of fenc {{{3
+" s:fenc() {{{3
+" function of fenc
 func! s:fenc() abort
     let en = substitute(toupper(&fenc!=''?&fenc:&enc),'\M-','','g')
     if en =~ 'UTF'
@@ -136,7 +173,8 @@ func! s:fenc() abort
     return '| '.en.' '
 endfunc
 
-" function to return erromsgs {{{3
+" s:RetError() {{{3
+" function to return erromsgs
 func! s:RetError() abort
     return get(s:, 'lasterrormsg', '')
 endfunc
