@@ -8,7 +8,7 @@ if neobundle#is_installed("lightline.vim")
 
     " active {{{3
     let g:lightline.active = { 'left' : [ [ 'mycwd' , 'mycurfiledir' , 'mywafu' ] ,
-    \ [ 'myfname', 'modified' , 'readonly' ] ],
+    \ [ 'myfname', 'modified' , 'readonly' ] ] ,
     \ 'right' : [ [ 'myff', 'myfenc', 'filetype' ] , [ 'myunite' ] , [ 'mymove' , 'mymdtoc' ] , [ 'mysearch' ] ] }
 
     " inactive {{{3
@@ -72,8 +72,7 @@ if neobundle#is_installed("lightline.vim")
     " component function visible {{{3
     let g:lightline.component_function_visible_condition = {
     \ 'myfenc' : '(&ft!="help")&&(&ft!="unite")' ,
-    \ 'mycurfiledir' : '(getcwd()!=expand("%:p:h"))||(expand("%:p:h")=="")&&(&ft!="help")&&(&ft!="unite")'
-    \ }
+    \ 'mycurfiledir' : '(getcwd()==expand("%:p:h"))||(expand("%:p:h")=="")&&(&ft!="help")&&(&ft!="unite")' }
 
     " separator and subseparator {{{3
     " let g:lightline.separator = { 'left': '', 'right': '' }
@@ -84,8 +83,8 @@ if neobundle#is_installed("lightline.vim")
     " \ &ft == 'unite' ? unite#get_status_string() :
 
     " lightline functions {{{2
-    " return current file dir {{{3
-    " only end two directory
+    " LightlineCurFileDir {{{3
+    " return current file dir only end two directory
     " when current file dir is different by current directory
     " if base directory isn't C directory show whre
     func! LightlineCurFileDir() abort
@@ -93,6 +92,14 @@ if neobundle#is_installed("lightline.vim")
             return ''
         endif
         return StlCurFileDir()
+    endfunc
+    " LightlineFenc() {{{3
+    " return file encoding Upeer and bomb?
+    func! LightlineFenc() abort
+        if (&ft=="unite")
+            return ''
+        endif
+        return StlFenc()
     endfunc
 endif
 

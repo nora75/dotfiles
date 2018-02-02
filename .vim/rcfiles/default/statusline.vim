@@ -18,7 +18,7 @@ func! MyStl() abort
     let forth = '%#StlRight0#'
     let move = '%{hasmapto("j")?" M ":""}'
     let ff = '%{(&ft!="help")?''| ''.toupper(strcharpart(&ff,-1,2)).'' '':""}'
-    let fenc = s:fenc()
+    let fenc = '| '.StlFenc().' '
     let ft =  '%{"| ".&ft." "}'
     return first.cwd.cfd.waf.second.mo.ro.third.forth.move.ff.fenc.ft
 endfunc
@@ -68,6 +68,8 @@ func! StlCurFileDir() abort
     let cfd = matchstr(cfd,'[^\\]\+\\[^\\]\+$')
     if (strcharpart(cwd,-1,2)!=cdr) && (cfd!~'\M^'.cdr)
         let cdr = cdr.':'.cfd
+    else
+        let cdr = ''
     endif
     let licwd = split(cdr, '\')
     let i = 0
@@ -163,14 +165,14 @@ func! s:ro() abort
     return (&ro)?'| - ':''
 endfunc
 
-" s:fenc() {{{3
+" StlFenc() {{{3
 " function of fenc
-func! s:fenc() abort
+func! StlFenc() abort
     let en = substitute(toupper(&fenc!=''?&fenc:&enc),'\M-','','g')
     if en =~ 'UTF'
         let en .= &bomb ? 'B': 'N'
     endif
-    return '| '.en.' '
+    return en
 endfunc
 
 " s:RetError() {{{3
