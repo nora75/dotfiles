@@ -61,17 +61,17 @@ endfunc
 func! StlCurFileDir() abort
     let cwd = getcwd()
     let cfd = expand('%:p:h')
-    if cwd==cfd
+    if (cwd==cfd)||(cfd=='')
         return ''
     endif
     let cdr = strcharpart(cfd,-1,2)
     let cfd = matchstr(cfd,'[^\\]\+\\[^\\]\+$')
     if (strcharpart(cwd,-1,2)!=cdr) && (cfd!~'\M^'.cdr)
-        let cdr = cdr.':'.cfd
+        let cdr = cdr.':'
     else
         let cdr = ''
     endif
-    let licwd = split(cdr, '\')
+    let licwd = split(cfd, '\')
     let i = 0
     while i < len(licwd)
         if len(licwd[i]) > 5
@@ -80,7 +80,7 @@ func! StlCurFileDir() abort
         let i += 1
     endwhile
     let cwd = join(licwd, '\')
-    return cwd
+    return cdr.cwd
 endfun
 
 " declation of wafu {{{3
