@@ -1,5 +1,9 @@
 " main {{{1
 " normal {{{2
+set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,sjis
+set fileencoding=utf-8
+set fileformats=unix,dos,mac
 set ruler
 set number
 set cmdheight=2
@@ -8,14 +12,11 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 set autoindent
-set encoding=utf-8
-set fileencodings=ucs-bom,utf-8,sjis
-set fileencoding=utf-8
-set fileformats=unix,dos,mac
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
+set showmatch
 set autoindent
 set smartindent
 set whichwrap=b,s,h,l
@@ -43,7 +44,7 @@ set autoread
 set equalalways
 " save command history more (default:50)
 set history=100
-" \を前の行と同じインデントにする
+" auto adjust indent before line when use \ in script
 let g:vim_indent_cont=0
 
 " else {{{2
@@ -59,16 +60,16 @@ if has('persistent_undo')
     set undofile
 endif
 
-" 日本語入力に関する設定:
+" Setting for using Japanese
 "
 if has('multi_byte_ime') || has('xim')
-    " IME ON時のカーソルの色を設定(設定例:紫)
+    " change cursor color when IME is enabled
     highlight CursorIM guibg=Purple guifg=NONE
-    " 挿入モード・検索モードでのデフォルトのIME状態設定
+    " set default IME status in insert/serch mode
     set iminsert=0 imsearch=0
     " if has('xim') && has('GUI_GTK')
-    " XIMの入力開始キーを設定:
-    " 下記の s-space はShift+Spaceの意味でkinput2+canna用設定
+    " set key to start input in XIM
+    " setting for kinput2+canna
     "set imactivatekey=s-space
     " endif
 endif

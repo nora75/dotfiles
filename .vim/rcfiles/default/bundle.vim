@@ -1,15 +1,11 @@
 " neobundle initialize {{{2
-if exists("g:NeobundleInstalled")
-    finish
-endif
-
-let g:NeobundleInstalled = 1
-
 filetype off
 
 if has('vim_starting')
-    if &runtimepath !~# '\neobundle.vim'
-        set runtimepath+=~\.vim\bundle\neobundle.vim
+    if &runtimepath !~# '/neobundle.vim'
+        set runtimepath+=~/.vim/bundle/neobundle.vim
+    else
+        finish
     endif
 endif
 
@@ -33,7 +29,6 @@ NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'junegunn/vim-easy-align'
 " NeoBundle 'powerline/powerline', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'itchyny/lightline.vim'
-" NeoBundle 'tyru/eskk.vim'
 
 " highlight {{{3
 NeoBundle 't9md/vim-quickhl'
@@ -85,14 +80,14 @@ NeoBundle 'nora75/MarkdownTable'
 
 " colorscheme {{{3
 NeoBundle 'vim-scripts/twilight'
-" 大杉
+" too many colorschemes
 NeoBundle 'flazz/vim-colorschemes'
 
 NeoBundleCheck
 
 call neobundle#end()
 
-" 必須 {{{2
+" must {{{2
 filetype plugin indent on
 filetype detect
 

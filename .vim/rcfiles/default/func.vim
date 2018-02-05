@@ -1,4 +1,5 @@
-" ノーマルコマンドの実行後カーソル位置の復元 {{{2
+" DoNormal(com) {{{2
+" do normal command and restore window view and last search
 fu! DoNormal(com)
     let l:save_search = @/
     let l:save_win = winsaveview()
@@ -7,8 +8,9 @@ fu! DoNormal(com)
     call winrestview(l:save_win)
 endfunction
 
-" move mode switch over buffer {{{2
-" unmapでエラーが起きるのを利用
+" SwitchMoces() {{{2
+" move mode switch over buffer
+" use error occuer when don't map yet
 fu! SwitchMoves()
     try
         nunmap j
@@ -131,7 +133,7 @@ func! Cdcomp(...)
     return split(substitute(substitute(glob('%:p:h'.'**'),'\M'.substitute(expand('%:p:h'),'\\','\\\\','g'),'','g'),'\\','','g'), '\n')
 endfunc
 
-" その他 {{{2
+" misc {{{2
 " move mode switch only current buffer with augroup {{{3
 " augroup SwitchMoves
 "     au!

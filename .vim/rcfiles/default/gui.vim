@@ -20,7 +20,7 @@ if has('gui') " options for gvim {{2
     "  no mouse
     set mouse+=a
 
-    " 最大化での起動
+    " Maximize when starting gui vim
     augroup gui
         au!
         au GUIEnter * simalt ~x
@@ -28,7 +28,7 @@ if has('gui') " options for gvim {{2
 
     syntax enable
     set background=dark
-    " if とかにしてもいいかも
+    " may change if statement
     try
         " colorscheme wombat256mod
         colorscheme iceberg
@@ -38,24 +38,24 @@ if has('gui') " options for gvim {{2
     endtry
 
     if has('win32')
-        " Windows用
+        " for windows
         set guifont=MS_Gothic:h12:cSHIFTJIS
         "set guifont=MS_Mincho:h12:cSHIFTJIS
-        " 行間隔の設定
+        " set line space
         set linespace=1
-        " 一部のUCS文字の幅を自動計測して決める
+        " Automatically measure the width of some UCS characters and decide
         if has('kaoriya')
             set ambiwidth=auto
         endif
     elseif has('xfontset')
-        " UNIX用 (xfontsetを使用)
+        " for unix
         set guifontset=a14,r14,k14
     endif
 
     function! GuiTabLabel() " guitablabel setting func {{{3
         let label = ''
         let bufnrlist = tabpagebuflist(v:lnum)
-        " このタブページに変更のあるバッファがるときには '+' を追加する
+        " add '+' when modified
         for bufnr in bufnrlist
             if getbufvar(bufnr, "&modified")
                 let label = '+'
@@ -63,7 +63,7 @@ if has('gui') " options for gvim {{2
             endif
         endfor
 
-        " ウィンドウが複数あるときにはその数を追加する
+        " add number of windows when open multiple windows
         let wincount = tabpagewinnr(v:lnum, '$')
         if wincount > 1
             let label .= wincount
@@ -72,7 +72,7 @@ if has('gui') " options for gvim {{2
             let label .= ' '
         endif
 
-        " バッファ名を追加する
+        " add bufer name
         return label . 
         \substitute(bufname(bufnrlist[tabpagewinnr(v:lnum) - 1]),'^.*\\', '', '')
     endfunction
@@ -112,7 +112,7 @@ else " {{{2
     let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
     " }}}
 endif
-" タブページ自体を左右に移動させる
+" move tabpage command
 " command! -bar TabMoveNext :execute "tabmove " tabpagenr() % tabpagenr("$") + (tabpagenr("$") == tabpagenr() ? 0 : 1)
 " command! -bar TabMovePrev :execute "tabmove" (tabpagenr() + tabpagenr("$") - 2) % tabpagenr("$") + (tabpagenr() == 1 ? 1 : 0)
 

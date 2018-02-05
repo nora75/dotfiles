@@ -1,5 +1,5 @@
 " Tab jump {{{2
-" t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
+" t1: jump to first(1) tabpage,t2: jump to second(2) tabpage...
 for n in range(1, 9)
     execute 'nnoremap <silent> [TabG]'.n  ':<C-u>tabnext'.n.'<CR>'
 endfor
