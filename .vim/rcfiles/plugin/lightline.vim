@@ -72,6 +72,7 @@ if neobundle#is_installed("lightline.vim")
     " component function visible {{{3
     let g:lightline.component_function_visible_condition = {
     \ 'myfenc' : '(&ft!="help")&&(&ft!="unite")' ,
+    \ 'mywafu': 'v:true' ,
     \ 'mycurfiledir' : '(getcwd()!=expand("%:p:h"))&&(expand("%:p:h")!="")&&(&ft!="help")&&(&ft!="unite")' }
 
     " separator and subseparator {{{3

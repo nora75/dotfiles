@@ -14,13 +14,13 @@ func! MyStl() abort
     let second = ' %#StlLeft1# %f '
     let mo = s:mod()
     let ro = s:ro()
-    let third = '%#None#%='
+    let third = '%='
     let forth = '%#StlRight0#'
     let move = '%{hasmapto("j")?" M ":""}'
     let ff = '%{(&ft!="help")?''| ''.toupper(strcharpart(&ff,-1,2)).'' '':""}'
-    let fenc = '| '.StlFenc().' '
+    let fenc = ' '.StlFenc().' '
     let ft =  '%{"| ".&ft." "}'
-    return first.cwd.cfd.waf.second.mo.ro.third.forth.move.ff.fenc.ft
+    return first.cwd.cfd.waf.second.mo.ro.third.move.ff.forth.fenc.ft
 endfunc
 
 " StlCwd() {{{3
