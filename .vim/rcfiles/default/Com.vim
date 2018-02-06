@@ -2,10 +2,6 @@
 "  Change current directory to current file's one
 command! -nargs=0 CdCurrent cd %:p:h
 
-" :Cde {{{2
-" edit file in current directory with don't move current directory
-command! -nargs=1 -complete=customlist,Cdcomp Cde e %:p:h\<args>
-
 " :CheckCom {{{2
 " Get command content by input command name
 command! -nargs=1 -complete=command CheckCom echo GetCom(<f-args>)
@@ -52,9 +48,3 @@ command! -nargs=0 Memot call NewTabScratch()
 " open new buffer for memo
 command! -nargs=0 Memoo call NewBufScratch()
 
-" :Cde {{{2
-" Change current directory to current file's one and edit file in this
-"  directory.
-" command! -nargs=1 -complete=customlist,Cdcomp Cde cd %:p:h | e <args>
-
-" vim: set fdm=marker fdl=1 fmr={{{,}}} :

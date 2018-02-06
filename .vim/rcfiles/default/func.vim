@@ -128,11 +128,6 @@ endfunc
 "     call winrestview(l:save_win)
 " endfunc
 
-" :Cde completion {{{2
-func! Cdcomp(...)
-    return split(substitute(substitute(glob('%:p:h'.'**'),'\M'.substitute(expand('%:p:h'),'\\','\\\\','g'),'','g'),'\\','','g'), '\n')
-endfunc
-
 " misc {{{2
 " move mode switch only current buffer with augroup {{{3
 " augroup SwitchMoves

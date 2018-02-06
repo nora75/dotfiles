@@ -33,8 +33,9 @@ endfunc
 " au groups {{{1
 aug Myau " {{{2
     au!
-    " when closed help file make all windows the same height & width
+    " when closed help file make all windows the same height & width {{{3
     au FileType help au BufWinLeave exe 'normal! \<C-w>='
+    " read pdf {{{3
     if executable('pdftotext')
         silent call s:Pdftxt('pdftotext -nopgbrk -layout -enc UTF-8 -eol unix -q')
     elseif executable('mutool')
