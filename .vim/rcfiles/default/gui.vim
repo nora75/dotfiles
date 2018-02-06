@@ -28,7 +28,7 @@ if has('gui') " options for gvim {{2
 
     syntax enable
     set background=dark
-    " may change if statement
+    " change to if statement
     try
         " colorscheme wombat256mod
         colorscheme iceberg
@@ -81,7 +81,6 @@ if has('gui') " options for gvim {{2
 
 else " {{{2
 
-    set showtabline=2
     syntax on
     set background=dark
 
@@ -113,7 +112,7 @@ else " {{{2
     " }}}
 endif
 " move tabpage command
-" command! -bar TabMoveNext :execute "tabmove " tabpagenr() % tabpagenr("$") + (tabpagenr("$") == tabpagenr() ? 0 : 1)
-" command! -bar TabMovePrev :execute "tabmove" (tabpagenr() + tabpagenr("$") - 2) % tabpagenr("$") + (tabpagenr() == 1 ? 1 : 0)
+" command! -bar TabMoveNext :execute 'tabmove ' tabpagenr() % tabpagenr('$') + (tabpagenr('$') == tabpagenr() ? 0 : 1)
+" command! -bar TabMovePrev :execute 'tabmove' (tabpagenr() + tabpagenr('$') - 2) % tabpagenr('$') + (tabpagenr() == 1 ? 1 : 0)
 
 " vim: set fdm=marker fmr={{{,}}} fdl=1 :

@@ -1,24 +1,25 @@
 " main {{{1
 " normal {{{2
+set ruler
+set number
+set showmatch
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,sjis
 set fileencoding=utf-8
 set fileformats=unix,dos,mac
-set ruler
-set number
 set cmdheight=2
+set more
+set wildmenu
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
 set autoindent
+set smartindent
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
-set showmatch
-set autoindent
-set smartindent
 set whichwrap=b,s,h,l
 if has("unnamedplus")
     set clipboard+=unnamed,unnamedplus
@@ -30,7 +31,6 @@ set linebreak
 set backup
 set writebackup
 set backupdir=$VIM/backup
-set wildmenu
 set modeline
 set showtabline=2
 set fdm=marker
@@ -48,12 +48,6 @@ set history=100
 let g:vim_indent_cont=0
 
 " else {{{2
-
-" backup by name
-" augroup backup
-"     au!
-"     autocmd BufWritePre * let &bex = '.' . strftime("%Y%m%d")
-" augroup END
 
 if has('persistent_undo')
     set undodir=$VIM/undo
