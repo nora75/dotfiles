@@ -3,7 +3,9 @@
 set ruler
 set number
 set showmatch
-set encoding=utf-8
+if &enc!='utf-8'
+    set enc=utf-8
+endif
 set fileencodings=ucs-bom,utf-8,sjis
 set fileencoding=utf-8
 set fileformats=unix,dos,mac
