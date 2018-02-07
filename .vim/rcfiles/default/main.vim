@@ -37,7 +37,6 @@ set modeline
 set showtabline=2
 set fdm=marker
 " set foldmarker={{{,}}}
-set title
 " movement over line wrap in this char
 set whichwrap=b,s,h,l
 " when change on out of Vim auto reload
