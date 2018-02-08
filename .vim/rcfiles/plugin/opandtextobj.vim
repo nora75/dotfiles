@@ -1,25 +1,25 @@
 " vim-operator-replace {{{2
-if neobundle#is_installed("vim-operator-replace")
+if neobundle#is_installed('vim-operator-replace')
     nmap _  <Plug>(operator-replace)
     vmap _  <Plug>(operator-replace)
-    if hasmapto("<C-p>")
+    if hasmapto('<C-p>')
         nunmap <C-p>
         vunmap <C-p>
     endif
-    if hasmapto("<C-S-p>")
+    if hasmapto('<C-S-p>')
         nunmap <C-S-p>
         vunmap <C-S-p>
     endif
 endif
 " vim-operator-stay-cursor {{{2
-if neobundle#is_installed("vim-operator-stay-cursor")
+if neobundle#is_installed('vim-operator-stay-cursor')
     map y <Plug>(operator-stay-cursor-yank)
     map gu <Plug>(operator-stay-cursor-gu)
     map gU <Plug>(operator-stay-cursor-gU)
     map g~ <Plug>(operator-stay-cursor-g~)
 endif
 " textobj-wiw {{{2
-if neobundle#is_installed("textobj-wiw")
+if neobundle#is_installed('textobj-wiw')
     " nmap ,w  <Plug>(textobj-wiw-n)
     " nmap ,b  <Plug>(textobj-wiw-p)
     " nmap ,e  <Plug>(textobj-wiw-N)

@@ -76,7 +76,7 @@ NeoBundle 'kannokanno/previm', {
 \ }
 " NeoBundle 'alvan/vim-closetag'
 " NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'nora75/MarkdownTable'
+" NeoBundle 'nora75/MarkdownTable'
 
 " colorscheme {{{3
 NeoBundle 'vim-scripts/twilight'

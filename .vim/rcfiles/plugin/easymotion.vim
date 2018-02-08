@@ -1,4 +1,4 @@
-if neobundle#is_installed("vim-easymotion")
+if neobundle#is_installed('vim-easymotion')
     " dont use now
     let g:EasyMotion_do_mapping = 0
     let g:EasyMotion_smartcase = 1

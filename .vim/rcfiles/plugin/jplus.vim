@@ -1,4 +1,4 @@
-if neobundle#is_installed("vim-jplus")
+if neobundle#is_installed('vim-jplus')
     nmap J <Plug>(jplus-input)<CR>
     vmap J <Plug>(jplus-input)<CR>
     nmap gJ <Plug>(jplus-input)

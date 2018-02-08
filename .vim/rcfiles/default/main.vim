@@ -3,7 +3,7 @@
 set ruler
 set number
 set showmatch
-if &enc!='utf-8'
+if &enc !=# 'utf-8'
     set enc=utf-8
 endif
 set fileencodings=ucs-bom,utf-8,sjis
@@ -23,7 +23,7 @@ set incsearch
 set ignorecase
 set smartcase
 set whichwrap=b,s,h,l
-if has("unnamedplus")
+if has('unnamedplus')
     set clipboard+=unnamed,unnamedplus
 else
     set clipboard+=unnamed

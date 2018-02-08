@@ -34,7 +34,7 @@ func! StlCwd() abort
     let fcwd = getcwd()
     let cd = strcharpart(fcwd,-1,2)
     let cwd = matchstr(fcwd,'[^\\]\+\\[^\\]\+$')
-    if cwd == ''
+    if cwd ==# ''
         let cwd = fcwd
     endif
     let licwd = split(cwd, '\')
@@ -46,8 +46,9 @@ func! StlCwd() abort
         let i += 1
     endwhile
     let cwd = join(licwd, '\')
-    if (cd!='C')
+    if (cd!=?'c')
         let cd .= ':'
+        let cd = toupper(cd)
     else
         let cd = ''
     endif
@@ -63,7 +64,7 @@ endfunc
 func! StlCurFileDir() abort
     let cwd = getcwd()
     let cfd = expand('%:p:h')
-    if (cwd==cfd)||(cfd=='')
+    if (cwd==?cfd)||(cfd==#'')
         return ''
     endif
     let cdr = strcharpart(cfd,-1,2)
@@ -89,7 +90,8 @@ endfun
 let wafun = '(>ω<)'
 " let wafun = '(>ω<)           '
 let wafuw = '(>ω<)/ わふーっ！'
-let wafue = '(>ω<) わふーっ! しすてむ・えらーですーっ!'
+let wafuel = '(>ω<) わふーっ! しすてむ・えらーですーっ!'
+let wafues = '(>ω<) えらーですーっ!'
 " let wafun = '(>ω<)                                   '
 " let wafuw = '(>ω<)/わふーっ！                        '
 " let wafue = '(>ω<)わふーっ! しすてむ・えらーですーっ!'
@@ -107,31 +109,45 @@ let s:wafustr = [
 \ wafuw ,
 \ wafuw ,
 \ ]
-let s:wafuerr = [ 
+let s:wafuerrlong = [ 
 \ wafun ,
 \ wafun ,
 \ wafun ,
 \ wafun ,
 \ wafun ,
 \ wafun ,
-\ wafue ,
-\ wafue ,
-\ wafue ,
-\ wafue ,
-\ wafue ,
-\ wafue ,
+\ wafuel ,
+\ wafuel ,
+\ wafuel ,
+\ wafuel ,
+\ wafuel ,
+\ wafuel ,
+\ ]
+let s:wafuerrshort = [ 
+\ wafun ,
+\ wafun ,
+\ wafun ,
+\ wafun ,
+\ wafun ,
+\ wafun ,
+\ wafues ,
+\ wafues ,
+\ wafues ,
+\ wafues ,
+\ wafues ,
+\ wafues ,
 \ ]
 " StlWafu() {{{3
 " function of wafu
 " return some variation of wafu
 function! StlWafu()
-    let wafuenc = get(s:, "wafuenc", &encoding)
+    let wafuenc = get(s:, 'wafuenc', &encoding)
     if wafuenc != &encoding
         let s:wafustr = map(s:wafustr, 'iconv(v:val,s:wafuenc,&encoding)')
-        let s:wafuerr = map(s:wafuerr, 'iconv(v:val,s:wafuenc,&encoding)')
+        let s:wafuerrlong = map(s:wafuerrlong, 'iconv(v:val,s:wafuenc,&encoding)')
     endif
     let s:wafuenc = &encoding
-    let wafupos = get(w:, "wafupos", -1) + 1
+    let wafupos = get(w:, 'wafupos', -1) + 1
     if len(v:errmsg) && wafupos >= 0
         let wafupos = -24
         let s:lasterrormsg = v:errmsg
@@ -144,7 +160,11 @@ function! StlWafu()
     if wafupos >= 0
         return s:wafustr[wafupos]
     else
-        return s:wafuerr[(wafupos+24) % len(s:wafuerr)].' '.matchstr(get(s:, 'lasterrormsg', ''),'^E\d\+')
+        if winwidth('') >= 100
+            return s:wafuerrlong[(wafupos+24) % len(s:wafuerrlong)].' '.matchstr(get(s:, 'lasterrormsg', ''),'^E\d\+')
+        else
+            return s:wafuerrshort[(wafupos+24) % len(s:wafuerrshort)].' '.matchstr(get(s:, 'lasterrormsg', ''),'^E\d\+')
+        endif
     endif
 endfunction
 
@@ -171,7 +191,7 @@ endfunc
 " function of fenc
 func! StlFenc() abort
     let en = substitute(toupper(&fenc!=''?&fenc:&enc),'\M-','','g')
-    if en =~ 'UTF'
+    if en =~? 'utf'
         let en .= &bomb ? 'B': 'N'
     endif
     return en

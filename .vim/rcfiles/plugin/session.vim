@@ -1,4 +1,4 @@
-if neobundle#is_installed("vim-session")
+if neobundle#is_installed('vim-session')
     " vim default session's options
     " only save loaded buffers
     set sessionoptions-=buffers

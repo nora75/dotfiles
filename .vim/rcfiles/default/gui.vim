@@ -13,7 +13,7 @@ if has('gui') " options for gvim {{2
     set guioptions-=b
     " don't show gui tab label
     " set guioptions+=e
-    " set guitablabel=""
+    " set guitablabel=''
 
     " don't blink coursor
     set guicursor=a:blinkon0
@@ -57,7 +57,7 @@ if has('gui') " options for gvim {{2
         let bufnrlist = tabpagebuflist(v:lnum)
         " add '+' when modified
         for bufnr in bufnrlist
-            if getbufvar(bufnr, "&modified")
+            if getbufvar(bufnr, '&modified')
                 let label = '+'
                 break
             endif
@@ -68,7 +68,7 @@ if has('gui') " options for gvim {{2
         if wincount > 1
             let label .= wincount
         endif
-        if label != ''
+        if label !=#''
             let label .= ' '
         endif
 

@@ -1,4 +1,4 @@
-if neobundle#is_installed("lightline.vim")
+if neobundle#is_installed('lightline.vim')
     " options {{{2
     set laststatus=2
     let g:unite_force_overwrite_statusline = 0
@@ -31,18 +31,18 @@ if neobundle#is_installed("lightline.vim")
 
     " component {{{3
     let g:lightline.component = {
-    \ 'modified': '%M',
+    \ 'modified': '%{(&ft!=#"unite")&&(&ft!=#"help")&&(&mod)?"-":""}',
     \ 'bufnum': '%n',
-    \ 'readonly': '%R',
-    \ 'filetype': '%{(&ft!="unite")?&ft:""}',
+    \ 'readonly': '%{(&ft!=#"unite")&&(&ft!=#"help")&&(&ro)?"RO":""}',
+    \ 'filetype': '%{(&ft!=#"unite")?&ft:""}',
     \ 'percent': '%3p%%',
     \ 'lineinfo': '%3l:%-2v',
     \ 'close': '%999X X ',
-    \ 'myff' : '%{(&ft!="help")&&(&ft!="unite")?toupper(strcharpart(&ff,-1,2)):""}' ,
+    \ 'myff' : '%{(&ft!=#"help")&&(&ft!=#"unite")?toupper(strcharpart(&ff,-1,2)):""}' ,
     \ 'myfname' : '%{expand("%:t")!~"unite"?expand("%:t"):strpart(unite#get_status_string(),0,stridx(unite#get_status_string()," "))}' ,
     \ 'mysearch' : '%{strcharpart(@/,0,5)}' ,
-    \ 'mymdtoc' : '%{(&ft=="markdown")&&(b:Markdown_AuToc)?"T":""}' ,
-    \ 'mymove' : '%{hasmapto("j")&&(&ft!="unite")?"M":""}' }
+    \ 'mymdtoc' : '%{(&ft==#"markdown")&&(b:Markdown_AuToc)?"T":""}' ,
+    \ 'mymove' : '%{hasmapto("j")&&(&ft!=#"unite")?"M":""}' }
 
     if neobundle#is_installed('unite.vim')
         call extend(g:lightline.component,{'myunite' : '%{(&ft!="unite")?matchstr(unite#get_status_string(),"\M|\.\+$"):""}'})
@@ -60,10 +60,10 @@ if neobundle#is_installed("lightline.vim")
     let g:lightline.component_visible_condition = {
     \ 'mymove': '(&ft=="markdown")&&(b:Markdown_AuToc)' ,
     \ 'myfname': 'v:true' ,
-    \ 'myff' : '(&ft!="help")&&(&ft!="unite")' ,
-    \ 'filetype' : '(&ft!="")&&(&ft!="unite")' ,
-    \ 'modified': '(expand("%:t:r")!=#"")&&(&modified||!&modifiable)' ,
-    \ 'readonly': '&readonly' }
+    \ 'myff' : '(&ft!=#"help")&&(&ft!=#"unite")' ,
+    \ 'filetype' : '(&ft!=#"")&&(&ft!=#"unite")' ,
+    \ 'modified': '(expand("%:t:r")!=#"")&&(&modified||!&modifiable)&&(&ft!="unite")&&(&ft!=?"help")' ,
+    \ 'readonly': '(&readonly)&&(&ft!="unite")&&(&ft!=?"help")' }
     " \ 'mycwd' : '' ,
     " \ 'mycurfiledir' : '' ,
     " \ 'myfname' : '' ,
@@ -74,9 +74,8 @@ if neobundle#is_installed("lightline.vim")
 
     " component function visible {{{3
     let g:lightline.component_function_visible_condition = {
-    \ 'myfenc' : '(&ft!="help")&&(&ft!="unite")' ,
-    \ 'mywafu': 'v:true' ,
-    \ 'mycurfiledir' : '(getcwd()!=expand("%:p:h"))&&(expand("%:p:h")!="")&&(&ft!="help")&&(&ft!="unite")' }
+    \ 'myfenc' : '(&ft!=#"unite")' ,
+    \ 'mycurfiledir' : '(getcwd()!=?expand("%:p:h"))&&(expand("%:p:h")!=#"")&&(&ft!=#"unite")' }
 
     " separator and subseparator {{{3
     " let g:lightline.separator = { 'left': '', 'right': '' }
@@ -92,7 +91,7 @@ if neobundle#is_installed("lightline.vim")
     " when current file dir is different by current directory
     " if base directory isn't C directory show whre
     func! LightlineCurFileDir() abort
-        if (&ft=="unite")
+        if (&ft==#"unite")
             return ''
         endif
         return StlCurFileDir()
@@ -100,7 +99,7 @@ if neobundle#is_installed("lightline.vim")
     " LightlineFenc() {{{3
     " return file encoding Upeer and bomb?
     func! LightlineFenc() abort
-        if (&ft=="unite")
+        if (&ft==#'unite')
             return ''
         endif
         return StlFenc()

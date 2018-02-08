@@ -1,4 +1,4 @@
-if neobundle#is_installed("vim-easy-align")
+if neobundle#is_installed('vim-easy-align')
     " not live
     " nmap ga <Plug>(EasyAlign)
     " xmap ga <Plug>(EasyAlign)

@@ -1,12 +1,11 @@
-if neobundle#is_installed("nerdtree")
+if neobundle#is_installed('nerdtree')
+    scriptencoding utf-8
         let g:NERDTreeDirArrowExpandable = '▸'
         let g:NERDTreeDirArrowCollapsible = '▾'
         let g:NERDTreeShowBookmarks = 1
-
         " map {{{2
         nnoremap [nerd] <Nop>
         nmap <Space>f [nerd]
-
         nnoremap <silent>[nerd]t :<C-u>NERDTreeToggle<CR>
         nnoremap <silent>[nerd]f :<C-u>NERDTreeFocus<CR>
         nnoremap <silent>[nerd]j :<C-u>NERDTreeCWD<CR>

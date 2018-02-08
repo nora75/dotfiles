@@ -3,7 +3,7 @@
 " Last Changes: 2018 FEB 6
 
 if has('vim_starting')
-    if &rtp !~ expand("~/.vim/") && &rtp !~ '\~/\.vim/'
+    if &rtp !~ expand('~/.vim/') && &rtp !~? '\~/\.vim/'
         " let &rtp += '~/.vim/'
         set runtimepath+=~/.vim/
     endif

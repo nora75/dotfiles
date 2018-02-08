@@ -3,7 +3,7 @@
 fu! DoNormal(com)
     let l:save_search = @/
     let l:save_win = winsaveview()
-    execute "normal "a:com
+    execute 'normal 'a:com
     let @/ = l:save_search
     call winrestview(l:save_win)
 endfunction
@@ -37,7 +37,7 @@ endfunc
 " if clipboard is file name return it. not file name return empty
 func! Effc()
     let ret = getreg('*')
-    if type(ret)!=1||getftype(ret)!='file'
+    if type(ret)!=1||getftype(ret)!=#'file'
         let ret = ''
     endif
     return ret
@@ -56,7 +56,7 @@ func! WinDo(...) abort
     endfor
     exe 'silent! windo '.do
     redraw!
-    if do=~'\Mnorm\[^z]\*z\[^hjkl]'|unlet save_win|exe 'windo unlet b:reload_save_fold'|endif
+    if do=~#'\Mnorm\[^z]\*z\[^hjkl]'|unlet save_win|exe 'windo unlet b:reload_save_fold'|endif
     windo if exists("b:reload_save_fold")|let &fdl = b:reload_save_fold|unlet b:reload_save_fold|endif
 call win_gotoid(cuwinid)
 let @/ = save_search
@@ -96,6 +96,7 @@ endfunc
 " function for :GetCom {{{2
 " get command content and return
 " if setted command is not declared, return error message
+" it is fast but not correct
 func! GetCom(com) abort
     if exists(':'.a:com)!=2
         return 'No such a command'
@@ -113,7 +114,7 @@ func! GetCom(com) abort
     "     endif
     " endwhile
     let i = stridx(result,a:com)
-    let i = stridx(result,"  ",i)
+    let i = stridx(result,'  ',i)
     let result = strcharpart(result,i,len(result)-i+1)
     " let result = matchstr(result,'\M\S\.\+$')
     return result

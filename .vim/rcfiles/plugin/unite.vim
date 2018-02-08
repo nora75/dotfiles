@@ -1,4 +1,4 @@
-if neobundle#is_installed("unite.vim")
+if neobundle#is_installed('unite.vim')
     " unite general settings {{{2
     " start with insert mode
     let g:unite_enable_start_insert = 1

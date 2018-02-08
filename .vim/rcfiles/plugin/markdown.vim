@@ -1,4 +1,4 @@
-if neobundle#is_installed("vim-markdown")
+if neobundle#is_installed('vim-markdown')
     " markdown option
     " let g:vim_markdown_folding_disabled = 1
     let g:vim_markdown_toc_autofit = 1
@@ -6,13 +6,13 @@ if neobundle#is_installed("vim-markdown")
     augroup markdown " {{{2
         au!
 
-        " markdownの時にキーバインドを
+        " mapping when markdown file
         autocmd FileType markdown call Markd()
 
-        " OpenBrowser <Space>oでプレビュー
+        " preview by OpenBrowser
         autocmd FileType html nnoremap <buffer> <Space>p :execute "OpenBrowser" expand("%:p")<CR>
 
-        " 自動でTocを閉じる
+        " auto close Toc when buffer leaving
         " au BufWinLeave *.md,*.mdown,*.markdown 
     augroup END
 
@@ -34,12 +34,18 @@ if neobundle#is_installed("vim-markdown")
         let b:Markdown_AuToc = 0
     endfunc
     func! MarkToc() " TocToggle {{{ 2
-        " markdownの時に保存時自動でToc
+        " auto do Toc command when bufwritepost in markdown file
         if (b:Markdown_AuToc)
-            au! BufWritePost <buffer>
+            aug Toc
+                au!
+                au! BufWritePost <buffer>
+            aug END
             let b:Markdown_AuToc = 0
         else
-            au BufWritePost <buffer> silent! Toc
+            aug Toc
+                au!
+                au BufWritePost <buffer> silent! Toc
+            aug END
             let b:Markdown_AuToc = 1
         endif
     endfunc

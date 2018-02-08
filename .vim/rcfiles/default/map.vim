@@ -65,7 +65,7 @@ vnoremap     <F5>               :<C-u>e!<CR>
 nnoremap <F12>              :<C-u>tabe $MYVIMRC<CR>
 vnoremap <F12>              :<C-u>tabe $MYVIMRC<CR>
 
-" helpファイル {{{3
+" help file {{{3
 augroup  helpf
     au!
     au Filetype help nnoremap <buffer> q<Space>       <C-w>c

@@ -1,4 +1,4 @@
-if neobundle#is_installed("quick-run")
+if neobundle#is_installed('quick-run')
     "" dont use now
     "" quickrun
     "" disable default map

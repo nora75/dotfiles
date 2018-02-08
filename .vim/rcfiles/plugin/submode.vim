@@ -1,4 +1,4 @@
-if neobundle#is_installed("vim-submode")
+if neobundle#is_installed('vim-submode')
     " options {{{2
     let g:submode_always_show_submode = 1
     let g:submode_keep_leaving_key = 1
