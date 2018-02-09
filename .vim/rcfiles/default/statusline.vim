@@ -207,3 +207,4 @@ endfunc
 " :ShowError {{{3
 " show last errors
 command! -nargs=0 ShowError echo s:RetError()
+command! -nargs=0 GoError echo help matchstr(s:RetError(),'\ME\d\+')
