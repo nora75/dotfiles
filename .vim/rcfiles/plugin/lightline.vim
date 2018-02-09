@@ -31,7 +31,7 @@ if neobundle#is_installed('lightline.vim')
 
     " component {{{3
     let g:lightline.component = {
-    \ 'modified': '%{(&ft!=#"unite")&&(&ft!=#"help")&&(&mod)?"-":""}',
+    \ 'modified': '%{(&ft!=#"unite")&&(&ft!=#"help")&&(&mod)?"+":""}',
     \ 'bufnum': '%n',
     \ 'readonly': '%{(&ft!=#"unite")&&(&ft!=#"help")&&(&ro)?"RO":""}',
     \ 'filetype': '%{(&ft!=#"unite")?&ft:""}',
