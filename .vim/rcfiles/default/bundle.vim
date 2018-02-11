@@ -74,9 +74,9 @@ NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'kannokanno/previm', {
 \ 'depends' :  'tyru/open-browser.vim',
 \ }
-" NeoBundle 'alvan/vim-closetag'
+NeoBundle 'alvan/vim-closetag'
 " NeoBundle 'thinca/vim-quickrun'
-" NeoBundle 'nora75/MarkdownTable'
+NeoBundle 'nora75/markdowntable'
 
 " colorscheme {{{3
 NeoBundle 'vim-scripts/twilight'
@@ -87,7 +87,7 @@ NeoBundleCheck
 
 call neobundle#end()
 
-" must {{{2
+" end {{{2
 filetype plugin indent on
 filetype detect
 

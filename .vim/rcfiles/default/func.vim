@@ -1,3 +1,4 @@
+" Use {{{1
 " DoNormal(com) {{{2
 " do normal command and restore window view and last search
 fu! DoNormal(com)
@@ -33,7 +34,8 @@ fu! SwitchMoves()
     endtry
 endfunc
 
-" function to :EFFC {{{2
+" Effc() {{{2
+" function to :EFFC
 " if clipboard is file name return it. not file name return empty
 func! Effc()
     let ret = getreg('*')
@@ -43,7 +45,8 @@ func! Effc()
     return ret
 endfunc
 
-" function to :Windom {{{2
+" Windo(...) {{{2
+" function to :Windom
 " separate all args with bar
 func! WinDo(...) abort
     let cuwinid = win_getid()
@@ -64,10 +67,11 @@ if exists('save_win')|call winrestview(save_win)|unlet save_win|endif
 unlet cuwinid
 endfunc
 
-" function for debugging {{{2
+"  ComcapOut(com) {{{2
+" function for debugging
 " do command and catch output in commandline
-func! Comcap(com) abort
-    let result = GetCom(a:com)
+func! ComcapOut(com) abort
+    let result = GetComOut(a:com)
     new
     let fname = 'output:'.a:com
     silent file`=fname`
@@ -77,7 +81,22 @@ func! Comcap(com) abort
     return
 endfunc
 
-" function for memo {{{2
+"  GetFunc(com) {{{2
+" function for debugging
+" do command and catch output in commandline
+func! GetFunc(com) abort
+    let result = GetComFunc(a:com)
+    new
+    let fname = 'output:'.a:com
+    silent file`=fname`
+    silent put =result
+    silent 1d_
+    setl nonu bt=nofile noswf nobl bh=wipe ft=vim
+    return
+endfunc
+
+" NewTabScratch() {{{2
+" function for memo
 " make new tab for memo
 func! NewTabScratch() abort
     tabnew
@@ -85,7 +104,8 @@ func! NewTabScratch() abort
     setl nonu bt=nofile noswf nobl bh=wipe ft=vim
 endfunc
 
-" function for memo {{{2
+" NewBufScratch() {{{2
+" function for memo
 " make new buffer for memo
 func! NewBufScratch() abort
     new
@@ -93,17 +113,22 @@ func! NewBufScratch() abort
     setl nonu bt=nofile noswf noma nobl bh=wipe ft=vim
 endfunc
 
-" function for :GetCom {{{2
+" GetComCont(com) {{{2
+" function for :GetCom
 " get command content and return
+" need perfect matching command name input
 " if setted command is not declared, return error message
 " it is fast but not correct
-func! GetCom(com) abort
-    if exists(':'.a:com)!=2
+func! GetComCont(com) abort
+    if exists(':'.a:com)
         return 'No such a command'
     endif
-    redir => result
-    silent exe 'com '.a:com
-    redir end
+    if a:com =~ '^\u'
+        let ex = "redir => result|silent exe 'com' a:com|redir end"
+    else
+        let ex = 'redir => result|silent exe a:com|redir end'
+    endif
+    return result
     " let result = matchstr(split(result,"\n")[-1],'\M\S\.\*\s\*')
     " let i = stridx(result,'\M\(\S\+\\\@<!|\.\*\)\|\(\S\+(\.\*)\)')
     " while true
@@ -117,6 +142,17 @@ func! GetCom(com) abort
     let i = stridx(result,'  ',i)
     let result = strcharpart(result,i,len(result)-i+1)
     " let result = matchstr(result,'\M\S\.\+$')
+endfunc
+
+" GetComOut(com) {{{2
+" function for matchit
+" get vimscript command output and return
+" need perfect matching command name input
+func! GetComOut(com) abort
+    if exists(':'.a:com)
+        return 'No such a command'
+    endif
+    exe 'redir => result|silent exe' a:com.'|redir end'
     return result
 endfunc
 
@@ -129,6 +165,7 @@ endfunc
 "     call winrestview(l:save_win)
 " endfunc
 
+" don't use{{{1
 " misc {{{2
 " move mode switch only current buffer with augroup {{{3
 " augroup SwitchMoves

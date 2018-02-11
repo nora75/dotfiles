@@ -4,7 +4,7 @@ command! -nargs=0 CdCurrent cd %:p:h
 
 " :CheckCom {{{2
 " Get command content by input command name
-command! -nargs=1 -complete=command CheckCom echo GetCom(<f-args>)
+command! -nargs=1 -complete=command CheckCom echo GetComCont(<f-args>)
 
 " :EFFC {{{2
 " Edit File From Clipboard
@@ -36,9 +36,12 @@ command! -nargs=1 Renamefe exe 'file '.expand('%:r').'.'.<f-args>|call delete(ex
 " don't move with do command to all windows
 command! -nargs=+ -complete=command Windom call WinDo(<f-args>)
 
-" :Comtoreg {{{2
-" commnad's output to regtister
+" :Comcap {{{2
+" get comamnd output and put it to new empty buffer
 command! -nargs=1 -complete=command Comcap call Comcap(<f-args>)
+
+" :GetFunc {{{2
+command! -nargs=1 -complete=command GetFunc call GetFunc(<f-args>)
 
 " :Memot {{{2
 " open new tab for memo

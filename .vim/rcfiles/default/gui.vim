@@ -31,8 +31,8 @@ if has('gui') " options for gvim {{2
     " change to if statement
     try
         " colorscheme wombat256mod
-        colorscheme iceberg
-        " colorscheme twilight
+        " colorscheme iceberg
+        colorscheme twilight
     catch
         colorscheme default
     endtry

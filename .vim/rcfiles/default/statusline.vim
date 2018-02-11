@@ -205,6 +205,8 @@ endfunc
 
 " Commands {{{2
 " :ShowError {{{3
-" show last errors
+" show last error
 command! -nargs=0 ShowError echo s:RetError()
+" :GoErro {{{3
+" Go help file of last error
 command! -nargs=0 GoError echo help matchstr(s:RetError(),'\ME\d\+')

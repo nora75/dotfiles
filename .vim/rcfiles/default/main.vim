@@ -20,6 +20,7 @@ set autoindent
 set smartindent
 set hlsearch
 set incsearch
+set backspace=2
 set ignorecase
 set smartcase
 set whichwrap=b,s,h,l
