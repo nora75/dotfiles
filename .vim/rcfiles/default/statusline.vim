@@ -49,7 +49,7 @@ func! StlCwd() abort
     let cwd = join(licwd, '\')
     if cd !~? matchstr(expand('~'),'\M^\/\?\zs\[^\\\/]\+\ze\(\/\|\\\)\?')
         let cd = toupper(cd)
-        if cwd !~? '^'.cd
+        if cwd !~? '^'.strcharpart(cd,0,5)
             if cd !~ ':$'
                 let cwd = cd.':'.cwd
             else

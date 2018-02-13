@@ -4,7 +4,7 @@
 " optional argument is used when execute file needs output file earier than
 " input in argument and optional command only must use in the execute file
 func! s:Pdftxt(exe,...) abort
-    let voutput = ' "$vim\%:t:r.pdftxt"'
+    let voutput = ' "$vim\\%:t:r.pdftxt"'
     let loutput = ' "%:p:r.pdftxt"'
     let input = ' "%"'
     if a:0
@@ -14,7 +14,7 @@ func! s:Pdftxt(exe,...) abort
         let vexe = a:exe.input.voutput."'"
         let lexe = a:exe.input.loutput."'"
     endif
-    let vexe .= '|exe "e $vim\%:t:r.pdftxt"'
+    let vexe .= '|exe "e $vim\\%:t:r.pdftxt"'
     let lexe .= '|exe "e %:p:r.pdftxt"'
     if a:0 > 1
         let vexe .= '|'.a:2
@@ -26,7 +26,7 @@ func! s:Pdftxt(exe,...) abort
     \|endif
     \|silent 1
     \|setl bt=nofile noswf nobl bh=wipe ft=pdf
-    \|au BufWipeOut <buffer> call delete(expand("%"))'
+    \|au BufWipeOut <buffer> call delete(expand("<afile>"))'
     return
 endfunc
 
