@@ -44,12 +44,12 @@ if neobundle#is_installed('vim-submode')
     call submode#map('TabWidthn', 'n', '', ',', '<<')
     " TabWidth visual {{{3
     " can't move must fix it
-    call submode#enter_with('TabWidthv', 'v', '', '>', '>')
-    call submode#enter_with('TabWidthv', 'v', '', '<', '<')
-    call submode#map('TabWidthv', 'n', '', '>', 'gv>')
-    call submode#map('TabWidthv', 'n', '', '.', 'gv>')
-    call submode#map('TabWidthv', 'n', '', '<', 'gv<')
-    call submode#map('TabWidthv', 'n', '', ',', 'gv<')
+    " call submode#enter_with('TabWidthv', 'v', '', '>', '>')
+    " call submode#enter_with('TabWidthv', 'v', '', '<', '<')
+    " call submode#map('TabWidthv', 'n', '', '>', 'gv>')
+    " call submode#map('TabWidthv', 'n', '', '.', 'gv>')
+    " call submode#map('TabWidthv', 'n', '', '<', 'gv<')
+    " call submode#map('TabWidthv', 'n', '', ',', 'gv<')
     " TabPageMove {{{2
     call submode#enter_with('TabPageMove', 'n', '', 'gt', 'gt')
     call submode#enter_with('TabPageMove', 'n', '', 'gT', 'gT')
@@ -70,6 +70,7 @@ if neobundle#is_installed('vim-submode')
     call submode#enter_with('LineMove', 'n', 'r', '<Space>lk', '[LineMove]k')
     call submode#map('LineMove', 'n', 'r', 'j', '[LineMove]j')
     call submode#map('LineMove', 'n', 'r', 'k', '[LineMove]k')
+    " }}}
     " }}}
 endif
 

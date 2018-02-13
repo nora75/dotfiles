@@ -165,6 +165,35 @@ endfunc
 "     call winrestview(l:save_win)
 " endfunc
 
+" ChangeAlp(case,text) {{{2
+" function for :ChangeUpper
+" change all argument text in current buffer to uppercase 
+func! ChangeAlp(case,text,...) abort
+    let backsearch = @/
+    if a:1 != a:2
+        let line1 = a:1
+        let line2 = a:2
+    else
+        let line1 = 1
+        let line2 = line('$')
+    endif
+    let text = split(a:text,'\s')
+    if len(text) > 1
+        let text = map(text,'"\\(".v:val."\\)"')
+        let text = join(text,'\|')
+    else
+        let text = join(text)
+    endif
+    if a:case ==# 'u'
+        let to = 'upper'
+    else
+        let to = 'lower'
+    endif
+    exe line1.','.line2.'s/'.text.'/\=to'.to.'(submatch(0))/g'
+    let @/ = backsearch 
+    return
+endfunc
+
 " don't use{{{1
 " misc {{{2
 " move mode switch only current buffer with augroup {{{3

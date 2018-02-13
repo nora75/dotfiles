@@ -105,17 +105,17 @@ cnoreabbre new]    new
 inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
 
 " no CursorKey {{{2
-nnoremap <Up>    :<C-u>qa!<CR>
-nnoremap <Down>  :<C-u>qa!<CR>
-nnoremap <Left>  :<C-u>qa!<CR>
-nnoremap <Right> :<C-u>qa!<CR>
-vnoremap <Up>    :<C-u>qa!<CR>
-vnoremap <Down>  :<C-u>qa!<CR>
-vnoremap <Left>  :<C-u>qa!<CR>
-vnoremap <Right> :<C-u>qa!<CR>
-inoremap <Up>    <ESC>:<C-u>qa!<CR>
-inoremap <Down>  <ESC>:<C-u>qa!<CR>
-inoremap <Left>  <ESC>:<C-u>qa!<CR>
-inoremap <Right> <ESC>:<C-u>qa!<CR>
+nnoremap <Up>    <Nop>
+nnoremap <Down>  <Nop>
+nnoremap <Left>  <Nop>
+nnoremap <Right> <Nop>
+vnoremap <Up>    <Nop>
+vnoremap <Down>  <Nop>
+vnoremap <Left>  <Nop>
+vnoremap <Right> <Nop>
+inoremap <Up>    <Nop>
+inoremap <Down>  <Nop>
+inoremap <Left>  <Nop>
+inoremap <Right> <Nop>
 
 " vim: set fdm=marker fdl=1 fmr={{{,}}} :

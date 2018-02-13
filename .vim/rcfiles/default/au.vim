@@ -26,7 +26,7 @@ func! s:Pdftxt(exe,...) abort
     \|endif
     \|silent 1
     \|setl bt=nofile noswf nobl bh=wipe ft=pdf
-    \|au BufWinLeave <buffer> call delete(expand("%"))'
+    \|au BufWipeOut <buffer> call delete(expand("%"))'
     return
 endfunc
 

@@ -43,6 +43,10 @@ command! -nargs=1 -complete=command Comcap call Comcap(<f-args>)
 " :GetFunc {{{2
 command! -nargs=1 -complete=command GetFunc call GetFunc(<f-args>)
 
+" :GoErro {{{2
+" go to last error of help file
+command! -nargs=0 GoError exe 'help' matchstr(v:errmsg,'\ME\d\+')
+
 " :Memot {{{2
 " open new tab for memo
 command! -nargs=0 Memot call NewTabScratch()
@@ -50,4 +54,14 @@ command! -nargs=0 Memot call NewTabScratch()
 " :Memoo {{{2
 " open new buffer for memo
 command! -nargs=0 Memoo call NewBufScratch()
+
+" :ChangeUpper {{{2
+" change all argument text in current buffer to uppercase 
+" use ChangeAlp(case,text)
+command! -nargs=+ -range ChangeUpper call ChangeAlp('u',<q-args>,<line1>,<line2>)
+
+" :ChangeLower {{{2
+" change all argument text in current buffer to lowercase 
+" use ChangeAlp(case,text)
+command! -nargs=+ -range ChangeLower call ChangeAlp('l',<q-args>,<line1>,<line2>)
 

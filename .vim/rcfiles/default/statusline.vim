@@ -29,11 +29,12 @@ endfunc
 " functino of cwd
 " return current dir
 " only end two directory
-" if base directory is different by current directory show where
+" show which partition if current directory's partition isn't match
+" home directory's partition
 func! StlCwd() abort
     let fcwd = getcwd()
-    let cd = strcharpart(fcwd,-1,2)
-    let cwd = matchstr(fcwd,'[^\\]\+\\[^\\]\+$')
+    let cd = matchstr(fcwd,'\M^\/\?\zs\[^\\\/]\+\ze\(\/\|\\\)\?')
+    let cwd = matchstr(fcwd,'\M\[^\\\/]\+\(\\\|\/\)\[^\\\/]\+$')
     if cwd ==# ''
         let cwd = fcwd
     endif
@@ -46,21 +47,22 @@ func! StlCwd() abort
         let i += 1
     endwhile
     let cwd = join(licwd, '\')
-    if (cd!=?'c')
-        let cd .= ':'
+    if cd !~? matchstr(expand('~'),'\M^\/\?\zs\[^\\\/]\+\ze\(\/\|\\\)\?')
         let cd = toupper(cd)
-    else
-        let cd = ''
-    endif
-    if cwd!~'^'.cd
-        let cwd = cd.cwd
+        if cwd !~? '^'.cd
+            if cd !~ ':$'
+                let cwd = cd.':'.cwd
+            else
+                let cwd = cd.cwd
+            endif
+        endif
     endif
     return cwd
 endfunc
 
 " StlCurFileDir() {{{3
-" if current file dir isn't match current working directory return current
-" file directory
+" if current file dir isn't match current working director
+" return current file directory
 func! StlCurFileDir() abort
     let cwd = getcwd()
     let cfd = expand('%:p:h')
@@ -207,6 +209,6 @@ endfunc
 " :ShowError {{{3
 " show last error
 command! -nargs=0 ShowError echo s:RetError()
-" :GoErro {{{3
+" :GoError {{{3
 " Go help file of last error
-command! -nargs=0 GoError echo help matchstr(s:RetError(),'\ME\d\+')
+command! -nargs=0 GoError exe 'help' matchstr(s:RetError(),'\ME\d\+')
