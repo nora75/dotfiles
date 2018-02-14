@@ -6,8 +6,12 @@ set showmatch
 if &enc !=# 'utf-8'
     set enc=utf-8
 endif
-set fileencodings=ucs-bom,utf-8,sjis
-set fileencoding=utf-8
+if &fencs !=# 'ucs-bom,utf-8,sjis'
+    set fileencodings=ucs-bom,utf-8,sjis
+endif
+if &fenc !=# 'utf-8'
+    set fileencoding=utf-8
+endif
 set fileformats=unix,dos,mac
 set cmdheight=2
 set more
