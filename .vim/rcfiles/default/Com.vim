@@ -26,11 +26,15 @@ command! -nargs=0 ReloadVimrc let g:reload_save_win = winsaveview()|
 
 " :Renamefn {{{3
 " rename current file
-command! -nargs=1 Renamefn exe 'file '.<f-args>|call delete(expand('#'))|filetype detect|w
+command! -nargs=1 Renamefn exe 'file '.<f-args>.'.'.expand('%:t:e')|call delete(expand('#'))|filetype detect|w
 
-" :Renamet {{{3
+" :Renamefe {{{3
 " change current filename entension
 command! -nargs=1 Renamefe exe 'file '.expand('%:r').'.'.<f-args>|call delete(expand('#'))|filetype detect|w
+
+" :Renamefa {{{3
+" change current filename entension
+command! -nargs=1 Renamefa exe 'file '.<f-args>|call delete(expand('#'))|filetype detect|w
 
 " :Windom {{{2
 " don't move with do command to all windows
@@ -65,3 +69,8 @@ command! -nargs=+ -range ChangeUpper call ChangeAlp('u',<q-args>,<line1>,<line2>
 " use ChangeAlp(case,text)
 command! -nargs=+ -range ChangeLower call ChangeAlp('l',<q-args>,<line1>,<line2>)
 
+" :SortFold {{{2
+" sort folded texts of selected area
+" command! -nargs=0 -range SortFol call SortFold(<line1>,<line2>)
+
+" vim: set fdm=marker fdl=1 fmr={{{,}}} :

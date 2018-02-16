@@ -12,7 +12,7 @@ endfunction
 " SwitchMoces() {{{2
 " move mode switch over buffer
 " use error occuer when don't map yet
-fu! SwitchMoves()
+func! SwitchMoves()
     try
         nunmap j
         nunmap k
@@ -231,6 +231,5 @@ endfunc
 "         endif
 "     endtry
 " endfunc
-" }}}
 
 " vim: set fdm=marker fdl=1 fmr={{{,}}} :

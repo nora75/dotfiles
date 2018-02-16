@@ -1,5 +1,4 @@
 if neobundle#is_installed('nerdtree')
-    scriptencoding utf-8
         let g:NERDTreeDirArrowExpandable = '+'
         let g:NERDTreeDirArrowCollapsible = '-'
         let g:NERDTreeShowBookmarks = 1

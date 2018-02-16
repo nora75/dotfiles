@@ -105,17 +105,17 @@ cnoreabbre new]    new
 inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
 
 " no CursorKey {{{2
-nnoremap <Up>    <Nop>
-nnoremap <Down>  <Nop>
-nnoremap <Left>  <Nop>
-nnoremap <Right> <Nop>
-vnoremap <Up>    <Nop>
-vnoremap <Down>  <Nop>
-vnoremap <Left>  <Nop>
-vnoremap <Right> <Nop>
-inoremap <Up>    <Nop>
-inoremap <Down>  <Nop>
-inoremap <Left>  <Nop>
-inoremap <Right> <Nop>
+nnoremap <Up>    :<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
+nnoremap <Down>  :<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
+nnoremap <Left>  :<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
+nnoremap <Right> :<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
+vnoremap <Up>    :<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
+vnoremap <Down>  :<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
+vnoremap <Left>  :<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
+vnoremap <Right> :<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
+inoremap <Up>    <ESC>:<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
+inoremap <Down>  <ESC>:<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
+inoremap <Left>  <ESC>:<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
+inoremap <Right> <ESC>:<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
 
 " vim: set fdm=marker fdl=1 fmr={{{,}}} :

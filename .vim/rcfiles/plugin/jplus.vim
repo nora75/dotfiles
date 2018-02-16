@@ -1,5 +1,5 @@
 if neobundle#is_installed('vim-jplus')
-    " mappign {{{2
+    " mapping {{{2
     nmap J <Plug>(jplus-input)<CR>
     vmap J <Plug>(jplus-input)<CR>
     nmap gJ <Plug>(jplus-input)
