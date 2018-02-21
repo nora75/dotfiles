@@ -88,67 +88,16 @@ func! StlCurFileDir() abort
     return cdr.cwd
 endfun
 
-" declation of wafu {{{3
-let wafun = '(>ω<)'
-" let wafun = '(>ω<)           '
-let wafuw = '(>ω<)/ わふーっ！'
-let wafuel = '(>ω<) わふーっ! しすてむ・えらーですーっ!'
-let wafues = '(>ω<) えらーですーっ!'
-" let wafun = '(>ω<)                                   '
-" let wafuw = '(>ω<)/わふーっ！                        '
-" let wafue = '(>ω<)わふーっ! しすてむ・えらーですーっ!'
-let s:wafustr = [ 
-\ wafun ,
-\ wafun ,
-\ wafun ,
-\ wafun ,
-\ wafun ,
-\ wafun ,
-\ wafuw ,
-\ wafuw ,
-\ wafuw ,
-\ wafuw ,
-\ wafuw ,
-\ wafuw ,
-\ ]
-let s:wafuerrlong = [ 
-\ wafun ,
-\ wafun ,
-\ wafun ,
-\ wafun ,
-\ wafun ,
-\ wafun ,
-\ wafuel ,
-\ wafuel ,
-\ wafuel ,
-\ wafuel ,
-\ wafuel ,
-\ wafuel ,
-\ ]
-let s:wafuerrshort = [ 
-\ wafun ,
-\ wafun ,
-\ wafun ,
-\ wafun ,
-\ wafun ,
-\ wafun ,
-\ wafues ,
-\ wafues ,
-\ wafues ,
-\ wafues ,
-\ wafues ,
-\ wafues ,
-\ ]
 " StlWafu() {{{3
 " function of wafu
 " return some variation of wafu
 function! StlWafu()
     let wafuenc = get(s:, 'wafuenc', &encoding)
     if wafuenc != &encoding
-        let s:wafustr = map(s:wafustr, 'iconv(v:val,s:wafuenc,&encoding)')
-        let s:wafuerrlong = map(s:wafuerrlong, 'iconv(v:val,s:wafuenc,&encoding)')
+        let g:wafustr = map(g:wafustr, 'iconv(v:val,g:wafuenc,&encoding)')
+        let g:wafuerrlong = map(g:wafuerrlong, 'iconv(v:val,g:wafuenc,&encoding)')
     endif
-    let s:wafuenc = &encoding
+    let g:wafuenc = &encoding
     let wafupos = get(w:, 'wafupos', -1) + 1
     if len(v:errmsg) && wafupos >= 0
         let wafupos = -24
@@ -156,16 +105,16 @@ function! StlWafu()
         let v:errmsg = ''
     endif
     if wafupos >= 0
-        let wafupos = wafupos % len(s:wafustr)
+        let wafupos = wafupos % len(g:wafustr)
     endif
     let w:['wafupos'] = wafupos
     if wafupos >= 0
-        return s:wafustr[wafupos]
+        return g:wafustr[wafupos]
     else
         if winwidth('') >= 100
-            return s:wafuerrlong[(wafupos+24) % len(s:wafuerrlong)].' '.matchstr(get(s:, 'lasterrormsg', ''),'^E\d\+')
+            return g:wafuerrlong[(wafupos+24) % len(g:wafuerrlong)].' '.matchstr(get(s:, 'lasterrormsg', ''),'^E\d\+')
         else
-            return s:wafuerrshort[(wafupos+24) % len(s:wafuerrshort)].' '.matchstr(get(s:, 'lasterrormsg', ''),'^E\d\+')
+            return g:wafuerrshort[(wafupos+24) % len(g:wafuerrshort)].' '.matchstr(get(s:, 'lasterrormsg', ''),'^E\d\+')
         endif
     endif
 endfunction
@@ -209,6 +158,7 @@ endfunc
 " :ShowError {{{3
 " show last error
 command! -nargs=0 ShowError echo s:RetError()
+
 " :GoError {{{3
 " Go help file of last error
 command! -nargs=0 GoError exe 'help' matchstr(s:RetError(),'\ME\d\+')

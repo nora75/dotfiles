@@ -3,15 +3,6 @@
 set ruler
 set number
 set showmatch
-if &enc !=# 'utf-8'
-    set enc=utf-8
-endif
-if &fencs !=# 'ucs-bom,utf-8,sjis'
-    set fileencodings=ucs-bom,utf-8,sjis
-endif
-if &fenc !=# 'utf-8'
-    set fileencoding=utf-8
-endif
 set fileformats=unix,dos,mac
 set cmdheight=2
 set more
@@ -41,6 +32,7 @@ set backupdir=$VIM/backup
 set modeline
 set showtabline=2
 set fdm=marker
+set noswf
 " set foldmarker={{{,}}}
 " movement over line wrap in this char
 set whichwrap=b,s,h,l

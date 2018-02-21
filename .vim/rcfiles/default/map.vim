@@ -1,5 +1,5 @@
 " map {{{1
-" normal {{{2
+" normal mode {{{2
 " command (ex) {{{3
 nnoremap ;                  :<C-u>
 nnoremap :                  ;
@@ -12,9 +12,10 @@ nnoremap gk                 k
 nnoremap <S-Space>          gt
 nnoremap <S-Tab>            gT
 " <Space>map {{{3
+" <Space> <Nop> {{{4
 nnoremap <Space>            <Nop>
 " yank select all {{{4
-nnoremap <silent> <Space>a           ggVG
+nnoremap <silent> <Space>a           :<C-u>keepjumps norm! ggVG<CR>
 nnoremap <silent> <Space>y           :<C-u>call DoNormal('ggVGy')<CR>
 nnoremap <silent> <Space>=           :<C-u>call DoNormal('gg=G')<CR>
 " switch movement {{{4
@@ -72,7 +73,7 @@ augroup  helpf
     au Filetype help nnoremap <buffer> <Enter> <C-]>
 augroup END
 
-" visual {{{2
+" visual mode {{{2
 " command {{{3
 vnoremap ;        :
 vnoremap :        ;
@@ -94,28 +95,69 @@ catch
 endtry
 vnoremap x                  "_x
 
-" command {{{2
+" command mode {{{2
+" ] {{{3
 cnoreabbre w]      w
 cnoreabbre q]      q
 cnoreabbre qa]     qa
 cnoreabbre tabnew] tabnew
 cnoreabbre new]    new
 
-" insert{{{2
+" insert mode {{{2
 inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
 
-" no CursorKey {{{2
-nnoremap <Up>    :<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
-nnoremap <Down>  :<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
-nnoremap <Left>  :<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
-nnoremap <Right> :<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
-vnoremap <Up>    :<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
-vnoremap <Down>  :<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
-vnoremap <Left>  :<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
-vnoremap <Right> :<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
-inoremap <Up>    <ESC>:<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
-inoremap <Down>  <ESC>:<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
-inoremap <Left>  <ESC>:<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
-inoremap <Right> <ESC>:<C-u>echoerr 'Don't use cursor key<ESC>'<CR>
+" practice for vim {{{2
+" s:errmsg() {{{3
+" start timer and stop timer if already exists
+func! s:rec() abort
+    if exists('s:t')
+        call timer_stop(s:t)
+    endif
+    let s:t = timer_start(1000,function('<SID>smile'),{'repeat':10})
+    return
+endfunc
+
+" s:smile() {{{3
+" echo smile and msg
+func! s:smile(...) abort
+    redraw!
+    if exists(':smile')
+        smile
+    else
+        let i = 0
+        while i < 8
+            redraw!
+            let i += 1
+        endwhile
+    endif
+    redraw!
+    return
+endfunc
+
+" s:mapkey(k) {{{3
+" map key of arg to s:rec()
+func! s:mapkey(k) abort
+    exe 'nnoremap <silent>' a:k ':<C-u>call <SID>rec()<CR>'
+    exe 'vnoremap <silent>' a:k ':<C-u>call <SID>rec()<CR>'
+    exe 'inoremap <silent>' a:k '<ESC>:<C-u>call <SID>rec()<CR>'
+    return
+endfunc
+
+" s:mapkey() {{{3
+" mapping by using s:mapkey()
+func! s:dontusethiskey() abort
+    call s:mapkey('<Left>')
+    call s:mapkey('<Down>')
+    call s:mapkey('<Up>')
+    call s:mapkey('<Right>')
+    call s:mapkey('<PageUp>')
+    call s:mapkey('<PageDown>')
+    call s:mapkey('<Home>')
+    call s:mapkey('<End>')
+    return
+endfunc
+
+" map {{{3
+call s:dontusethiskey()
 
 " vim: set fdm=marker fdl=1 fmr={{{,}}} :

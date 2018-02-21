@@ -11,7 +11,18 @@ if has('vim_starting')
         " don't load default menu
         set guioptions+=M
     endif
+    if &enc !=# 'utf-8'
+        set enc=utf-8
+    endif
+    if &fencs !=# 'ucs-bom,utf-8,sjis'
+        set fileencodings=ucs-bom,utf-8,sjis
+    endif
+    if &fenc !=# 'utf-8'
+        set fileencoding=utf-8
+    endif
 endif
 
 runtime! rcfiles/default/*.vim
-runtime! rcfiles/plugin/*.vim
+if exists(':NeoBundle')
+    runtime! rcfiles/plugin/*.vim
+endif

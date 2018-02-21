@@ -83,6 +83,9 @@ NeoBundle 'vim-scripts/twilight'
 " too many colorschemes
 NeoBundle 'flazz/vim-colorschemes'
 
+" test {{{3
+NeoBundle 'vim-scripts/AdvancedSorters'
+
 NeoBundleCheck
 
 call neobundle#end()

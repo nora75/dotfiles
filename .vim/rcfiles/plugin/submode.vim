@@ -36,8 +36,8 @@ if neobundle#is_installed('vim-submode')
 
     " TabWidth {{{2
     " TabWidth normal {{{3
-    call submode#enter_with('TabWidthn', 'n', '', '>>', '>>')
-    call submode#enter_with('TabWidthn', 'n', '', '<<', '<<')
+    call submode#enter_with('TabWidthn', 'n', '', 'g>', '>>')
+    call submode#enter_with('TabWidthn', 'n', '', 'g<', '<<')
     call submode#map('TabWidthn', 'n', '', '>', '>>')
     call submode#map('TabWidthn', 'n', '', '.', '>>')
     call submode#map('TabWidthn', 'n', '', '<', '<<')

@@ -4,7 +4,7 @@
 fu! DoNormal(com)
     let l:save_search = @/
     let l:save_win = winsaveview()
-    execute 'normal 'a:com
+    execute 'keepjumps normal 'a:com
     let @/ = l:save_search
     call winrestview(l:save_win)
 endfunction
@@ -165,6 +165,7 @@ endfunc
 "     call winrestview(l:save_win)
 " endfunc
 
+
 " ChangeAlp(case,text) {{{2
 " function for :ChangeUpper
 " change all argument text in current buffer to uppercase 
@@ -193,6 +194,125 @@ func! ChangeAlp(case,text,...) abort
     let @/ = backsearch 
     return
 endfunc
+
+" SortFold(line1,line2) {{{2
+" get lines of selected area and sort by fold header
+" only support marker
+func! SortFold(line1,line2,bang) abort
+    if a:line1 ==# a:line2 || &fdm !=# 'marker'
+        return
+    endif
+    let marks = matchstr(&fmr,'\M\.\+\ze,')
+    let marke = matchstr(&fmr,'\M,\zs\.\+')
+    let lines = getline(a:line1,a:line2)
+    let back_lines = deepcopy(lines)
+    call filter(lines,'v:val =~# "\\M'.marks.'\\d\\*"')
+    " call filter(lines,'v:val =~# "\\M'.marks.'\\d\\*" || v:val =~# "\\M'.marke.'"')
+    let back_sortlines = deepcopy(lines)
+    let sortlist = {}
+    let i = 0
+    let k = 0
+    let count = { 1 : 0 , 2 : 0 , 3 : 0 , 4 : 0 , 5 : 0 , 6 : 0 , 7 : 0 , 8 : 0 , 9 : 0 , 10 : 0 , 11 : 0 , 12 : 0 , 13 : 0 , 14 : 0 , 15 : 0 , 16 : 0 , 17 : 0 , 18 : 0 , 19 : 0 , 20 : 0 }
+    let t = ''
+    while i < len(lines)
+        let n = matchstr(lines[i],'M'.marks.'\(\d\*\)')
+        while true
+            if lines[i] =~# '\M'.marks.'\d\*'
+                if n >= matchstr(lines[i],'M'.marks.'\(\d\*\)')
+                    let k += 1
+                    if k > 0
+                        continue
+                    else
+                        break
+                    endif
+                endif
+            elseif lines[i] =~# '\M'.marks
+            endif
+            let i += 1
+        endwhile
+    endwhile
+    for d in lines
+        try
+            exe 'call extend(sortlist.'.matchstr(d,'\d').',[d])'
+        catch
+            exe 'call extend(sortlist,{'.matchstr(d,'\d').':[d]})'
+        endtry
+    endfor
+    " let i = 0
+    " let list = []
+    " let innerlist = []
+    " while i < len(back_lines)
+    "     if lines[i] !~ '{{{\d'
+    "         let i += 1
+    "         continue
+    "     else
+    "         let n = matchstr(lines[i],mark.'\(\d\)')
+    "         while true
+    "             if lines[i] =~# mark.'\d' || lines[i] =~# mark
+    "                 if n >= matchstr(lines[i],mark.'\(\d\)')
+    "                     let k -= 1
+    "                     if k > 0
+    "                         continue
+    "                     else
+    "                         break
+    "                     endif
+    "                 endif
+    "             endif
+    "             let i += 1
+    "         endwhile
+    "     endif
+    " endwhile
+    " if len()
+    "     return
+    " endif
+    return
+endfunc
+
+" " GetCurrentFoldPath() abort
+" " get current fold line by directory style
+" func! GetCurrentFoldPath() abort
+"     if &fdm !=# 'marker'
+"         return
+"     endif
+"     let gcfp = ''
+"     let marks = matchstr(&fmr,'\M\.\+\ze,')
+"     let marke = matchstr(&fmr,'\M,\zs\.\+')
+"     let lines = getline(a:line1,a:line2)
+"     let back_lines = deepcopy(lines)
+"     call filter(lines,'v:val =~# "\\M'.marks.'\\d\\*" || v:val =~# "\\M'.marke.'"')
+"     let back_sortlines = deepcopy(lines)
+"     let sortlist = {}
+"     let i = 0
+"     let k = 0
+"     let count = { 1 : 0 , 2 : 0 , 3 : 0 , 4 : 0 , 5 : 0 , 6 : 0 , 7 : 0 , 8 : 0 , 9 : 0 , 10 : 0 , 11 : 0 , 12 : 0 , 13 : 0 , 14 : 0 , 15 : 0 , 16 : 0 , 17 : 0 , 18 : 0 , 19 : 0 , 20 : 0 }
+"     let t = ''
+"     while i < len(lines)
+"         let n = matchstr(lines[i],'M'.marks.'\(\d\*\)')
+"         while true
+"             if lines[i] =~# '\M'.marks.'\d\*'
+"                 if n >= matchstr(lines[i],'M'.marks.'\(\d\*\)')
+"                     let k += 1
+"                     if k > 0
+"                         continue
+"                     else
+"                         break
+"                     endif
+"                 endif
+"             elseif lines[i] =~# '\M'.marks
+"             endif
+"             let i += 1
+"         endwhile
+"     endwhile
+"     for d in lines
+"         try
+"             exe 'call extend(sortlist.'.matchstr(d,'\d').',[d])'
+"         catch
+"             exe 'call extend(sortlist,{'.matchstr(d,'\d').':[d]})'
+"         endtry
+"     endfor
+"     echo gcfp
+"     return
+" endfunc
 
 " don't use{{{1
 " misc {{{2

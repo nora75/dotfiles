@@ -14,11 +14,8 @@ command! -nargs=0 -complete=file EFFC exe 'e '.Effc()
 " Reload .vimrc files
 command! -nargs=0 ReloadVimrc let g:reload_save_win = winsaveview()|
 \ let g:reload_save_cuwinid = win_getid()|
-\ exe 'windo let b:reload_save_fold = &fdl'|
 \ source $MYVIMRC|
 \ set nohlsearch|
-\ exe 'silent! windo let &fdl = b:reload_save_fold'|
-\ exe 'silent! windo unlet b:reload_save_fold'|
 \ call win_gotoid(g:reload_save_cuwinid)|
 \ call winrestview(g:reload_save_win)|
 \ unlet g:reload_save_win|
@@ -71,6 +68,6 @@ command! -nargs=+ -range ChangeLower call ChangeAlp('l',<q-args>,<line1>,<line2>
 
 " :SortFold {{{2
 " sort folded texts of selected area
-" command! -nargs=0 -range SortFol call SortFold(<line1>,<line2>)
+command! -nargs=0 -range -bang SortFold call SortFold(<line1>,<line2>,<q-bang>)
 
 " vim: set fdm=marker fdl=1 fmr={{{,}}} :

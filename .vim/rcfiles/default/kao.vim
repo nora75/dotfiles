@@ -1,4 +1,4 @@
-if expand('$VIM') =~ 'kaoriya'
+if expand('$VIM') =~? 'kaoriya'
     " add all folder under the $vim/plugins to rtp
     for s:path in split(glob($VIM.'/plugins/*'), '\n')
         if s:path !~# '\~$' && isdirectory(s:path)
