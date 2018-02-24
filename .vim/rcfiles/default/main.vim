@@ -44,6 +44,12 @@ set equalalways
 set history=100
 " auto adjust indent before line when use \ in script
 let g:vim_indent_cont=0
+" don't make number when convert to html
+let g:html_number_lines = 0
+" convert fold and expand it
+let g:html_dynamic_folds = 1
+" expand fold by hover mouse using css 2.0
+let g:html_hover_unfold = 1
 
 " else {{{2
 

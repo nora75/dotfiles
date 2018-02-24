@@ -68,6 +68,10 @@ command! -nargs=+ -range ChangeLower call ChangeAlp('l',<q-args>,<line1>,<line2>
 
 " :SortFold {{{2
 " sort folded texts of selected area
-command! -nargs=0 -range -bang SortFold call SortFold(<line1>,<line2>,<q-bang>)
+" command! -nargs=0 -range -bang SortFold call SortFold(<line1>,<line2>,<q-bang>)
+
+" :Reformatmd {{{2
+" reformat current buffer of markdown file by using Reformatmd(line1,line2)
+" command! -nargs=0 -range Reformatmd call Reformatmd(<line1>,<line2>)
 
 " vim: set fdm=marker fdl=1 fmr={{{,}}} :

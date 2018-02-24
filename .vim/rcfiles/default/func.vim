@@ -198,46 +198,46 @@ endfunc
 " SortFold(line1,line2) {{{2
 " get lines of selected area and sort by fold header
 " only support marker
-func! SortFold(line1,line2,bang) abort
-    if a:line1 ==# a:line2 || &fdm !=# 'marker'
-        return
-    endif
-    let marks = matchstr(&fmr,'\M\.\+\ze,')
-    let marke = matchstr(&fmr,'\M,\zs\.\+')
-    let lines = getline(a:line1,a:line2)
-    let back_lines = deepcopy(lines)
-    call filter(lines,'v:val =~# "\\M'.marks.'\\d\\*"')
-    " call filter(lines,'v:val =~# "\\M'.marks.'\\d\\*" || v:val =~# "\\M'.marke.'"')
-    let back_sortlines = deepcopy(lines)
-    let sortlist = {}
-    let i = 0
-    let k = 0
-    let count = { 1 : 0 , 2 : 0 , 3 : 0 , 4 : 0 , 5 : 0 , 6 : 0 , 7 : 0 , 8 : 0 , 9 : 0 , 10 : 0 , 11 : 0 , 12 : 0 , 13 : 0 , 14 : 0 , 15 : 0 , 16 : 0 , 17 : 0 , 18 : 0 , 19 : 0 , 20 : 0 }
-    let t = ''
-    while i < len(lines)
-        let n = matchstr(lines[i],'M'.marks.'\(\d\*\)')
-        while true
-            if lines[i] =~# '\M'.marks.'\d\*'
-                if n >= matchstr(lines[i],'M'.marks.'\(\d\*\)')
-                    let k += 1
-                    if k > 0
-                        continue
-                    else
-                        break
-                    endif
-                endif
-            elseif lines[i] =~# '\M'.marks
-            endif
-            let i += 1
-        endwhile
-    endwhile
-    for d in lines
-        try
-            exe 'call extend(sortlist.'.matchstr(d,'\d').',[d])'
-        catch
-            exe 'call extend(sortlist,{'.matchstr(d,'\d').':[d]})'
-        endtry
-    endfor
+" func! SortFold(line1,line2,bang) abort
+"     if a:line1 ==# a:line2 || &fdm !=# 'marker'
+"         return
+"     endif
+"     let marks = matchstr(&fmr,'\M\.\+\ze,')
+"     let marke = matchstr(&fmr,'\M,\zs\.\+')
+"     let lines = getline(a:line1,a:line2)
+"     let back_lines = deepcopy(lines)
+"     call filter(lines,'v:val =~# "\\M'.marks.'\\d\\*"')
+"     " call filter(lines,'v:val =~# "\\M'.marks.'\\d\\*" || v:val =~# "\\M'.marke.'"')
+"     let back_sortlines = deepcopy(lines)
+"     let sortlist = {}
+"     let i = 0
+"     let k = 0
+"     let count = { 1 : 0 , 2 : 0 , 3 : 0 , 4 : 0 , 5 : 0 , 6 : 0 , 7 : 0 , 8 : 0 , 9 : 0 , 10 : 0 , 11 : 0 , 12 : 0 , 13 : 0 , 14 : 0 , 15 : 0 , 16 : 0 , 17 : 0 , 18 : 0 , 19 : 0 , 20 : 0 }
+"     let t = ''
+"     while i < len(lines)
+"         let n = matchstr(lines[i],'M'.marks.'\(\d\*\)')
+"         while true
+"             if lines[i] =~# '\M'.marks.'\d\*'
+"                 if n >= matchstr(lines[i],'M'.marks.'\(\d\*\)')
+"                     let k += 1
+"                     if k > 0
+"                         continue
+"                     else
+"                         break
+"                     endif
+"                 endif
+"             elseif lines[i] =~# '\M'.marks
+"             endif
+"             let i += 1
+"         endwhile
+"     endwhile
+"     for d in lines
+"         try
+"             exe 'call extend(sortlist.'.matchstr(d,'\d').',[d])'
+"         catch
+"             exe 'call extend(sortlist,{'.matchstr(d,'\d').':[d]})'
+"         endtry
+"     endfor
     " let i = 0
     " let list = []
     " let innerlist = []
@@ -265,8 +265,8 @@ func! SortFold(line1,line2,bang) abort
     " if len()
     "     return
     " endif
-    return
-endfunc
+    " return
+" endfunc
 
 " " GetCurrentFoldPath() abort
 " " get current fold line by directory style
@@ -313,6 +313,48 @@ endfunc
 "     echo gcfp
 "     return
 " endfunc
+
+" Reformatmd(line1,line2) {{{2
+" reformat current buffer of markdown file
+func! Reformatmd(line1,line2) abort
+    if &ft !=# 'markdown'
+        echohl WarningMsg
+        echo 'Please use this function/command in markdown file'
+        echohl None
+        return
+    endif
+    if !exists('b:refomd_lineend')
+        let b:refomd_lineend = 0
+    endif
+    if a:line1 != a:line2
+        let line1 = a:line1
+        let line2 = a:line2
+    else
+        let line1 = b:refomd_lineend
+        let 
+    let b:refomd_lineend += 1
+    let lines = []
+    endif
+    for lnum in range()
+        let line = getline(lnum)
+        let leftwhite = matchstr(line,'\M^s\*')
+        let line = mathstr(line,'\M^\s\*\zs\S\.\*')
+        if line =~ '\M^#\+\s\*'
+            call add(lines,leftwhite.substitute(line,'\M\s\*',' ','')
+        elseif line =~ '\M^\(\[+*-]\)\|\(\d\+.\)\s'
+            call add(lines,leftwhite.substitute())
+        elseif line =~ '\M^'
+            call add(lines,)
+        else
+            if
+            else
+                call add(lines,line)
+            endif
+        endif
+    endfor
+    let b:refomd_lineend = line('$')
+    return
+endfunc
 
 " don't use{{{1
 " misc {{{2
