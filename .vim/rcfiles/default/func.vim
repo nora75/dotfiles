@@ -238,34 +238,34 @@ endfunc
 "             exe 'call extend(sortlist,{'.matchstr(d,'\d').':[d]})'
 "         endtry
 "     endfor
-    " let i = 0
-    " let list = []
-    " let innerlist = []
-    " while i < len(back_lines)
-    "     if lines[i] !~ '{{{\d'
-    "         let i += 1
-    "         continue
-    "     else
-    "         let n = matchstr(lines[i],mark.'\(\d\)')
-    "         while true
-    "             if lines[i] =~# mark.'\d' || lines[i] =~# mark
-    "                 if n >= matchstr(lines[i],mark.'\(\d\)')
-    "                     let k -= 1
-    "                     if k > 0
-    "                         continue
-    "                     else
-    "                         break
-    "                     endif
-    "                 endif
-    "             endif
-    "             let i += 1
-    "         endwhile
-    "     endif
-    " endwhile
-    " if len()
-    "     return
-    " endif
-    " return
+" let i = 0
+" let list = []
+" let innerlist = []
+" while i < len(back_lines)
+"     if lines[i] !~ '{{{\d'
+"         let i += 1
+"         continue
+"     else
+"         let n = matchstr(lines[i],mark.'\(\d\)')
+"         while true
+"             if lines[i] =~# mark.'\d' || lines[i] =~# mark
+"                 if n >= matchstr(lines[i],mark.'\(\d\)')
+"                     let k -= 1
+"                     if k > 0
+"                         continue
+"                     else
+"                         break
+"                     endif
+"                 endif
+"             endif
+"             let i += 1
+"         endwhile
+"     endif
+" endwhile
+" if len()
+"     return
+" endif
+" return
 " endfunc
 
 " " GetCurrentFoldPath() abort
@@ -317,42 +317,121 @@ endfunc
 " Reformatmd(line1,line2) {{{2
 " reformat current buffer of markdown file
 func! Reformatmd(line1,line2) abort
-    if &ft !=# 'markdown'
-        echohl WarningMsg
-        echo 'Please use this function/command in markdown file'
-        echohl None
-        return
-    endif
+    " if &ft !=# 'markdown'
+    "     echohl WarningMsg
+    "     echo 'Please use this function/command in markdown file'
+    "     echohl None
+    "     return
+    " endif
     if !exists('b:refomd_lineend')
         let b:refomd_lineend = 0
     endif
     if a:line1 != a:line2
         let line1 = a:line1
         let line2 = a:line2
+        let b = v:false
     else
-        let line1 = b:refomd_lineend
-        let 
-    let b:refomd_lineend += 1
-    let lines = []
+        let line1 = b:refomd_lineend + 1
+        let line2 = line('$')
+        let b = v:true
     endif
-    for lnum in range()
-        let line = getline(lnum)
-        let leftwhite = matchstr(line,'\M^s\*')
-        let line = mathstr(line,'\M^\s\*\zs\S\.\*')
+    let rw = '  '
+    let code = v:false
+    let head = v:false
+    let list = v:false
+    let table = v:false
+    let bflag = v:false
+    let aflag = v:false
+    let lines = getline(line1,line2)
+    call filter(lines,'v:val !~ ''\M^\s\*$''')
+    let i = 0
+    while i < len(lines)
+        let line = lines[i]
+        let leftwhite = matchstr(line,'\M^\s\*')
+        let line = matchstr(line,'\M^\s\*\zs\S\.\*\s\*$')
+        let line = substitute(line,'\M\s\+$','','')
         if line =~ '\M^#\+\s\*'
-            call add(lines,leftwhite.substitute(line,'\M\s\*',' ','')
+            let line = substitute(line,'\M#\+\zs\s\*',' ','')
+            let head = v:true
+            let bflag = v:true
+            let aflag = v:true
+        elseif line =~ '\M^\(\(\[+*-]\)\|\(\d\+.\)\s\)\+'
+            let line = line
         elseif line =~ '\M^\(\[+*-]\)\|\(\d\+.\)\s'
-            call add(lines,leftwhite.substitute())
-        elseif line =~ '\M^'
-            call add(lines,)
-        else
-            if
+            let line = leftwhite.substitute(line,'\M\(\[+*-]\)\|\(\d\+.\)\s\zs\s\*',' ','')
+            if list
+                if leftwhite == matchstr(lines[i-1],'\M^\s\+') && lines[i-1] == ''
+                    call remove(lines,i-1)
+                endif
+            endif
+            let list = v:true
+            let bflag = v:true
+            let aflag = v:true
+        elseif line =~ '\M^|\.\*|$'
+            if !table
+                let bflag = v:true
+            endif
+            let table = v:true
+            let line = line
+        elseif line =~ '\M^>'
+            let line = line.rw
+        elseif line =~ '\M^`{3}'
+            if code
+                let code = v:false
+                let aflag = v:true
             else
-                call add(lines,line)
+                let bflag = v:true
+                let code = v:true
+            endif
+            let line = line
+        elseif line =~ '\M</\?details>'
+            let bflag = v:true
+            let aflag = v:true
+        else
+            if !code && line != ''
+                let line .= rw
+            endif
+            if table
+                let bflag = v:true
+                let table = v:false
             endif
         endif
-    endfor
-    let b:refomd_lineend = line('$')
+        if head
+            let head = v:false
+        else
+            let line = leftwhite.line
+        endif
+        let lines[i] = line
+        if bflag
+            if i == 0
+                call insert(lines,'',0)
+                let i += 1
+            elseif i != 0 && lines[i-1] != ''
+                echomsg 'bflag'
+                echomsg i
+                call insert(lines,'',i-1)
+                let i += 1
+            endif
+            let bflag = v:false
+        endif
+        " if aflag
+        "     if i == len(lines)-1
+        "         call insert(lines,'',i)
+        "         let i += 1
+        "     elseif i != len(lines)-1 && lines[i+1] != ''
+        "         echomsg 'aflag'
+        "         call insert(lines,'',i+1)
+        "         let i += 1
+        "     endif
+        "     let aflag = v:false
+        " endif
+        let i += 1
+    endwhile
+    call append(line2,lines)
+    exe 'silent' line1.','.line2.'delete _'
+    if b
+        let b:refomd_lineend = line('$')
+    endif
     return
 endfunc
 

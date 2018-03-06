@@ -72,6 +72,6 @@ command! -nargs=+ -range ChangeLower call ChangeAlp('l',<q-args>,<line1>,<line2>
 
 " :Reformatmd {{{2
 " reformat current buffer of markdown file by using Reformatmd(line1,line2)
-" command! -nargs=0 -range Reformatmd call Reformatmd(<line1>,<line2>)
+command! -nargs=0 -range Reformatmd call Reformatmd(<line1>,<line2>)
 
 " vim: set fdm=marker fdl=1 fmr={{{,}}} :

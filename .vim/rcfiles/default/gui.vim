@@ -41,6 +41,9 @@ if has('gui') " options for gvim {{2
         " for windows
         set guifont=MS_Gothic:h12:cSHIFTJIS
         "set guifont=MS_Mincho:h12:cSHIFTJIS
+        if v:version >= 800
+            set rop=type:directx,gamma:3.4,contrast:6.0,geom:2,renmode:2,level:1.0,taamode:2
+        endif
         " set line space
         set linespace=1
         " Automatically measure the width of some UCS characters and decide
