@@ -402,7 +402,10 @@ func! Reformatmd(line1,line2) abort
             let line = leftwhite.line
         endif
         let lines[i] = line
+        echomsg bflag
+        echomsg aflag
         if bflag
+            echomsg 'bflag'
             if i == 0
                 call insert(lines,'',0)
                 let i += 1
@@ -414,17 +417,18 @@ func! Reformatmd(line1,line2) abort
             endif
             let bflag = v:false
         endif
-        " if aflag
-        "     if i == len(lines)-1
-        "         call insert(lines,'',i)
-        "         let i += 1
-        "     elseif i != len(lines)-1 && lines[i+1] != ''
-        "         echomsg 'aflag'
-        "         call insert(lines,'',i+1)
-        "         let i += 1
-        "     endif
-        "     let aflag = v:false
-        " endif
+        if aflag
+            echomsg 'aflag'
+            if i == len(lines)-1
+                call insert(lines,'',i)
+                let i += 1
+            elseif i != len(lines)-1 && lines[i+1] != ''
+                echomsg 'aflag'
+                call insert(lines,'',i+1)
+                let i += 1
+            endif
+            let aflag = v:false
+        endif
         let i += 1
     endwhile
     call append(line2,lines)
