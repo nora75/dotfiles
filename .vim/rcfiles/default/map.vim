@@ -168,25 +168,27 @@ let s:smileafter = '                                  oooo$$$$$$$$$$$$$$oooo'."\
 " s:rec() {{{3
 " start timer and stop timer if already exists
 func! s:rec() abort
-    if exists('s:t')
-        call timer_stop(s:t)
+    " for i in range(0,10)
+    if exists('s:n')
+        call timer_stop(s:n)
     endif
-    let s:t = timer_start(5000,function('<SID>smile'),{'repeat':10})
+    let s:n = timer_start(1000,function('<SID>wafun'),{'repeat':5})
+    " endfor
     return
 endfunc
 
-" s:smile(num) {{{3
-" echo smile and msg
-func! s:smile(num) abort
-    redraw!
-    echohl WarningMsg
-    if a:num %2 == 1
-        echo s:smilebefore
-    else
-        echo s:smileafter
-    endif
-        echohl None
-    redraw!
+" s:wafun(...) {{{3
+" echo g:wafuw
+func! s:wafun(...) abort
+    echo g:wafun
+    let s:w = timer_start(400,function('<SID>wafuw'))
+    return
+endfunc
+
+" s:wafuw(...) {{{3
+" echo g:wafun and g:wafuw
+func! s:wafuw(...) abort
+    echo g:wafuw
     return
 endfunc
 
