@@ -9,7 +9,7 @@ set statusline=%!MyStl()
 " number name variable is separator (colorscheme or alignment)
 func! MyStl() abort
     call s:col()
-    let first = '%<%#StlLeft0# '
+    let first = '%#StlLeft0# '
     let cwd = StlCwd()
     let cfd = StlCurFileDir()
     let waf = ' | '.StlWafu().'  '

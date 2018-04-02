@@ -1,3 +1,4 @@
+scriptencoding utf-8
 " Use {{{1
 " DoNormal(com) {{{2
 " do normal command and restore window view and last search
@@ -195,6 +196,20 @@ func! ChangeAlp(case,text,...) abort
     return
 endfunc
 
+" DontBrackets() {{{2
+" function for :DontBrackets
+" substitute full width(em) brackets to half width brackets
+fun! DontBrackets()
+    let save_search = @/
+    let save_win = winsaveview()
+    let last = line('$')
+    exe '1,'.last 'substitute/（/(/g'
+    exe '1,'.last 'substitute/）/)/g'
+    let @/ = save_search
+    call winrestview(save_win)
+    return
+endfunc
+
 " SortFold(line1,line2) {{{2
 " get lines of selected area and sort by fold header
 " only support marker
@@ -346,21 +361,24 @@ func! Reformatmd(line1,line2) abort
     call filter(lines,'v:val !~ ''\M^\s\*$''')
     let i = 0
     while i < len(lines)
+        echomsg i
         let line = lines[i]
         let leftwhite = matchstr(line,'\M^\s\*')
         let line = matchstr(line,'\M^\s\*\zs\S\.\*\s\*$')
         let line = substitute(line,'\M\s\+$','','')
         if line =~ '\M^#\+\s\*'
-            let line = substitute(line,'\M#\+\zs\s\*',' ','')
+            echomsg '\M^#\+\s\*'
+            let line = substitute(line,'\M^#\+\zs\s\*',' ','')
             let head = v:true
             let bflag = v:true
             let aflag = v:true
-        elseif line =~ '\M^\(\(\[+*-]\)\|\(\d\+.\)\s\)\+'
-            let line = line
-        elseif line =~ '\M^\(\[+*-]\)\|\(\d\+.\)\s'
-            let line = leftwhite.substitute(line,'\M\(\[+*-]\)\|\(\d\+.\)\s\zs\s\*',' ','')
+        elseif line =~ '\M^\(\(\[+*-]\{1}\)\|\(\d\+.\)\s\)\+'
+        echomsg '\M^\(\[+*-]\)\|\(\d\+.\)\s\*'
+            let line = substitute(line,'\M\s\+',' ','')
             if list
+            echomsg 'list'
                 if leftwhite == matchstr(lines[i-1],'\M^\s\+') && lines[i-1] == ''
+                echomsg '\M^\s\+ && lines[i-1] == '
                     call remove(lines,i-1)
                 endif
             endif
@@ -368,65 +386,71 @@ func! Reformatmd(line1,line2) abort
             let bflag = v:true
             let aflag = v:true
         elseif line =~ '\M^|\.\*|$'
+        echomsg '\M^|\.\*|$'
             if !table
+                echomsg '!table'
                 let bflag = v:true
             endif
             let table = v:true
             let line = line
         elseif line =~ '\M^>'
+        echomsg '\M^>'
             let line = line.rw
-        elseif line =~ '\M^`{3}'
+        elseif line =~ '\M^`\{3}'
+        echomsg '\M^`{3}'
             if code
+            echomsg 'code'
                 let code = v:false
                 let aflag = v:true
+                let bflag = v:false
             else
-                let bflag = v:true
+                echomsg 'code else'
                 let code = v:true
+                let aflag = v:false
+                let bflag = v:true
             endif
             let line = line
         elseif line =~ '\M</\?details>'
+        echomsg '\M</\?details>'
             let bflag = v:true
             let aflag = v:true
         else
             if !code && line != ''
+            echomsg '!code && line != '
                 let line .= rw
             endif
             if table
+                echomsg 'table'
                 let bflag = v:true
                 let table = v:false
             endif
         endif
         if head
+            echomsg 'head'
             let head = v:false
         else
+            echomsg 'else'
             let line = leftwhite.line
         endif
         let lines[i] = line
-        echomsg bflag
-        echomsg aflag
+        echomsg 'bflag'.bflag
+        echomsg 'aflag'.aflag
         if bflag
-            echomsg 'bflag'
-            if i == 0
-                call insert(lines,'',0)
-                let i += 1
-            elseif i != 0 && lines[i-1] != ''
-                echomsg 'bflag'
-                echomsg i
-                call insert(lines,'',i-1)
+        echomsg 'bflag'
+            echomsg 'bflag'.bflag
+            if i != 0 && lines[i-1] != ''
+            echomsg 'i!=0&&lines[i-1]!='
+                echomsg 'bflag'.bflag
+                echomsg 'i'.i
+                call insert(lines,'',i)
                 let i += 1
             endif
             let bflag = v:false
         endif
         if aflag
-            echomsg 'aflag'
-            if i == len(lines)-1
-                call insert(lines,'',i)
-                let i += 1
-            elseif i != len(lines)-1 && lines[i+1] != ''
-                echomsg 'aflag'
-                call insert(lines,'',i+1)
-                let i += 1
-            endif
+            echomsg 'aflag'.aflag
+            call insert(lines,'',i+1)
+            let i += 1
             let aflag = v:false
         endif
         let i += 1
@@ -434,9 +458,11 @@ func! Reformatmd(line1,line2) abort
     call append(line2,lines)
     exe 'silent' line1.','.line2.'delete _'
     if b
+        echomsg 'b'
         let b:refomd_lineend = line('$')
     endif
     return
+    " call append(line('$'),
 endfunc
 
 " don't use{{{1

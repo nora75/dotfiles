@@ -39,12 +39,23 @@ if has('gui') " options for gvim {{2
 
     if has('win32')
         " for windows
-        set guifont=MS_Gothic:h12:cSHIFTJIS
-        "set guifont=MS_Mincho:h12:cSHIFTJIS
-        if v:version >= 800
-            set rop=type:directx,gamma:3.4,contrast:6.0,geom:2,renmode:2,level:1.0,taamode:2
-        endif
-        " set line space
+        " set guifont=MS_Gothic:h12:cSHIFTJIS
+        " set guifont=MS_Mincho:h12:cSHIFTJIS
+        set guifont=Myrica_M:h12:cSHIFTJIS
+        " set guifont=MyricaM_M:h12:cSHIFTJIS
+        " want use directx, but move very slow in my device
+        " if v:version >= 800
+        "     let s:gf = &guifont
+        "     if s:gf =~? '\M^MS'
+        "         set rop=type:directx,gamma:3.4,contrast:6.0,geom:2,renmode:2,level:1.0,taamode:1
+        "     elseif s:gf =~ '\M^Myrica'
+        "         set rop=type:directx,gamma:0.0,contrast:0.0,geom:2,renmode:1,level:1.0,taamode:1
+        "     else
+        "         set rop=
+        "     endif
+
+        " endif
+        " set line space(vertical)
         set linespace=1
         " Automatically measure the width of some UCS characters and decide
         if has('kaoriya')

@@ -4,4 +4,6 @@ if neobundle#is_installed('vim-table-mode')
     let g:table_mode_map_prefix = '<Space>,'
     let g:table_mode_corner_corner = '|'
     let g:table_mode_corner='|'
+    " auto align when recognize changed in file
+    let g:table_mode_auto_align = 1
 endif
