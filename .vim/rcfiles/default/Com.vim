@@ -8,7 +8,11 @@ command! -nargs=1 -complete=command CheckCom echo GetComCont(<f-args>)
 
 " :EFFC {{{2
 " Edit File From Clipboard
-command! -nargs=0 -complete=file EFFC exe 'e '.Effc()
+command! -nargs=0 -complete=file EFFC call Effc()
+
+" :FPTC {{{2
+" File Path To Clipboard
+command! -nargs=0 FPTC call FPTC()
 
 " :ReloadVimrc {{{2
 " Reload .vimrc files
@@ -42,7 +46,7 @@ command! -nargs=+ -complete=command Windom call WinDo(<f-args>)
 command! -nargs=1 -complete=command Comcap call Comcap(<f-args>)
 
 " :GetFunc {{{2
-command! -nargs=1 -complete=command GetFunc call GetFunc(<f-args>)
+" command! -nargs=1 -complete=command GetFunc call GetFunc(<f-args>)
 
 " :GoErro {{{2
 " go to last error of help file
@@ -74,8 +78,14 @@ command! -nargs=+ -range ChangeLower call ChangeAlp('l',<q-args>,<line1>,<line2>
 " reformat current buffer of markdown file by using Reformatmd(line1,line2)
 command! -nargs=0 -range Reformatmd call Reformatmd(<line1>,<line2>)
 
-" :DontBrackets {{{2
+" :DontFullWidth {{{2
 " substitute full width(em) brackets to half width brackets
-command! -nargs=0 DontBrakcets call DontBrackets()
+command! -nargs=0 DontFullWidth call DontFullWidth()
 
-" vim: set fdm=marker fdl=1 fmr={{{,}}} :
+" :AddLastDoubleSpaces {{{2
+" The funciton for markdown
+" Add double spaces to line's last
+command! -nargs=0 AddLastDoubleSpaces call AddLastDoubleSpaces()
+" }}}
+
+" vim: set fdm=marker fdl=1 fmr={{{,}}} : }}}

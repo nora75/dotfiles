@@ -32,7 +32,7 @@ NeoBundle 'itchyny/lightline.vim'
 
 " highlight {{{3
 NeoBundle 't9md/vim-quickhl'
-" NeoBundle 'osyo-manga/vim-brightest'
+NeoBundle 'osyo-manga/vim-brightest'
 NeoBundle 'tmhedberg/matchit'
 NeoBundle 'vimtaku/hl_matchit.vim', {
 \ 'depends' : 'tmhedberg/matchit',

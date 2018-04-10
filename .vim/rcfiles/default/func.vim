@@ -36,15 +36,34 @@ func! SwitchMoves()
 endfunc
 
 " Effc() {{{2
-" function to :EFFC
-" if clipboard is file name return it. not file name return empty
+" Function for :EFFC
+" If clipboard is file name return it. not file name return empty
 func! Effc()
-    let ret = getreg('*')
-    if type(ret)!=1||getftype(ret)!=#'file'
-        let ret = ''
+    let fi = getreg('*')
+    if type(fi)!=1||getftype(fi)!=#'file'
+        echohl WarningMsg
+        echo 'Clipboard is not file'
+        echohl NONE
+        return
     endif
-    return ret
+    echo 'Enter or Space to edit file of clipboard'
+    try
+        let c = getchar()
+        if c =~ '^\d\+$'
+            let c = nr2char(c)
+        endif
+        elseif c =~ "\<Enter>"
+            throw 'Interrupt'
+        elseif c =~ "\<Space>"
+            throw 'Interrupt'
+        endif
+    catch
+        exe 'e '.fi
+    endtry
+    return
 endfunc
+
+" FilePathToClipboard()
 
 " Windo(...) {{{2
 " function to :Windom
@@ -196,15 +215,34 @@ func! ChangeAlp(case,text,...) abort
     return
 endfunc
 
-" DontBrackets() {{{2
-" function for :DontBrackets
+" DontFullWidth() {{{2
+" function for :DontFullWidth
 " substitute full width(em) brackets to half width brackets
-fun! DontBrackets()
+fun! DontFullWidth()
     let save_search = @/
     let save_win = winsaveview()
-    let last = line('$')
-    exe '1,'.last 'substitute/（/(/g'
-    exe '1,'.last 'substitute/）/)/g'
+    silent %substitute/（/(/g
+    silent %substitute/）/)/g
+    silent %substitute/：/:/g
+    let @/ = save_search
+    call winrestview(save_win)
+    w
+    return
+endfunc
+
+" AddLastDoubleSpaces() {{{2
+" The funciton for markdown
+" Add double spaces to line's last
+func! AddLastDoubleSpaces()
+    if &ft != 'markdown' || &ft != 'md' || &ft != 'mdown'
+        return
+    endif
+    let save_search = @/
+    let save_win = winsaveview()
+    let line = getline(line('.'))
+        if line !~ '\M^#\+\s\*' && line !~ '\M^\(\(\[+*-]\{1}\)\|\(\d\+.\)\s\)\+' && line !~ '\M^|\.\*|$' && line !~ '\M^>' && line !~ '\M^`\{3}' && line !~ '\M</\?details>'
+        substitute/\M\s\*$/  /
+        endif
     let @/ = save_search
     call winrestview(save_win)
     return
@@ -364,7 +402,7 @@ func! Reformatmd(line1,line2) abort
         echomsg i
         let line = lines[i]
         let leftwhite = matchstr(line,'\M^\s\*')
-        let line = matchstr(line,'\M^\s\*\zs\S\.\*\s\*$')
+        let line = matchstr(line,'\M^\S\.\*\s\*$')
         let line = substitute(line,'\M\s\+$','','')
         if line =~ '\M^#\+\s\*'
             echomsg '\M^#\+\s\*'
@@ -373,12 +411,12 @@ func! Reformatmd(line1,line2) abort
             let bflag = v:true
             let aflag = v:true
         elseif line =~ '\M^\(\(\[+*-]\{1}\)\|\(\d\+.\)\s\)\+'
-        echomsg '\M^\(\[+*-]\)\|\(\d\+.\)\s\*'
+            echomsg '\M^\(\[+*-]\)\|\(\d\+.\)\s\*'
             let line = substitute(line,'\M\s\+',' ','')
             if list
-            echomsg 'list'
+                echomsg 'list'
                 if leftwhite == matchstr(lines[i-1],'\M^\s\+') && lines[i-1] == ''
-                echomsg '\M^\s\+ && lines[i-1] == '
+                    echomsg '\M^\s\+ && lines[i-1] == '
                     call remove(lines,i-1)
                 endif
             endif
@@ -386,7 +424,7 @@ func! Reformatmd(line1,line2) abort
             let bflag = v:true
             let aflag = v:true
         elseif line =~ '\M^|\.\*|$'
-        echomsg '\M^|\.\*|$'
+            echomsg '\M^|\.\*|$'
             if !table
                 echomsg '!table'
                 let bflag = v:true
@@ -394,12 +432,12 @@ func! Reformatmd(line1,line2) abort
             let table = v:true
             let line = line
         elseif line =~ '\M^>'
-        echomsg '\M^>'
+            echomsg '\M^>'
             let line = line.rw
         elseif line =~ '\M^`\{3}'
-        echomsg '\M^`{3}'
+            echomsg '\M^`{3}'
             if code
-            echomsg 'code'
+                echomsg 'code'
                 let code = v:false
                 let aflag = v:true
                 let bflag = v:false
@@ -411,18 +449,21 @@ func! Reformatmd(line1,line2) abort
             endif
             let line = line
         elseif line =~ '\M</\?details>'
-        echomsg '\M</\?details>'
+            echomsg '\M</\?details>'
             let bflag = v:true
             let aflag = v:true
         else
             if !code && line != ''
-            echomsg '!code && line != '
+                echomsg '!code && line != '
                 let line .= rw
             endif
             if table
                 echomsg 'table'
                 let bflag = v:true
                 let table = v:false
+            endif
+            if line !~ '\M\s{2}$'
+                let line .= '  '
             endif
         endif
         if head
@@ -436,10 +477,10 @@ func! Reformatmd(line1,line2) abort
         echomsg 'bflag'.bflag
         echomsg 'aflag'.aflag
         if bflag
-        echomsg 'bflag'
+            echomsg 'bflag'
             echomsg 'bflag'.bflag
             if i != 0 && lines[i-1] != ''
-            echomsg 'i!=0&&lines[i-1]!='
+                echomsg 'i!=0&&lines[i-1]!='
                 echomsg 'bflag'.bflag
                 echomsg 'i'.i
                 call insert(lines,'',i)
@@ -502,5 +543,6 @@ endfunc
 "         endif
 "     endtry
 " endfunc
+" }}}
 
-" vim: set fdm=marker fdl=1 fmr={{{,}}} :
+" vim: set fdm=marker fdl=1 fmr={{{,}}} : }}}
