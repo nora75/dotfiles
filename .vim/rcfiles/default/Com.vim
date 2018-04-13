@@ -1,3 +1,7 @@
+" :AppendBlankLine {{{2
+" append blank line at all selected lines
+command! -range -nargs=? AppendBlankLine call AppendBlankLine(<line1>,<line2>,<q-args>)
+
 " :CdCurrent {{{2
 "  Change current directory to current file's one
 command! -nargs=0 CdCurrent cd %:p:h
@@ -79,8 +83,16 @@ command! -nargs=+ -range ChangeLower call ChangeAlp('l',<q-args>,<line1>,<line2>
 command! -nargs=0 -range Reformatmd call Reformatmd(<line1>,<line2>)
 
 " :DontFullWidth {{{2
-" substitute full width(em) brackets to half width brackets
+" substitute full width(em) characters to half width characters
 command! -nargs=0 DontFullWidth call DontFullWidth()
+
+" :DoNormal {{{2
+" do normal ncommand and restore window view and last search
+command! -nargs=1 DoNormal call DoNormal(<q-args>)
+
+" :SwitchColorScheme {{{2
+" switch the colorschemes of twilight and iceberg
+command! -nargs=0 SwitchColorScheme call SwitchColorScheme()
 
 " :AddLastDoubleSpaces {{{2
 " The funciton for markdown

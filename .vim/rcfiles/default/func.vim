@@ -1,13 +1,42 @@
 scriptencoding utf-8
+" global variables {{{1
+" use this variable for DontFullWidth() {{{2
+let g:DontFull = []
+call add(g:DontFull,['（','('])
+call add(g:DontFull,['）',')'])
+call add(g:DontFull,['：',':'])
+call add(g:DontFull,['　',' '])
+call add(g:DontFull,['−','-'])
+" call add(g:DontFull,[÷,\/])
+
 " Use {{{1
-" DoNormal(com) {{{2
-" do normal command and restore window view and last search
-fu! DoNormal(com)
-    let l:save_search = @/
-    let l:save_win = winsaveview()
-    execute 'keepjumps normal 'a:com
-    let @/ = l:save_search
-    call winrestview(l:save_win)
+" AppendBlankLine() {{{2
+" append blank line at all selected lines
+func! AppendBlankLine(l1,l2,apl)
+    for i in range(a:l1,a:l2)
+        if a:apl ==# ''
+            let apline = 1
+        else
+            let apline = str2nr(a:apl)
+        endif
+        exe 'norm' ';append'.repeat("\<CR>",apline)."\<ESC>"
+        exe 'norm' apline+1.'j'
+    endfor
+    return
+endfunc
+
+" DoNormal(ncom) {{{2
+" do normal ncommand and restore window view and last search
+func! DoNormal(ncom)
+    let save = s:saveState()
+    try
+        exe 'norm '.a:ncom
+    catch
+        echoe v:errmsg
+        return 1
+    endtry
+    call s:restoreState(save,v:true,v:true)
+    return
 endfunction
 
 " SwitchMoces() {{{2
@@ -51,7 +80,6 @@ func! Effc()
         let c = getchar()
         if c =~ '^\d\+$'
             let c = nr2char(c)
-        endif
         elseif c =~ "\<Enter>"
             throw 'Interrupt'
         elseif c =~ "\<Space>"
@@ -108,7 +136,7 @@ func! GetFunc(com) abort
     let result = GetComFunc(a:com)
     new
     let fname = 'output:'.a:com
-    silent file`=fname`
+    silent file `=fname`
     silent put =result
     silent 1d_
     setl nonu bt=nofile noswf nobl bh=wipe ft=vim
@@ -120,7 +148,7 @@ endfunc
 " make new tab for memo
 func! NewTabScratch() abort
     tabnew
-    silent file memo
+    silent file #MEMO
     setl nonu bt=nofile noswf nobl bh=wipe ft=vim
 endfunc
 
@@ -129,7 +157,7 @@ endfunc
 " make new buffer for memo
 func! NewBufScratch() abort
     new
-    silent file memo
+    silent file #MEMO
     setl nonu bt=nofile noswf noma nobl bh=wipe ft=vim
 endfunc
 
@@ -217,16 +245,31 @@ endfunc
 
 " DontFullWidth() {{{2
 " function for :DontFullWidth
-" substitute full width(em) brackets to half width brackets
+" substitute full width(em) characters to half width characters
 fun! DontFullWidth()
-    let save_search = @/
-    let save_win = winsaveview()
-    silent %substitute/（/(/g
-    silent %substitute/）/)/g
-    silent %substitute/：/:/g
-    let @/ = save_search
-    call winrestview(save_win)
-    w
+    let out = []
+    let save = s:saveState()
+    for c in g:DontFull
+        call add(out,c[0])
+        exe 'silent %substitute/'.c[0].'/'.c[1].'/g'
+    endfor
+    silent! w
+    call s:restoreState(save,v:true,v:true)
+    echo 'change' join(map(out,'"''".v:val."''"'),',') 'to half width'
+    return
+endfunc
+
+" SwitchColorScheme() {{{2
+" function for :SwitchColorScheme
+" switch the colorschemes of twilight and iceberg
+func! SwitchColorScheme()
+    let col1 = 'twilight'
+    let col2 = 'iceberg'
+    if g:colors_name ==? col1
+        exe 'silent colorscheme' col2
+    else
+        exe 'silent colorscheme' col1
+    endif
     return
 endfunc
 
@@ -240,9 +283,9 @@ func! AddLastDoubleSpaces()
     let save_search = @/
     let save_win = winsaveview()
     let line = getline(line('.'))
-        if line !~ '\M^#\+\s\*' && line !~ '\M^\(\(\[+*-]\{1}\)\|\(\d\+.\)\s\)\+' && line !~ '\M^|\.\*|$' && line !~ '\M^>' && line !~ '\M^`\{3}' && line !~ '\M</\?details>'
+    if line !~ '\M^#\+\s\*' && line !~ '\M^\(\(\[+*-]\{1}\)\|\(\d\+.\)\s\)\+' && line !~ '\M^|\.\*|$' && line !~ '\M^>' && line !~ '\M^`\{3}' && line !~ '\M</\?details>'
         substitute/\M\s\*$/  /
-        endif
+    endif
     let @/ = save_search
     call winrestview(save_win)
     return
@@ -504,6 +547,38 @@ func! Reformatmd(line1,line2) abort
     endif
     return
     " call append(line('$'),
+endfunc
+
+" base functions{{{1
+" s:saveState() {{{2
+" save current buffer's state and return it
+func! s:saveState()
+    let ret = []
+    call add(ret,'call winrestview('.string(winsaveview()).')')
+    call add(ret,'let @/ = '.string(@/))
+    call add(ret,'let v:errmsg = '.string(v:errmsg))
+    call add(ret,'let &fdl = '.&fdl)
+    return ret
+endfunction
+
+" s:restoreState(view,...) {{{2
+" restore state from args
+" must restore view
+" args: search erromsg fdl
+func! s:restoreState(rest,...)
+    let do = []
+    call add(do,a:rest[0])
+    let i = 0
+    while i < a:0
+        if a:000[i]
+            call add(do,a:rest[i+1])
+        endif
+        let i += 1
+    endwhile
+    for c in do
+        exe c
+    endfor
+    return
 endfunc
 
 " don't use{{{1

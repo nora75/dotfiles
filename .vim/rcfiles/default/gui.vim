@@ -31,8 +31,8 @@ if has('gui') " options for gvim {{2
     " change to if statement
     try
         " colorscheme wombat256mod
-        " colorscheme iceberg
-        colorscheme twilight
+        colorscheme iceberg
+        " colorscheme twilight
     catch
         colorscheme default
     endtry
@@ -67,28 +67,31 @@ if has('gui') " options for gvim {{2
     endif
 
     function! GuiTabLabel() " guitablabel setting func {{{3
-        let label = ''
+        let label = '['
         let bufnrlist = tabpagebuflist(v:lnum)
-        " add '+' when modified
-        for bufnr in bufnrlist
-            if getbufvar(bufnr, '&modified')
-                let label = '+'
-                break
-            endif
-        endfor
-
         " add number of windows when open multiple windows
         let wincount = tabpagewinnr(v:lnum, '$')
         if wincount > 1
             let label .= wincount
         endif
-        if label !=#''
-            let label .= ' '
+        if label !=# '['
+            let label .= '] '
+        else
+            let label = ''
         endif
-
+        let tabbufname = substitute(bufname(bufnrlist[tabpagewinnr(v:lnum) - 1]),'^.*\\', '', '')
+        if tabbufname ==# ''
+            let tabbufname = '#NONAME'
+        endif
+        " add '+' when modified
+        for bufnr in bufnrlist
+            if getbufvar(bufnr, '&modified')
+                let tabbufname .= ' +'
+                break
+            endif
+        endfor
         " add bufer name
-        return label . 
-        \substitute(bufname(bufnrlist[tabpagewinnr(v:lnum) - 1]),'^.*\\', '', '')
+        return label . tabbufname
     endfunction
 
     set guitablabel=%{GuiTabLabel()}

@@ -102,6 +102,7 @@ cnoreabbre q]      q
 cnoreabbre qa]     qa
 cnoreabbre tabnew] tabnew
 cnoreabbre new]    new
+cnoreabbre qq q
 
 " insert mode {{{2
 inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
