@@ -20,14 +20,7 @@ command! -nargs=0 FPTC call FPTC()
 
 " :ReloadVimrc {{{2
 " Reload .vimrc files
-command! -nargs=0 ReloadVimrc let g:reload_save_win = winsaveview()|
-\ let g:reload_save_cuwinid = win_getid()|
-\ source $MYVIMRC|
-\ set nohlsearch|
-\ call win_gotoid(g:reload_save_cuwinid)|
-\ call winrestview(g:reload_save_win)|
-\ unlet g:reload_save_win|
-\ unlet g:reload_save_cuwinid
+command! -nargs=0 ReloadVimrc exe g:ReloadVimrc.ret()
 
 " :Renamefn {{{3
 " rename current file

@@ -16,8 +16,8 @@ nnoremap <S-Tab>            gT
 nnoremap <Space>            <Nop>
 " yank select all {{{4
 nnoremap <silent> <Space>a           :<C-u>keepjumps norm! ggVG<CR>
-nnoremap <silent> <Space>y           :<C-u>call DoNormal('ggVGy')<CR>
-nnoremap <silent> <Space>=           :<C-u>call DoNormal('gg=G')<CR>
+nnoremap <silent> <Space>y           :<C-u>call DoBuffer('ggVGy')<CR>
+nnoremap <silent> <Space>=           :<C-u>call DoBuffer('gg=G')<CR>
 " switch movement {{{4
 nnoremap <silent> <Space>sm :<C-u>call SwitchMoves()<CR>
 " commands {{{4

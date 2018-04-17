@@ -1,6 +1,10 @@
 scriptencoding utf-8
-" global variables {{{1
-" use this variable for DontFullWidth() {{{2
+" variables {{{1
+" script local variables {{{2
+let s:tmpn = tempname()
+let s:stateFlags = reverse([ 's', 'e', 'f', 'r', 'm', 'j', 'c', 'h' ])
+" global variables {{{2
+" use this variable for DontFullWidth() {{{3
 let g:DontFull = []
 call add(g:DontFull,['（','('])
 call add(g:DontFull,['）',')'])
@@ -26,7 +30,7 @@ func! AppendBlankLine(l1,l2,apl)
 endfunc
 
 " DoNormal(ncom) {{{2
-" do normal ncommand and restore window view and last search
+" do normal command and restore window view and last search
 func! DoNormal(ncom)
     let save = s:saveState()
     try
@@ -35,9 +39,20 @@ func! DoNormal(ncom)
         echoe v:errmsg
         return 1
     endtry
-    call s:restoreState(save,v:true,v:true)
+    call s:restoreState(save,'se')
     return
 endfunction
+
+" DoBuffer(ncom) {{{2
+" do normal comamnd and restore window view and last search if buffer isn't
+" null
+func! DoBuffer(ncom)
+    let lines = getline(0,line('$'))
+    if lines != ['']
+        call DoNormal(a:ncom)
+    endif
+    return
+endfunc
 
 " SwitchMoces() {{{2
 " move mode switch over buffer
@@ -91,28 +106,21 @@ func! Effc()
     return
 endfunc
 
-" FilePathToClipboard()
-
 " Windo(...) {{{2
 " function to :Windom
 " separate all args with bar
 func! WinDo(...) abort
     let cuwinid = win_getid()
-    let save_search = @/
-    let save_win = winsaveview()
-    windo let b:reload_save_fold = &fdl
+    windo let b:saved_state = s:saveState()
     let do = ''
     for cm in a:000
         let do .= ' '.cm
     endfor
     exe 'silent! windo '.do
     redraw!
-    if do=~#'\Mnorm\[^z]\*z\[^hjkl]'|unlet save_win|exe 'windo unlet b:reload_save_fold'|endif
-    windo if exists("b:reload_save_fold")|let &fdl = b:reload_save_fold|unlet b:reload_save_fold|endif
+    windo if do!~#'\Mnorm\[^z]\*z\[^hjkl]'|call s:restoreState(b:saved_state,'sf')|endif
+windo unlet b:saved_state
 call win_gotoid(cuwinid)
-let @/ = save_search
-if exists('save_win')|call winrestview(save_win)|unlet save_win|endif
-unlet cuwinid
 endfunc
 
 "  ComcapOut(com) {{{2
@@ -204,15 +212,12 @@ func! GetComOut(com) abort
     return result
 endfunc
 
-" :ReloadVimrc
+" g:ReloadVimrc.ret() {{{2
 " save current window and restore current winodow after reloading .vimrc
-" func! ReloadVimrc() abort
-"     let l:save_win = winsaveview()
-"     source $MYVIMRC
-"     set nohlsearch
-"     call winrestview(l:save_win)
-" endfunc
-
+let g:ReloadVimrc = {'data':['let g:ReloadVimrc.save_winid = win_getid()','source $MYVIMRC','set nohlsearch','call win_gotoid(g:ReloadVimrc.save_winid)'],'save_winid':''}
+func! g:ReloadVimrc.ret() abort
+    return join(self.data,'|')
+endfunc
 
 " ChangeAlp(case,text) {{{2
 " function for :ChangeUpper
@@ -254,7 +259,7 @@ fun! DontFullWidth()
         exe 'silent %substitute/'.c[0].'/'.c[1].'/g'
     endfor
     silent! w
-    call s:restoreState(save,v:true,v:true)
+    call s:restoreState(save,'se')
     echo 'change' join(map(out,'"''".v:val."''"'),',') 'to half width'
     return
 endfunc
@@ -280,14 +285,12 @@ func! AddLastDoubleSpaces()
     if &ft != 'markdown' || &ft != 'md' || &ft != 'mdown'
         return
     endif
-    let save_search = @/
-    let save_win = winsaveview()
+    let save = s:saveState()
     let line = getline(line('.'))
     if line !~ '\M^#\+\s\*' && line !~ '\M^\(\(\[+*-]\{1}\)\|\(\d\+.\)\s\)\+' && line !~ '\M^|\.\*|$' && line !~ '\M^>' && line !~ '\M^`\{3}' && line !~ '\M</\?details>'
         substitute/\M\s\*$/  /
     endif
-    let @/ = save_search
-    call winrestview(save_win)
+    call s:restoreState()
     return
 endfunc
 
@@ -553,28 +556,96 @@ endfunc
 " s:saveState() {{{2
 " save current buffer's state and return it
 func! s:saveState()
-    let ret = []
-    call add(ret,'call winrestview('.string(winsaveview()).')')
-    call add(ret,'let @/ = '.string(@/))
-    call add(ret,'let v:errmsg = '.string(v:errmsg))
-    call add(ret,'let &fdl = '.&fdl)
-    return ret
-endfunction
-
-" s:restoreState(view,...) {{{2
-" restore state from args
-" must restore view
-" args: search erromsg fdl
-func! s:restoreState(rest,...)
-    let do = []
-    call add(do,a:rest[0])
+    exe 'let ret = ['."''".repeat(",''",9).']'
+    let ret[0] = 'call winrestview('.string(winsaveview()).')'
+    let ret[1] = 'let @/ = '.string(@/)
+    let ret[2] = 'let v:errmsg = '.string(v:errmsg)
+    let ret[3] = 'let &fdl = '.&fdl
+    call delete(s:tmpn)
+    exe 'wv!' s:tmpn
+    let tmp = []
+    let infolines = readfile(s:tmpn)
     let i = 0
-    while i < a:0
-        if a:000[i]
-            call add(do,a:rest[i+1])
+    while i < len(infolines)
+        if infolines[i] =~? 'レジスタ'
+            let i += 1
+            while infolines[i] !~ '\M^#\s\{1}' && i < len(infolines)
+                call add(tmp,infolines[i])
+                let i += 1
+            endwhile
+            let ret[4] = 'call writefile('.string(tmp).',s:tmpn)|rv! '.s:tmpn.'|call delete(s:tmpn)'
+            let tmp = []
+        elseif infolines[i] =~? 'ファイルマーク'
+            let i += 1
+            while infolines[i] !~ '\M^#\s\{1}' && i < len(infolines)
+                call add(tmp,infolines[i])
+                let i += 1
+            endwhile
+            let ret[5] = 'call writefile('.string(tmp).',s:tmpn)|rv! '.s:tmpn.'|call delete(s:tmpn)'
+            let tmp = []
+        elseif infolines[i] =~? 'ジャンプ'
+            let i += 1
+            while infolines[i] !~ '\M^#\s\{1}' && i < len(infolines)
+                call add(tmp,infolines[i])
+                let i += 1
+            endwhile
+            let ret[6] = 'call writefile('.string(tmp).',s:tmpn)|rv! '.s:tmpn.'|call delete(s:tmpn)'
+            let tmp = []
+        elseif infolines[i] =~? 'コマンドライン'
+            let i += 1
+            while infolines[i] !~ '\M^#\s\{1}' && i < len(infolines)
+                call add(tmp,infolines[i])
+                let i += 1
+            endwhile
+            let ret[7] = 'call writefile('.string(tmp).',s:tmpn)|rv! '.s:tmpn.'|call delete(s:tmpn)'
+            let tmp = []
+        elseif infolines[i] =~? '検索'
+            let i += 1
+            while infolines[i] !~ '\M^#\s\{1}' && i < len(infolines)
+                call add(tmp,infolines[i])
+                let i += 1
+            endwhile
+            let ret[8] = 'call writefile('.string(tmp).',s:tmpn)|rv! '.s:tmpn.'|call delete(s:tmpn)'
+            let tmp = []
         endif
         let i += 1
     endwhile
+    return ret
+endfunction
+
+" s:restoreState(view,[{flag}]) {{{2
+" restore state from args
+" must restore view
+" {flag}: s:search e:erromsg f:fdl r:registers m:marks j:jumps c:commandline
+" h:search history
+func! s:restoreState(rest,...)
+    let flags = join(a:000)
+    let do = []
+    if len(flags)
+        for i in a:rest
+            call add(do,i)
+        endfor
+        let i = 0
+        if flags !=# 'all'
+            if flags =~ '^-'
+                while i < len(s:stateFlags)
+                    if flags =~ s:stateFlags[i]
+                        call remove(do,len(do)-i-1)
+                    endif
+                    let i+= 1
+                endwhile
+            else
+                while i < len(s:stateFlags)
+                    if flags !~ s:stateFlags[i]
+                        call remove(do,len(do)-i-1)
+                    endif
+                    let i+= 1
+                endwhile
+            endif
+        endif
+    else
+        call add(do,a:rest[0])
+    endif
     for c in do
         exe c
     endfor

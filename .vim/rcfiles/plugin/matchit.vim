@@ -25,27 +25,39 @@ if neobundle#is_installed('hl_matchit.vim')
     else
         let g:hl_matchit_hl_groupname = 'IncSearch'
     endif
+    " au {{{{4
     if s:isExistCol('iceberg')
         au ColorScheme iceberg let g:hl_matchit_hl_groupname = 'IncSearch'
     endif
     if s:isExistCol('twilight')
         au ColorScheme twilight let g:hl_matchit_hl_groupname = 'MatchParen'
     endif
+    " au WinEnter * HiMatchOn
+    " au WinLeave * HiMatchOff
     " define :ReloadVimrc again {{{2
-    command! -nargs=0 ReloadVimrc let g:reload_save_win = winsaveview()|
-    \ let g:reload_save_cuwinid = win_getid()|
-    \ exe 'windo let b:reload_save_fold = &fdl'|
-    \ exe 'NoHiMatch'|
-    \ exe 'HiMatchOff'|
-    \ source $MYVIMRC|
-    \ set nohlsearch|
-    \ exe 'HiMatchOn'|
-    \ exe 'silent! windo let &fdl = b:reload_save_fold'|
-    \ exe 'silent! windo unlet b:reload_save_fold'|
-    \ call win_gotoid(g:reload_save_cuwinid)|
-    \ call winrestview(g:reload_save_win)|
-    \ unlet g:reload_save_win|
-    \ unlet g:reload_save_cuwinid
+    if !exists(':ReloadVimrc')
+        command! -nargs=0 ReloadVimrc exe g:ReloadVimrc.ret()
+    else
+        if exists('g:ReloadVimrc')
+            let i = 0
+            while i < len(g:ReloadVimrc.data)
+                if g:ReloadVimrc.data[i] =~? 'MYVIMRC'
+                    call insert(g:ReloadVimrc.data,'exe "HiMatchOn"',i+1)
+                    call insert(g:ReloadVimrc.data,'exe "HiMatchOff"',i)
+                    call insert(g:ReloadVimrc.data,'exe "NoHiMatch"',i)
+                    break
+                endif
+                let i += 1
+            endwhile
+        else
+            " g:ReloadVimrc.ret() {{{2
+            " save current window and restore current winodow after reloading .vimrc
+            let g:ReloadVimrc = {'data':['let g:ReloadVimrc.save_cuwinid = win_getid()','exe "NoHiMatch"','exe "HiMatchOff"','source $MYVIMRC','exe "HiMatchOn"','set nohlsearch','call win_gotoid(g:ReloadVimrc.save_cuwinid)'],'save_winid':''}
+            func! g:ReloadVimrc.ret() abort
+                return join(self.data,'|')
+            endfunc
+        endif
+    endif
     " }}}
 endif
 

@@ -29,6 +29,7 @@ if has('gui') " options for gvim {{2
     syntax enable
     set background=dark
     " change to if statement
+if has('vim_starting')
     try
         " colorscheme wombat256mod
         colorscheme iceberg
@@ -36,6 +37,7 @@ if has('gui') " options for gvim {{2
     catch
         colorscheme default
     endtry
+endif
 
     if has('win32')
         " for windows
@@ -53,7 +55,6 @@ if has('gui') " options for gvim {{2
         "     else
         "         set rop=
         "     endif
-
         " endif
         " set line space(vertical)
         set linespace=1
