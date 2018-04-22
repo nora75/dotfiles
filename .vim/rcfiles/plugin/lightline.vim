@@ -61,7 +61,7 @@ if neobundle#is_installed('lightline.vim')
     \ 'myfname': 'v:true' ,
     \ 'myff' : '(&ft!=#"help")&&(&ft!=#"unite")' ,
     \ 'filetype' : '(&ft!=#"")&&(&ft!=#"unite")' ,
-    \ 'modified': '(expand("%:t:r")!=#"")&&(&modified||!&modifiable)&&(&ft!="unite")&&(&ft!=?"help")' ,
+    \ 'modified': '(expand("%:t:r")!=#"")&&(&modified)&&(&ft!="unite")&&(&ft!=?"help")' ,
     \ 'readonly': '(&readonly)&&(&ft!="unite")&&(&ft!=?"help")' }
     " \ 'mycwd' : '' ,
     " \ 'mycurfiledir' : '' ,

@@ -25,15 +25,13 @@ if neobundle#is_installed('hl_matchit.vim')
     else
         let g:hl_matchit_hl_groupname = 'IncSearch'
     endif
-    " au {{{{4
+    " au {{{{3
     if s:isExistCol('iceberg')
         au ColorScheme iceberg let g:hl_matchit_hl_groupname = 'IncSearch'
     endif
     if s:isExistCol('twilight')
         au ColorScheme twilight let g:hl_matchit_hl_groupname = 'MatchParen'
     endif
-    " au WinEnter * HiMatchOn
-    " au WinLeave * HiMatchOff
     " define :ReloadVimrc again {{{2
     if !exists(':ReloadVimrc')
         command! -nargs=0 ReloadVimrc exe g:ReloadVimrc.ret()
@@ -42,7 +40,6 @@ if neobundle#is_installed('hl_matchit.vim')
             let i = 0
             while i < len(g:ReloadVimrc.data)
                 if g:ReloadVimrc.data[i] =~? 'MYVIMRC'
-                    call insert(g:ReloadVimrc.data,'exe "HiMatchOn"',i+1)
                     call insert(g:ReloadVimrc.data,'exe "HiMatchOff"',i)
                     call insert(g:ReloadVimrc.data,'exe "NoHiMatch"',i)
                     break

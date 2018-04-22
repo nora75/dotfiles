@@ -1,6 +1,6 @@
 " Author: NORA(nora75)
 " Since: 2017 SEP 1?
-" Last Changes: 2018 FEB 22
+" Last Changes: 2018 May 22
 
 if has('vim_starting')
     if &rtp !~ expand('~/.vim/') && &rtp !~? '\~/\.vim/'
@@ -23,6 +23,4 @@ if has('vim_starting')
 endif
 
 runtime! rcfiles/default/*.vim
-if exists(':NeoBundle')
-    runtime! rcfiles/plugin/*.vim
-endif
+runtime! rcfiles/rcfiles/*.vim

@@ -69,7 +69,7 @@ vnoremap <F12>              :<C-u>tabe $MYVIMRC<CR>
 " help file {{{3
 augroup  helpf
     au!
-    au Filetype help nnoremap <buffer> q<Space>       <C-w>c
+    au Filetype help nnoremap <buffer><nowait> q       <C-w>c
     au Filetype help nnoremap <buffer> <Enter> <C-]>
 augroup END
 
@@ -213,6 +213,8 @@ func! s:dontusethiskey() abort
     call s:mapkey('<PageDown>')
     call s:mapkey('<Home>')
     call s:mapkey('<End>')
+    call s:mapkey('<Insert>')
+    call s:mapkey('<Del>')
     return
 endfunc
 

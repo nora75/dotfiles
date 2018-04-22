@@ -118,9 +118,9 @@ func! WinDo(...) abort
     endfor
     exe 'silent! windo '.do
     redraw!
-    windo if do!~#'\Mnorm\[^z]\*z\[^hjkl]'|call s:restoreState(b:saved_state,'sf')|endif
-windo unlet b:saved_state
-call win_gotoid(cuwinid)
+    windo exe 'if do!~#''\Mnorm\[^z]\*z\[^hjkl]''|call s:restoreState(b:saved_state,''sf'')|endif'
+    windo unlet b:saved_state
+    call win_gotoid(cuwinid)
 endfunc
 
 "  ComcapOut(com) {{{2
@@ -180,9 +180,9 @@ func! GetComCont(com) abort
         return 'No such a command'
     endif
     if a:com =~ '^\u'
-        let ex = "redir => result|silent exe 'com' a:com|redir end"
+        let result = execute('com '.a:com,'silent!')
     else
-        let ex = 'redir => result|silent exe a:com|redir end'
+        let result = execute(a:com,'silent!')
     endif
     return result
     " let result = matchstr(split(result,"\n")[-1],'\M\S\.\*\s\*')
@@ -208,7 +208,7 @@ func! GetComOut(com) abort
     if exists(':'.a:com)
         return 'No such a command'
     endif
-    exe 'redir => result|silent exe' a:com.'|redir end'
+    let result = execute(a:com,'silent!')
     return result
 endfunc
 
@@ -305,17 +305,20 @@ endfunc
 "     let marke = matchstr(&fmr,'\M,\zs\.\+')
 "     let lines = getline(a:line1,a:line2)
 "     let back_lines = deepcopy(lines)
+"     call append(line('$'),marks.marke)
+"     call append(line('$'),lines)
+"     call append(line('$'),back_lines)
 "     call filter(lines,'v:val =~# "\\M'.marks.'\\d\\*"')
 "     " call filter(lines,'v:val =~# "\\M'.marks.'\\d\\*" || v:val =~# "\\M'.marke.'"')
 "     let back_sortlines = deepcopy(lines)
 "     let sortlist = {}
 "     let i = 0
 "     let k = 0
-"     let count = { 1 : 0 , 2 : 0 , 3 : 0 , 4 : 0 , 5 : 0 , 6 : 0 , 7 : 0 , 8 : 0 , 9 : 0 , 10 : 0 , 11 : 0 , 12 : 0 , 13 : 0 , 14 : 0 , 15 : 0 , 16 : 0 , 17 : 0 , 18 : 0 , 19 : 0 , 20 : 0 }
+"     let foldcount = { 1 : 0 , 2 : 0 , 3 : 0 , 4 : 0 , 5 : 0 , 6 : 0 , 7 : 0 , 8 : 0 , 9 : 0 , 10 : 0 , 11 : 0 , 12 : 0 , 13 : 0 , 14 : 0 , 15 : 0 , 16 : 0 , 17 : 0 , 18 : 0 , 19 : 0 , 20 : 0 }
 "     let t = ''
 "     while i < len(lines)
 "         let n = matchstr(lines[i],'M'.marks.'\(\d\*\)')
-"         while true
+"         while v:true
 "             if lines[i] =~# '\M'.marks.'\d\*'
 "                 if n >= matchstr(lines[i],'M'.marks.'\(\d\*\)')
 "                     let k += 1
@@ -689,6 +692,7 @@ endfunc
 "         endif
 "     endtry
 " endfunc
+" }}}
 " }}}
 
 " vim: set fdm=marker fdl=1 fmr={{{,}}} : }}}

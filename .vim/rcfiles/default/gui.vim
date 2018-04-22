@@ -56,7 +56,7 @@ endif
         "         set rop=
         "     endif
         " endif
-        " set line space(vertical)
+        " set linespace(vertical space)
         set linespace=1
         " Automatically measure the width of some UCS characters and decide
         if has('kaoriya')

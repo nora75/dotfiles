@@ -21,18 +21,15 @@ NeoBundle 'tpope/vim-repeat'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'kana/vim-submode'
-NeoBundle 'xolox/vim-misc'
-NeoBundle 'xolox/vim-session', {
-\ 'depends' : 'xolox/vim-misc',
-\ }
+NeoBundle 'mhinz/vim-startify'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'junegunn/vim-easy-align'
 " NeoBundle 'powerline/powerline', { 'rtp' : 'powerline/bindings/vim'}
-NeoBundle 'itchyny/lightline.vim'
+" NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'simeji/winresizer'
 
 " highlight {{{3
 NeoBundle 't9md/vim-quickhl'
-" NeoBundle 'osyo-manga/vim-brightest'
 NeoBundle 'tmhedberg/matchit'
 NeoBundle 'vimtaku/hl_matchit.vim', {
 \ 'depends' : 'tmhedberg/matchit',
@@ -74,6 +71,7 @@ NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'kannokanno/previm', {
 \ 'depends' :  'tyru/open-browser.vim',
 \ }
+NeoBundle 'suan/vim-instant-markdown'
 NeoBundle 'alvan/vim-closetag'
 " NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'nora75/markdowntable'

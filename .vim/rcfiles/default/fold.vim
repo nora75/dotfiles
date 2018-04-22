@@ -38,7 +38,6 @@ function! MyFoldText() abort
     call add(sub,repeat('-',s:leftbar))
     call add(sub,line)
     call add(sub,g:wafuw)
-    " echom off
     call add(sub,off)
     let width = strwidth(off) + s:leftbar
     if &nu
@@ -56,7 +55,7 @@ function! MyFoldText() abort
     if flag
         call remove(sub,2)
     endif
-    let width = winwidth(0) - (strwidth(line) + width + len(sub)-1)
+    let width = winwidth(0) - (strdisplaywidth(join(sub,' '))-1)
     if width > 0
         let r = s:leftbar + 2
         if width - r > 0
