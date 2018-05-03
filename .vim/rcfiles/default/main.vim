@@ -36,12 +36,17 @@ set noswf
 " set foldmarker={{{,}}}
 " movement over line wrap in this char
 set whichwrap=b,s,h,l
+" show can't see charactors
+" set list
+" set listchars=eol:$
 " when change on out of Vim auto reload
 set autoread
 " when split or close window, set all window size equal 'ea'
 set equalalways
 " save command history more (default:50)
 set history=100
+" don't bel
+set belloff=all
 " auto adjust indent before line when use \ in script
 let g:vim_indent_cont=0
 " don't make number when convert to html

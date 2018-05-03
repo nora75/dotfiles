@@ -12,11 +12,11 @@ func! MyStl() abort
     let first = '%#StlLeft0# '
     let cwd = StlCwd()
     let cfd = StlCurFileDir()
-    let waf = ' | '.StlWafu().'  '
+    let waf = ' | '.StlWafu()
     let second = ' %#StlLeft1# %f '
     let mo = s:mod()
     let ro = s:ro()
-    let third = '%='
+    let third = '%#StlCent#%='
     let forth = '%#StlRight0#'
     let move = '%{hasmapto("j")?" M ":""}'
     let ff = '%{(&ft!="help")?''| ''.toupper(strcharpart(&ff,-1,2)).'' '':""}'
@@ -126,6 +126,7 @@ func! s:col() abort
     hi StlLeft1 ctermfg=231 ctermbg=240 guifg=#ffffff guibg=#585858
     hi StlRight0 term=bold gui=bold ctermfg=241 ctermbg=252 guifg=#606060 guibg=#d0d0d0
     hi StlRight1 term=bold gui=bold ctermfg=231 ctermbg=240 guifg=#ffffff guibg=#585858
+    hi StlCent term=bold gui=bold ctermfg=235 ctermbg=235 guifg=#262626 guibg=#262626
 endfunc
 
 " s:mod() {{{3

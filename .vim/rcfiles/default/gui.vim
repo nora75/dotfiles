@@ -43,7 +43,8 @@ endif
         " for windows
         " set guifont=MS_Gothic:h12:cSHIFTJIS
         " set guifont=MS_Mincho:h12:cSHIFTJIS
-        set guifont=Myrica_M:h12:cSHIFTJIS
+        set guifont=Myrica_M:h11:cSHIFTJIS
+        " set linespace=2
         " set guifont=MyricaM_M:h12:cSHIFTJIS
         " want use directx, but move very slow in my device
         " if v:version >= 800

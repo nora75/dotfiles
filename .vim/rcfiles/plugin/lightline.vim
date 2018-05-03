@@ -39,7 +39,7 @@ if neobundle#is_installed('lightline.vim')
     \ 'lineinfo': '%3l:%-2v',
     \ 'close': '%999X X ',
     \ 'myff' : '%{(&ft!=#"help")&&(&ft!=#"unite")?toupper(strcharpart(&ff,-1,2)):""}' ,
-    \ 'myfname' : '%{expand("%:t")!~"unite"?expand("%:t"):strpart(unite#get_status_string(),0,stridx(unite#get_status_string()," "))}' ,
+    \ 'myfname' : '%{expand("%:t:r")!~"unite"?expand("%:t:r"):strpart(unite#get_status_string(),0,stridx(unite#get_status_string()," "))}' ,
     \ 'mysearch' : '%{strcharpart(@/,0,5)}' ,
     \ 'mymdtoc' : '%{(&ft==#"markdown")&&(b:Markdown_AuToc)?"T":""}' ,
     \ 'mymove' : '%{hasmapto("j")&&(&ft!=#"unite")?"M":""}' }

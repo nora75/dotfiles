@@ -46,7 +46,7 @@ function! MyFoldText() abort
     let flag = v:false
     let wwidth = strdisplaywidth(g:wafuw)
     let long = winwidth(0) - width - wwidth
-    let width += strdispalywidth(line) + wwidth + len(sub)-1
+    let width += strdisplaywidth(line) + wwidth + len(sub)-1
     if width >= winwidth(0)
         let long -= wwidth
         let flag = v:true
@@ -66,7 +66,7 @@ function! MyFoldText() abort
         call insert(sub,repeat('-',right),-1)
     endif
     let line = join(sub,' ')
-    let long = winwidth(0) - strdispalywidth(line)
+    let long = winwidth(0) - strdisplaywidth(line)
     if long >= 0
         let sub[-1] = sub[-1].repeat('-',long)
     else

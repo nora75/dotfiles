@@ -1,3 +1,7 @@
+" variables {{{1
+" declation of tempname
+let s:tmpn = { 'file' : tempname() , 'lock' : v:false , 'count' : '1' }
+
 " functions {{{1
 " s:Pdftxt(exe,...) {{{2
 " exe au BufreadPost *.pdf
@@ -5,11 +9,13 @@
 " input in argument and optional command only must use in the execute file
 func! s:Pdftxt() abort
     let input = ' "%"'
-    let tmpn = tempname()
+    " if v:true
+    " endif
+    let tmpn = get(s:tmpn,'file'.get(s:tmpn,'count'))
     if executable('pdftotext')
-        let vexe = 'pdftotext -nopgbrk -layout -enc UTF-8 -eol unix -q '.input.tmpn
+        let vexe = 'pdftotext -nopgbrk -layout -enc UTF-8 -eol unix -q '.input.s:tmpn.file1
     elseif executable('mutool')
-        let vexe = 'mutool draw -F txt -o '.tmpn.input
+        let vexe = 'mutool draw -F txt -o '..input
     else
         echohl WarningMsg
         echo "Vim can't convert pdf to text.Because You don't have pdftotext or mutool"
@@ -17,12 +23,12 @@ func! s:Pdftxt() abort
         return
     endif
     exe 'silent !'.vexe
-    exe 'e' tmpn
-    call s:au(tmpn)
+    exe 'e' s:tmpn.file1
+    call s:au(s:tmpn.file1)
     return
 endfunc
 
-" s:au(tmpn) {{{2
+" s:au(s:tmpn.file1) {{{2
 " declare autocmd in current buffer
 func! s:au(tmpn) abort
     if filereadable(a:tmpn) && getftype(a:tmpn) == 'file' && expand('%:t') ==# a:tmpn
@@ -42,13 +48,27 @@ endfunc
 aug Myau " {{{2
     au!
     " read pdf {{{3
-        au BufReadPost *.pdf silent call s:Pdftxt()
+    au BufReadPost *.pdf silent call s:Pdftxt()
+    au WinLeave * silent HiMatchOff
+    au WinEnter * silent HiMatchOn
 aug END
 
 " augroup backup take backup by name{{{1
 "     au!
 "     autocmd BufWritePre * let &bex = '.' . strftime("%Y%m%d")
 " augroup END
+
+" BinaryXXD {{{2
+" from web site
+augroup BinaryXXD 
+    autocmd!
+    autocmd BufReadPre *.bin let &binary =1
+    autocmd BufReadPost * if &binary | silent %!xxd -g 1
+    autocmd BufReadPost * set ft=xxd | endif
+    autocmd BufWritePre * if &binary | %!xxd -r | endif
+    autocmd BufWritePost * if &binary | silent %!xxd -g 1
+    autocmd BufWritePost * set nomod | endif
+augroup END
 
 
 " aug debug {{{2

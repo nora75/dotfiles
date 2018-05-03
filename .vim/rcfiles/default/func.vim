@@ -12,7 +12,9 @@ call add(g:DontFull,['：',':'])
 call add(g:DontFull,['　',' '])
 call add(g:DontFull,['−','-'])
 " call add(g:DontFull,[÷,\/])
-
+let g:DontFullDel = []
+call add(g:DontFullDel,'「')
+call add(g:DontFullDel,'」')
 " Use {{{1
 " AppendBlankLine() {{{2
 " append blank line at all selected lines
@@ -47,10 +49,12 @@ endfunction
 " do normal comamnd and restore window view and last search if buffer isn't
 " null
 func! DoBuffer(ncom)
+    let save = s:saveState()
     let lines = getline(0,line('$'))
     if lines != ['']
         call DoNormal(a:ncom)
     endif
+    call s:restoreState(save,'se')
     return
 endfunc
 
@@ -106,7 +110,7 @@ func! Effc()
     return
 endfunc
 
-" Windo(...) {{{2
+" Windo([{command}]) {{{2
 " function to :Windom
 " separate all args with bar
 func! WinDo(...) abort
@@ -156,7 +160,7 @@ endfunc
 " make new tab for memo
 func! NewTabScratch() abort
     tabnew
-    silent file #MEMO
+    silent file \#MEMO
     setl nonu bt=nofile noswf nobl bh=wipe ft=vim
 endfunc
 
@@ -165,7 +169,7 @@ endfunc
 " make new buffer for memo
 func! NewBufScratch() abort
     new
-    silent file #MEMO
+    silent file \#MEMO
     setl nonu bt=nofile noswf noma nobl bh=wipe ft=vim
 endfunc
 
@@ -252,15 +256,21 @@ endfunc
 " function for :DontFullWidth
 " substitute full width(em) characters to half width characters
 fun! DontFullWidth()
-    let out = []
+    let change = []
+    let del = []
     let save = s:saveState()
     for c in g:DontFull
-        call add(out,c[0])
-        exe 'silent %substitute/'.c[0].'/'.c[1].'/g'
+        call add(change,c[0])
+        exe 'silent! %substitute/'.c[0].'/'.c[1].'/g'
+    endfor
+    for c in g:DontFullDel
+        call add(del,c)
+        exe 'silent! %substitute/'.c.'//g'
     endfor
     silent! w
     call s:restoreState(save,'se')
-    echo 'change' join(map(out,'"''".v:val."''"'),',') 'to half width'
+    echo 'change' join(map(change,'"''".v:val."''"'),',') 'to half width'
+    echo 'delete' join(map(del,'"''".v:val."''"'),',')
     return
 endfunc
 
@@ -621,6 +631,7 @@ endfunction
 " must restore view
 " {flag}: s:search e:erromsg f:fdl r:registers m:marks j:jumps c:commandline
 " h:search history
+" all and -(minus) are support specially
 func! s:restoreState(rest,...)
     let flags = join(a:000)
     let do = []

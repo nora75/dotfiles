@@ -91,6 +91,11 @@ command! -nargs=0 SwitchColorScheme call SwitchColorScheme()
 " The funciton for markdown
 " Add double spaces to line's last
 command! -nargs=0 AddLastDoubleSpaces call AddLastDoubleSpaces()
-" }}}
+
+" :BinaryEdit {{{2
+" edit current file in binary mode
+" convert current file to binary by xxd and set binary in vim
+" -g 1 is xxd's option of display by 1 byte (in default 2 bytes)
+command! BinaryEdit exe '%!xxd -g 1'|set binary|set ft=xxd
 
 " vim: set fdm=marker fdl=1 fmr={{{,}}} : }}}

@@ -1,3 +1,4 @@
+scriptencoding utf-8
 " neobundle initialize {{{2
 filetype off
 
@@ -25,8 +26,9 @@ NeoBundle 'mhinz/vim-startify'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'junegunn/vim-easy-align'
 " NeoBundle 'powerline/powerline', { 'rtp' : 'powerline/bindings/vim'}
-" NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'simeji/winresizer'
+NeoBundle 'ryanoasis/vim-devicons'
 
 " highlight {{{3
 NeoBundle 't9md/vim-quickhl'
@@ -71,7 +73,6 @@ NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'kannokanno/previm', {
 \ 'depends' :  'tyru/open-browser.vim',
 \ }
-NeoBundle 'suan/vim-instant-markdown'
 NeoBundle 'alvan/vim-closetag'
 " NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'nora75/markdowntable'
@@ -80,6 +81,8 @@ NeoBundle 'nora75/markdowntable'
 NeoBundle 'vim-scripts/twilight'
 " too many colorschemes
 NeoBundle 'flazz/vim-colorschemes'
+" たのしー!すっごーい!
+" NeoBundle 'machakann/vim-colorscheme-kemonofriends'
 
 " test {{{3
 NeoBundle 'vim-scripts/AdvancedSorters'

@@ -12,9 +12,9 @@ nmap     <Space>t [TabG]
 " tI make new tab at last
 nnoremap <silent> [TabG]I :<C-u>tabl<Bar>tabnew<CR>
 " tx close! current tab
-nnoremap <silent> [TabG]x :<C-u>tabc!<CR>
+nnoremap <silent> [TabG]x :<C-u>try<Bar>tabc!<Bar>catch<Bar>qa!<Bar>endtry<CR>
 " tc same as above one
-nnoremap <silent> [TabG]c :<C-u>tabc<CR>
+nnoremap <silent> [TabG]c :<C-u>try<Bar>tabc<Bar>catch<Bar>qa<Bar>endtry<CR>
 " tn go to next tab
 " nnoremap <silent> [TabG]n :tabnext<CR>
 " tp go to previous tab

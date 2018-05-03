@@ -1,29 +1,34 @@
-if neobundle#is_installed('vim-easy-align')
+if neobundle#is_installed('vim-startify')
     " custom list {{{2
     let g:startify_bookmarks = [ { 'v':'~/.vim/rcfiles/' } ]
     let g:startify_session_dir = '~/.vim/session'
+    let g:startify_session_number = 10
+    let g:startify_session_sort = 1
+    let g:startify_session_persistence = 1
     let g:startify_lists = [
     \ { 'type': 'sessions',  'header': [   'Sessions']       },
     \ { 'type': 'bookmarks', 'header': [   'Bookmarks']      },
     \ { 'type': 'files',     'header': [   'MRU']            },
-    \ { 'type': 'dir',       'header': [   'MRU '. getcwd()] },
     \ { 'type': 'commands',  'header': [   'Commands']       },
     \ ]
+    " \ { 'type': 'dir',       'header': [   'MRU '. getcwd()] },
     let g:startify_session_before_save = [
     \ 'echo "Cleaning up before saving.."',
     \ 'silent! NERDTreeTabsClose'
     \ ]
     if neobundle#is_installed('vim-indent-guides')
         aug startify
-            au BufRead Startify if !exists('g:startifyIndent')|let g:startifyIndent = 1|IndentGuidesEnable|endif
-            " au BufEnter,WinEnter,FileType * if !exists('g:startifyIndent')|let g:startifyIndent = 1|IndentGuidesEnable|endif
-            au BufEnter Startify IndentGuidesDisable|let g:startifyIndent = 0
+            au User Startified IndentGuidesDisable|au BufLeave <buffer> IndentGuidesEnable
         aug end
     endif
+    let g:startify_commands = [
+    \ { 'd' : [ 'open default session', 'SLoad default.vim' ] },
+    \ { 'o' : [ 'open default session', 'SLoad default.vim' ] },
+    \ { 'h' : ':help' },
+    \ ]
 
     " custom header {{{2
     let s:StartifyHeader = { 'data' : [
-    \ '                           ',
     \ '         __                ',
     \ ' __  __ /\_\    ___ ___    ',
     \ '/\ \/\ \\/\ \ /'' __` __`\ ',
@@ -49,4 +54,12 @@ if neobundle#is_installed('vim-easy-align')
         return self.data
     endfunc
     let g:startify_custom_header = s:StartifyHeader.center()
+    let g:startify_skiplist = [
+    \ 'COMMIT_EDITMSG',
+    \ 'bundle/.*/doc',
+    \ 'bundle/.*/doc',
+    \ '/plugins/vimdoc-ja/doc/',
+    \ ]
+    let g:startify_padding_left = 4
+    let g:startify_fortune_use_unicode = 1
 endif
