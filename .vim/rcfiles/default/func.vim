@@ -110,7 +110,7 @@ func! Effc()
     return
 endfunc
 
-" Windo([{command}]) {{{2
+" Windo({command}...) {{{2
 " function to :Windom
 " separate all args with bar
 func! WinDo(...) abort
@@ -123,7 +123,11 @@ func! WinDo(...) abort
     exe 'silent! windo '.do
     redraw!
     windo exe 'if do!~#''\Mnorm\[^z]\*z\[^hjkl]''|call s:restoreState(b:saved_state,''sf'')|endif'
-    windo unlet b:saved_state
+    try
+        echom b:saved_state
+        windo unlet b:saved_state
+    catch
+    endtry
     call win_gotoid(cuwinid)
 endfunc
 
@@ -132,6 +136,10 @@ endfunc
 " do command and catch output in commandline
 func! ComcapOut(com) abort
     let result = GetComOut(a:com)
+    if result == -1
+        echo 'No such a command'
+        return
+    endif
     new
     let fname = 'output:'.a:com
     silent file`=fname`
@@ -153,6 +161,30 @@ func! GetFunc(com) abort
     silent 1d_
     setl nonu bt=nofile noswf nobl bh=wipe ft=vim
     return
+endfunc
+
+" GetScNum({scriptname}) {{{2
+" return script number by name
+func! GetScNum(scname) abort
+    let result = execute('script','silent!')
+    let result = split(result,"\n")
+    let result = map(result,function('s:mapfunc'))
+    call filter(result,'v:val[v:key] =~? ''\M'.a:scname.'''')
+    if len(result) < 1
+        let result = 'No such script'
+    elseif len(result) == 1
+        let result = 
+    elseif len(result) > 1
+        let ech = []
+        for i in result
+            call extend(ech,values(i),len(ech))
+        endfor
+        let ech = map(ech,'v:key.''.''.v:val')
+        let ech = inputlist(ech)
+        let result = keys(result[ech])
+    endif
+    redraw
+    return result[0]
 endfunc
 
 " NewTabScratch() {{{2
@@ -210,7 +242,7 @@ endfunc
 " need perfect matching command name input
 func! GetComOut(com) abort
     if exists(':'.a:com)
-        return 'No such a command'
+        return -1
     endif
     let result = execute(a:com,'silent!')
     return result
@@ -565,6 +597,26 @@ func! Reformatmd(line1,line2) abort
     " call append(line('$'),
 endfunc
 
+" PluginCheck({type}) {{{2
+" Using in :PluginCheck
+" return executable command of view plugins directory by case
+func! PluginCheck(...) abort
+    let ret = 'e ~\.vim\bundle\'
+    if a:0 == 0
+        return ret
+    endif
+    let type = a:1
+    if type =~? 't'
+        return 'tab'.ret
+    elseif type =~? 'n'
+        return 'new|'.ret
+    elseif type =~? 's'
+        return 'sp|'.ret
+    elseif type =~? 'v'
+        return 'vs|'.ret
+    endif
+endfunc
+
 " base functions{{{1
 " s:saveState() {{{2
 " save current buffer's state and return it
@@ -664,6 +716,12 @@ func! s:restoreState(rest,...)
         exe c
     endfor
     return
+endfunc
+
+" s:mapfunc(in,val) {{{2
+" used by GetScNum()
+function! s:mapfunc(key,val)
+    return { a:key : matchstr(a:val,'\M^\s\*\d\+:\s\(\.\+\\\)\+\zs\.\+$') }
 endfunc
 
 " don't use{{{1

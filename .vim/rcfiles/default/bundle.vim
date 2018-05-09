@@ -25,10 +25,14 @@ NeoBundle 'kana/vim-submode'
 NeoBundle 'mhinz/vim-startify'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'junegunn/vim-easy-align'
+
+" powerline's classification(分類) {{{4
 " NeoBundle 'powerline/powerline', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'simeji/winresizer'
+" fonts for powerline {{{5
 NeoBundle 'ryanoasis/vim-devicons'
+" NeoBundle 'powerline/fonts'
 
 " highlight {{{3
 NeoBundle 't9md/vim-quickhl'

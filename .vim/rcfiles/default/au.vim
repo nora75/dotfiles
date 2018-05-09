@@ -11,9 +11,9 @@ func! s:Pdftxt() abort
     let input = ' "%"'
     " if v:true
     " endif
-    let tmpn = get(s:tmpn,'file'.get(s:tmpn,'count'))
+    let tmpn = get(s:tmpn,'file')
     if executable('pdftotext')
-        let vexe = 'pdftotext -nopgbrk -layout -enc UTF-8 -eol unix -q '.input.s:tmpn.file1
+        let vexe = 'pdftotext -nopgbrk -layout -enc UTF-8 -eol unix -q '.input.tmpn
     elseif executable('mutool')
         let vexe = 'mutool draw -F txt -o '..input
     else
@@ -23,15 +23,17 @@ func! s:Pdftxt() abort
         return
     endif
     exe 'silent !'.vexe
-    exe 'e' s:tmpn.file1
-    call s:au(s:tmpn.file1)
+    exe 'e' tmpn
+    call s:au(tmpn)
     return
 endfunc
 
 " s:au(s:tmpn.file1) {{{2
 " declare autocmd in current buffer
 func! s:au(tmpn) abort
-    if filereadable(a:tmpn) && getftype(a:tmpn) == 'file' && expand('%:t') ==# a:tmpn
+    if getline(1,line('$')) !=# [''] || 
+    \( filereadable(a:tmpn) && getftype(a:tmpn) == 'file'
+    \ && expand('%:t') ==# a:tmpn )
         silent! exe 'g//d_'
         silent 1
         setl bt=nofile noswf nobl bh=wipe ft=pdf
@@ -49,8 +51,6 @@ aug Myau " {{{2
     au!
     " read pdf {{{3
     au BufReadPost *.pdf silent call s:Pdftxt()
-    au WinLeave * silent HiMatchOff
-    au WinEnter * silent HiMatchOn
 aug END
 
 " augroup backup take backup by name{{{1

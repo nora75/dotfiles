@@ -98,4 +98,13 @@ command! -nargs=0 AddLastDoubleSpaces call AddLastDoubleSpaces()
 " -g 1 is xxd's option of display by 1 byte (in default 2 bytes)
 command! BinaryEdit exe '%!xxd -g 1'|set binary|set ft=xxd
 
+" :GetScNum {{{2
+" echo script number by name
+command! -nargs=+ -complete=file_in_path GetScNum echo GetScNum(<f-args>)
+
+" :PluginCheck {{{2
+" cd to plugin's dir and view thir sources
+command! -nargs=* PluginCheck exe PluginCheck(<f-args>)
+
+" }}}
 " vim: set fdm=marker fdl=1 fmr={{{,}}} : }}}

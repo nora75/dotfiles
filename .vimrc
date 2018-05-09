@@ -24,3 +24,4 @@ endif
 
 runtime! rcfiles/default/*.vim
 runtime! rcfiles/plugin/*.vim
+redraws!

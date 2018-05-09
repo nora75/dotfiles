@@ -92,6 +92,9 @@ endfun
 " function of wafu
 " return some variation of wafu
 function! StlWafu()
+    " if !exists('b:myvariables_iswinactive')
+    "     return ''
+    " endif
     let wafuenc = get(s:, 'wafuenc', &encoding)
     if wafuenc != &encoding
         let g:wafustr = map(g:wafustr, 'iconv(v:val,g:wafuenc,&encoding)')
@@ -163,3 +166,11 @@ command! -nargs=0 ShowError echo s:RetError()
 " :GoError {{{3
 " Go help file of last error
 command! -nargs=0 GoError exe 'help' matchstr(s:RetError(),'\ME\d\+')
+
+" au {{{2
+" StlAu
+" aug StlAu
+"     au!
+"     au BufEnter * silent! let b:myvariables_iswinactive = 1
+"     au BufLeave * silent! unlet b:myvariables_iswinactive
+" aug END
