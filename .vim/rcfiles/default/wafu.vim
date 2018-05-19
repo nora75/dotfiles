@@ -18,9 +18,9 @@ let g:wafuerrlong = []
 let g:wafuerrshort = []
 let i = 0
 while i < 6
-    call add(g:wafustr,wafun)
-    call add(g:wafuerrshort,wafun)
-    call add(g:wafuerrlong,wafun)
+    call add(g:wafustr,g:wafun)
+    call add(g:wafuerrshort,g:wafun)
+    call add(g:wafuerrlong,g:wafun)
     let i += 1
 endwhile
 let i = 0

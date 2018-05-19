@@ -1,19 +1,28 @@
 scriptencoding utf-8
 
+" initialize {{{2
+" set variables if not exist
 set ls=2
-set statusline=%!MyStl()
+if !exists('g:wafun')
+    source ~\.vim\rcfiles\default\wafu.vim
+endif
 
 " functions {{{2
 " MyStl() {{{3
 " function of setting statusline value
 " number name variable is separator (colorscheme or alignment)
-func! MyStl() abort
+func! s:stl(active) abort
     call s:col()
-    let first = '%#StlLeft0# '
-    let cwd = StlCwd()
+    let first = ''
     let cfd = StlCurFileDir()
-    let waf = ' | '.StlWafu()
+    let cwd = ''
+    let waf = ''
     let second = ' %#StlLeft1# %f '
+    if !a:active
+        let cwd = StlCwd()
+        let waf = ' | '.StlWafu()
+        let first = '%#StlLeft0# '
+    endif
     let mo = s:mod()
     let ro = s:ro()
     let third = '%#StlCent#%='
@@ -158,6 +167,16 @@ func! s:RetError() abort
     return get(s:, 'lasterrormsg', '')
 endfunc
 
+" s:stlupdate() abort {{{3
+" update stl in all window
+func! s:stlupdate() abort
+    let w = winnr()
+    let s = winnr('$') == 1 ? [s:stl(0)] : [s:stl(0), s:stl(1)]
+    for n in range(1, winnr('$'))
+        call setwinvar(n, '&statusline', s[n!=w])
+    endfor
+endfunc
+
 " Commands {{{2
 " :ShowError {{{3
 " show last error
@@ -169,8 +188,15 @@ command! -nargs=0 GoError exe 'help' matchstr(s:RetError(),'\ME\d\+')
 
 " au {{{2
 " StlAu
-" aug StlAu
-"     au!
-"     au BufEnter * silent! let b:myvariables_iswinactive = 1
-"     au BufLeave * silent! unlet b:myvariables_iswinactive
-" aug END
+aug StlAu
+    au!
+    au BufUnload * call s:stlupdate()
+    au BufWinEnter * call s:stlupdate()
+    au WinEnter * call s:stlupdate()
+    au FileType * call s:stlupdate()
+    au CursorMoved * call s:stlupdate()
+    au BufWritePost * call s:stlupdate()
+aug END
+
+" initialize {{{2
+call s:stlupdate()

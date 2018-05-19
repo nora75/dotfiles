@@ -1,7 +1,7 @@
 " map {{{1
 " normal mode {{{2
 " command (ex) {{{3
-nnoremap ;                  :<C-u>
+nnoremap ;                  :
 nnoremap :                  ;
 nmap     q;                 q:<C-u>
 " movement {{{3
@@ -14,12 +14,15 @@ nnoremap <S-Tab>            gT
 " <Space>map {{{3
 " <Space> <Nop> {{{4
 nnoremap <Space>            <Nop>
-" yank select all {{{4
+vnoremap <Space>            <Nop>
+" misc {{{4
 nnoremap <silent> <Space>a           :<C-u>keepjumps norm! ggVG<CR>
 nnoremap <silent> <Space>y           :<C-u>call DoBuffer('ggVGy')<CR>
 nnoremap <silent> <Space>=           :<C-u>call DoBuffer('gg=G')<CR>
 " switch movement {{{4
 nnoremap <silent> <Space>sm :<C-u>call SwitchMoves()<CR>
+" switch autosave {{{4
+nnoremap <silent> <Space>sa :<C-u>call SwitchASave()<CR>
 " commands {{{4
 nnoremap <silent> <Space>cd          :<C-u>CdCurrent<CR>
 nnoremap <Space>e           :<C-u>echo<Space>
@@ -57,15 +60,15 @@ nnoremap <F1>               :<C-u>ReloadVimrc<CR>
 vnoremap <F1>               :<C-u>ReloadVimrc<CR>
 nnoremap <F3>               :<C-u>Windom norm zR<CR>
 vnoremap <F3>               :<C-u>Windom norm zR<CR>
-nnoremap <F5>               :<C-u>e!<CR>
-vnoremap <F5>               :<C-u>e!<CR>
+nnoremap <F5>               :<C-u>silent! e!<CR>
+vnoremap <F5>               :<C-u>silent! e!<CR>
 nnoremap <F12>              :<C-u>tabe $MYVIMRC<CR>
 vnoremap <F12>              :<C-u>tabe $MYVIMRC<CR>
 
 " help file {{{3
 augroup  helpf
     au!
-    au Filetype help nnoremap <buffer><nowait> q       <C-w>c
+    au Filetype help nnoremap <buffer>> q       <C-w>c
     au Filetype help nnoremap <buffer> <Enter> <C-]>
 augroup END
 
@@ -137,7 +140,7 @@ endfunc
 func! s:mapkey(k) abort
     exe 'nnoremap <silent>' a:k ':<C-u>call <SID>rec()<CR>'
     exe 'vnoremap <silent>' a:k ':<C-u>call <SID>rec()<CR>'
-    exe 'inoremap <silent>' a:k '<ESC>:<C-u>call <SID>rec()<CR>'
+    exe 'inoremap <silent>' a:k '<C-o>:<C-u>call <SID>rec()<CR>'
     return
 endfunc
 
@@ -164,4 +167,3 @@ call s:dontusethiskey()
 " }}}
 
 " vim: set fdm=marker fdl=1 fmr={{{,}}} :
-

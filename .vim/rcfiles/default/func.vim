@@ -1,4 +1,5 @@
 scriptencoding utf-8
+
 " variables {{{1
 " script local variables {{{2
 let s:tmpn = tempname()
@@ -81,6 +82,18 @@ func! SwitchMoves()
         vnoremap gj j
         vnoremap gk k
     endtry
+    return
+endfunc
+
+" SwitchASave {{{2
+" switch auto save
+func! SwitchASave() abort
+    if !exists('#Myau#ASave')
+        au! Myau CursorHold
+    else
+        au Myau CursorHold <buffer> if !&ro|silent! w|endif
+    endif
+    return
 endfunc
 
 " Effc() {{{2
@@ -615,6 +628,7 @@ func! PluginCheck(...) abort
     elseif type =~? 'v'
         return 'vs|'.ret
     endif
+    return
 endfunc
 
 " base functions{{{1

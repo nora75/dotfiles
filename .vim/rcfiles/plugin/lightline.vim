@@ -4,6 +4,9 @@ endif
 " options {{{2
 set laststatus=2
 let g:unite_force_overwrite_statusline = 0
+aug StlAu
+    au!
+aug END
 
 " g:lightline {{{2
 let g:lightline = {}
@@ -11,7 +14,7 @@ let g:lightline = {}
 " active {{{3
 let g:lightline.active = { 'left' : [ [ 'mycwd' , 'mycurfiledir' , 'mywafu' ] ,
 \ [ 'myfname', 'modified' , 'readonly' ] ] ,
-\ 'right' : [ [ 'myff', 'myfenc', 'filetype' ] , [ 'myunite' ] , [ 'mymove' , 'mymdtoc' ] , [ 'mysearch' ] ] }
+\ 'right' : [ [ 'myfenc', 'filetype' ] , [ 'myunite' ] , [ 'mymdtoc' ] ] }
 
 " inactive {{{3
 let g:lightline.inactive = {
@@ -35,16 +38,16 @@ let g:lightline.colorscheme = 'default'
 let g:lightline.component = {
 \ 'modified': '%{(&ft!=#"unite")&&(&ft!=#"help")&&(&mod)?"+":""}',
 \ 'bufnum': '%n',
-\ 'readonly': '%{(&ft!=#"unite")&&(&ft!=#"help")&&(&ro)?"RO":""}',
+\ 'readonly': '%{(&ft!=#"unite")&&(&ft!=#"help")&&(&ro)?"R":""}',
 \ 'filetype': '%{(&ft!=#"unite")?&ft:""}',
 \ 'percent': '%3p%%',
 \ 'lineinfo': '%3l:%-2v',
 \ 'close': '%999X X ',
-\ 'myff' : '%{(&ft!=#"help")&&(&ft!=#"unite")?toupper(strcharpart(&ff,-1,2)):""}' ,
-\ 'myfname' : '%{expand("%:t:r")!~"unite"?expand("%:t:r"):strpart(unite#get_status_string(),0,stridx(unite#get_status_string()," "))}' ,
+\ 'myff' : '%{(&ft!=#"help")&&(&ft!=#"unite")&&(&ff!="unix")?toupper(strcharpart(&ff,-1,2)):""}' ,
+\ 'myfname' : '%{(&ft!=#"unite")?expand("%:t:r"):strpart(unite#get_status_string(),0,stridx(unite#get_status_string()," "))}' ,
 \ 'mysearch' : '%{strcharpart(@/,0,5)}' ,
 \ 'mymdtoc' : '%{(&ft==#"markdown")&&(b:Markdown_AuToc)?"T":""}' ,
-\ 'mymove' : '%{hasmapto("j")&&(&ft!=#"unite")?"M":""}' }
+\ 'mymove' : '%{hasmapto("gj")?"M":""}' }
 
 if neobundle#is_installed('unite.vim')
     call extend(g:lightline.component,{'myunite' : '%{(&ft!="unite")?matchstr(unite#get_status_string(),"\M|\.\+$"):""}'})
@@ -59,7 +62,6 @@ let g:lightline.component_function = {
 
 " component visible {{{3
 let g:lightline.component_visible_condition = {
-\ 'mymove': '(&ft=="markdown")&&(b:Markdown_AuToc)' ,
 \ 'myfname': 'v:true' ,
 \ 'myff' : '(&ft!=#"help")&&(&ft!=#"unite")' ,
 \ 'filetype' : '(&ft!=#"")&&(&ft!=#"unite")' ,
@@ -75,8 +77,8 @@ let g:lightline.component_visible_condition = {
 
 " component function visible {{{3
 let g:lightline.component_function_visible_condition = {
-\ 'myfenc' : '(&ft!=#"unite")' ,
 \ 'mycurfiledir' : '(getcwd()!=?expand("%:p:h"))&&(expand("%:p:h")!=#"")&&(&ft!=#"unite")' }
+" \ 'myfenc' : '(&ft!=#"unite")' ,
 
 " separator and subseparator {{{3
 " let g:lightline.separator = { 'left': '', 'right': '' }
@@ -97,6 +99,7 @@ func! LightlineCurFileDir() abort
     endif
     return StlCurFileDir()
 endfunc
+
 " LightlineFenc() {{{3
 " return file encoding Upeer and bomb?
 func! LightlineFenc() abort

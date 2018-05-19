@@ -1,6 +1,10 @@
 " fold setting {{{1
+" initialize {{{2
 if !has('folding')
     finish
+endif
+if !exists('g:wafun')
+    source ~\.vim\rcfiles\default\wafu.vim
 endif
 
 " script variables of folding {{{2

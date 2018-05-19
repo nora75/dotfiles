@@ -23,7 +23,9 @@ let g:startify_commands = [
 \ { 'o' : [ 'open default session', 'SLoad default.vim' ] },
 \ { 'sd' : [ 'open db session', 'SLoad db.vim' ] },
 \ { 'ss' : [ 'open sec.md', 'exe "cd D:\\Users\\NORA\\Documents\\授業ノート\\"|e sec.md|norm zR' ] },
-\ { 'sm' : [ 'move note dir', 'PluginCheck' ] },
+\ { 'se' : [ 'move note dir and open filer', 'exe "cd D:\\Users\\NORA\\Documents\\授業ノート\\"|e eigo.md' ] },
+\ { 'sm' : [ 'move note dir and open filer', 'exe "cd D:\\Users\\NORA\\Documents\\授業ノート\\"|e %:h\' ] },
+\ { 'p' : [ 'move note dir', 'PluginCheck' ] },
 \ { 'h' : ':help' },
 \ ]
 

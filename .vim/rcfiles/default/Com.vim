@@ -1,10 +1,12 @@
+scriptencoding utf-8
+
 " :AppendBlankLine {{{2
 " append blank line at all selected lines
 command! -range -nargs=? AppendBlankLine call AppendBlankLine(<line1>,<line2>,<q-args>)
 
 " :CdCurrent {{{2
 "  Change current directory to current file's one
-command! -nargs=0 CdCurrent cd %:p:h
+command! -nargs=0 CdCurrent exe 'cd %:p:h'|cd
 
 " :CheckCom {{{2
 " Get command content by input command name
@@ -83,9 +85,9 @@ command! -nargs=0 DontFullWidth call DontFullWidth()
 " do normal ncommand and restore window view and last search
 command! -nargs=1 DoNormal call DoNormal(<q-args>)
 
-" :SwitchColorScheme {{{2
+" :SwColorScheme {{{2
 " switch the colorschemes of twilight and iceberg
-command! -nargs=0 SwitchColorScheme call SwitchColorScheme()
+command! -nargs=0 SwColorScheme call SwitchColorScheme()
 
 " :AddLastDoubleSpaces {{{2
 " The funciton for markdown
@@ -105,6 +107,10 @@ command! -nargs=+ -complete=file_in_path GetScNum echo GetScNum(<f-args>)
 " :PluginCheck {{{2
 " cd to plugin's dir and view thir sources
 command! -nargs=* PluginCheck exe PluginCheck(<f-args>)
+
+" :Scnote {{2
+" show notes of school note dir
+command! -nargs=0 Scnote exe 'e' 'D:\Users\NORA\Documents\授業ノート'
 
 " }}}
 " vim: set fdm=marker fdl=1 fmr={{{,}}} : }}}
