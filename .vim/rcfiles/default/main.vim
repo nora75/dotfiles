@@ -47,6 +47,8 @@ set equalalways
 set history=100
 " don't bel
 set belloff=all
+" don't open vsplit window to right side
+set nosplitright
 " auto adjust indent before line when use \ in script
 let g:vim_indent_cont=0
 " don't make number when convert to html

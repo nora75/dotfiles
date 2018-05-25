@@ -15,6 +15,9 @@ nnoremap <S-Tab>            gT
 " <Space> <Nop> {{{4
 nnoremap <Space>            <Nop>
 vnoremap <Space>            <Nop>
+" double <Space>
+nnoremap <silent> <Space><Space>     :<C-u>echo SwitchColorScheme()<CR>
+vnoremap <silent> <Space><Space>     :<C-u>echo SwitchColorScheme()<CR>
 " misc {{{4
 nnoremap <silent> <Space>a           :<C-u>keepjumps norm! ggVG<CR>
 nnoremap <silent> <Space>y           :<C-u>call DoBuffer('ggVGy')<CR>
@@ -47,15 +50,22 @@ nnoremap <C-h>              :<C-u>help<Space>
 nmap     gw                 <C-W>
 nnoremap x                  "_x
 nnoremap X                  "_X
-nnoremap dl                 d2l
+vnoremap x                  "_x
+vnoremap X                  "_X
+nnoremap <Space>x                  x
+nnoremap <Space>X                  X
+vnoremap <Space>x                  x
+vnoremap <Space>X                  X
+" nnoremap dl                 d2l
 nnoremap yy                 y$
+nnoremap cc                 c$
 nnoremap <silent> <C-p>     "0p
 nnoremap <silent> <C-S-p>   "0P
 nnoremap J gJ
 nnoremap gJ J
 " funcion key
-nnoremap <F11>              :<C-u>tabnew<bar>e $vim\file1<Bar>silent! exe 'vs $vim\file2'<Bar>windo setl bt=nofile noswf noma nobl bh=wipe<bar><CR>
-vnoremap <F11>              :<C-u>tabnew<bar>e $vim\file1<Bar>silent! exe 'vs $vim\file2'<Bar>setl bt=nofile noswf noma nobl bh=wipe<bar><CR>
+nnoremap <F11>              :<C-u>tabnew<bar>e $vim\file1<bar>silent! exe 'vs $vim\file2'<bar>windo setl bt=nofile noswf noma nobl bh=wipe<bar><CR>
+vnoremap <F11>              :<C-u>tabnew<bar>e $vim\file1<bar>silent! exe 'vs $vim\file2'<bar>setl bt=nofile noswf noma nobl bh=wipe<bar><CR>
 nnoremap <F1>               :<C-u>ReloadVimrc<CR>
 vnoremap <F1>               :<C-u>ReloadVimrc<CR>
 nnoremap <F3>               :<C-u>Windom norm zR<CR>
@@ -97,6 +107,7 @@ vnoremap x                  "_x
 " command mode {{{2
 " ] {{{3
 cnoreabbre w]      w
+cnoreabbre we      w
 cnoreabbre q]      q
 cnoreabbre qa]     qa
 cnoreabbre tabnew] tabnew
@@ -119,6 +130,10 @@ func! s:rec() abort
     " endfor
     return
 endfunc
+
+if !exists('g:wafun')
+    source ~\.vim\rcfiles\default\wafu.vim
+endif
 
 " s:wafun(...) {{{3
 " echo g:wafuw

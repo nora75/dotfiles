@@ -8,6 +8,8 @@ let g:vim_markdown_toc_autofit = 1
 let g:vim_markdown_follow_anchor = 1
 " disable default mapping
 let g:vim_markdown_no_default_key_mappings = 1
+" fold level setting
+let g:vim_markdown_folding_level = 2
 
 " local function {{{1
 

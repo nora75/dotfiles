@@ -4,6 +4,35 @@ scriptencoding utf-8
 " script local variables {{{2
 let s:tmpn = tempname()
 let s:stateFlags = reverse([ 's', 'e', 'f', 'r', 'm', 'j', 'c', 'h' ])
+
+" variables that used by SwitchColorScheme() {{{2
+let s:colnum = 0
+let s:col = []
+
+" initialize for SwitchColorScheme() {{{3
+func! s:initSwiC() abort
+    let i = 1
+    let col1 = 'twilight'
+    let col2 = 'iceberg'
+    let col3 = 'crayon'
+    let col4 = 'deepsea'
+    let col5 = 'flattown'
+    let col6 = 'jellybeans'
+    let col7 = 'skittles_berry'
+    let col8 = 'spacegray'
+    let col9 = 'strange'
+    let col10 = 'sunburst'
+    let col11 = 'tir_black'
+    let col12 = 'wombat256mod'
+    while i < 13
+        exe 'call add(s:col,col'.i.')'
+        let i += 1
+    endwhile
+    return
+endfunc
+
+call s:initSwiC()
+
 " global variables {{{2
 " use this variable for DontFullWidth() {{{3
 let g:DontFull = []
@@ -323,14 +352,15 @@ endfunc
 " function for :SwitchColorScheme
 " switch the colorschemes of twilight and iceberg
 func! SwitchColorScheme()
-    let col1 = 'twilight'
-    let col2 = 'iceberg'
-    if g:colors_name ==? col1
-        exe 'silent colorscheme' col2
-    else
-        exe 'silent colorscheme' col1
-    endif
-    return
+    let save = s:saveState()
+    let n = s:colnum % 12
+    exe 'silent colorscheme' s:col[n]
+    let s:colnum += 1
+    high IndentGuidesOdd guifg=#42434B guibg=#2D2F37
+    high IndentGuidesEven guifg=#2D2F37 guibg=#42434B
+    call s:restoreState(save,'se')
+    redraw!
+    return s:col[n]
 endfunc
 
 " AddLastDoubleSpaces() {{{2

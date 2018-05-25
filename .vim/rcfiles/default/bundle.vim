@@ -1,5 +1,6 @@
 scriptencoding utf-8
-" neobundle initialize {{{2
+
+" neobundle initialize {{{1
 filetype off
 
 if has('vim_starting')
@@ -10,7 +11,7 @@ if has('vim_starting')
     endif
 endif
 
-" add plugin {{{2
+" add plugin {{{1
 call neobundle#begin(expand('~/.vim/bundle'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -31,7 +32,7 @@ NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'simeji/winresizer'
 " fonts for powerline {{{5
-NeoBundle 'ryanoasis/vim-devicons'
+" NeoBundle 'ryanoasis/vim-devicons'
 " NeoBundle 'powerline/fonts'
 
 " highlight {{{3
@@ -49,7 +50,7 @@ NeoBundle 'sgur/vim-textobj-parameter'
 NeoBundle 'osyo-manga/vim-jplus'
 NeoBundle 'osyo-manga/vim-operator-stay-cursor'
 NeoBundle 'osyo-manga/vim-textobj-blockwise'
-NeoBundle 'h1mesuke/textobj-wiw'
+" NeoBundle 'h1mesuke/textobj-wiw'
 
 " unite {{{3
 NeoBundle 'Shougo/vimproc', {
@@ -81,6 +82,10 @@ NeoBundle 'alvan/vim-closetag'
 " NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'nora75/markdowntable'
 
+" writing {{{3
+" NeoBundle 'junegunn/goyo.vim'
+" NeoBundle 'junegunn/limelight.vim'
+
 " colorscheme {{{3
 NeoBundle 'vim-scripts/twilight'
 " too many colorschemes
@@ -90,6 +95,7 @@ NeoBundle 'flazz/vim-colorschemes'
 
 " test {{{3
 NeoBundle 'vim-scripts/AdvancedSorters'
+" NeoBundle 'gyim/vim-boxdraw'
 
 NeoBundleCheck
 
