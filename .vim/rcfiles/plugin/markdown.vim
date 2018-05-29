@@ -13,25 +13,23 @@ let g:vim_markdown_folding_level = 2
 
 " local function {{{1
 
-" s:Toce() {{{2
-func! s:Toce() abort
-    let t:toc = win_getid(winnr())
-    exe 'Toc'
-    return
-endfunc
-
-" s:backmap() {{{2
-
-func! s:backmap() abort
-    let w:toc = t:toc
-    nnoremap <buffer><silent> <Space>mt :<C-u>win_gotoid(w:toc)<CR>
-    unlet t:toc
-    return
-endfunc
+if !exists('*Mmap')
+    " Mmap() abort {{{2
+    func! Mmap() abort
+        if &ft != 'markdown'
+            echoerr 'This file isn't markdown'
+            return -1
+        endif
+        let bid = win_getid(winnr())
+        Toc
+        exe 'nnoremap <buffer> <Space>mt :<C-u>call win_gotoid('.bid.')<CR>'
+        return
+    endfunc!
+endif
 
 " command {{{1
 " :Toc {{{2
-" command! -nargs=0 Toce call Toce()
+command! -nargs=0 Toce call Mmap()
 
 " au {{{1
 augroup markdown " {{{2

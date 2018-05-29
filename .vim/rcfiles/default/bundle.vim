@@ -103,6 +103,5 @@ call neobundle#end()
 
 " end {{{2
 filetype plugin indent on
-filetype detect
 
 " vim: set fdm=marker fmr={{{,}}} fdl=1 :

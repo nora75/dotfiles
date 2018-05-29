@@ -112,5 +112,15 @@ command! -nargs=* PluginCheck exe PluginCheck(<f-args>)
 " show notes of school note dir
 command! -nargs=0 Scnote exe 'e' 'D:\Users\NORA\Documents\授業ノート'
 
+if has('terminal')||executable('mysql')
+    " :MySql {{{2
+    " open mysql client in vertical window
+    command! -nargs=0 MySql call system('net start "MySQL"')|
+    \ call 
+    \ term_start('"C:\Program Files\MySQL\MySQL Server 5.5\bin\mysql.exe" "--defaults-file=C:\Program Files\MySQL\MySQL Server 5.5\my.ini" "-uroot" "-p"', 
+    \ { "vertical" : 1 , "term_name" : "mysql" , "term_finish" : 'call system(''net stop "MySQL"'')' } )
+    " \ { "vertical" : 1 , "term_name" : "mysql" , "term_finish" : "%y" , "term_opencmd" : "10sp|buffer %d" })
+endif
+
 " }}}
 " vim: set fdm=marker fdl=1 fmr={{{,}}} : }}}

@@ -5,29 +5,39 @@ endif
 " functions {{{1
 " local {{{2
 if neobundle#is_installed('vim-markdown')
-    " s:aumap() abort {{{2
-    func! s:aumap(bid) abort
-        echom 'before toc'
-        Toc
-        echom 'after toc'
-        echom 'before mapping'
-        exe 'nnoremap <buffer> <Space>mt :<C-u>call win_gotoid('.a:bid.')<CR>'
-        echom 'end mapping'
-        return
-    endfunc!
+    if !exists('*Mmap')
+        " Mmap() abort {{{2
+        func! Mmap() abort
+            if &ft != 'markdown'
+                echoerr 'This file isn't markdown'
+                return -1
+            endif
+            let bid = win_getid(winnr())
+            Toc
+            exe 'nnoremap <buffer> <Space>mt :<C-u>call win_gotoid('.bid.')<CR>'
+            return
+        endfunc!
+    endif
 
     " s:toc(file) abort {{{3
-    func! s:toc(file,...) abort
-        let bid = win_getid()
-        exe 'e' a:file
+    func! s:toc(file) abort
+        call s:cd(a:file)
+        call Mmap()
         return
     endfunc
-    " s:SID() abort {{{3
-	function s:SID() abort
-	  return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_SID$')
-	endfun
-    let s:sid = function('s:SID')
+    " s:sid() abort {{{3
+    function! s:sid() abort
+        return matchstr(expand('<sfile>'), '<SNR>\d\+_')
+    endfun
+    let s:markd = v:true
 endif
+
+" s:cd(file) abort {{{3
+func! s:cd(file) abort
+    exe "cd D:\\Users\\NORA\\Documents\\授業ノート\\"
+    exe 'e' a:file
+    return
+endfunc
 
 " settings {{{1
 " custom list {{{2
@@ -56,10 +66,17 @@ let g:startify_commands = [
 \ { 'd' : [ 'open default session', 'SLoad default.vim' ] },
 \ { 'o' : [ 'open default session', 'SLoad default.vim' ] },
 \ { 'sd' : [ 'open db session', 'SLoad db.vim' ] },
+\ { 'ss' : [ 'open sec.md', 'call '.eval('s:sid()').'cd("sec.md")' ] } ,
+\ { 'se' : [ 'open eigo.md', 'call '.eval('s:sid()').'cd("eigo.md")' ] } ,
 \ { 'sm' : [ 'move note dir and open filer', 'exe "cd D:\\Users\\NORA\\Documents\\授業ノート\\"|e %:h\' ] }
 \ ]
-" \ { 'ss' : [ 'open sec.md', 'call <SNR>'.eval(s:sid).'_aumap(<SNR>'.eval(s:sid).'_toc("sec.md"))' ] } ,
-" \ { 'se' : [ 'move note dir and open filer', 'exe "cd D:\\Users\\NORA\\Documents\\授業ノート\\"|call '.eval(s:sid).'aumap('.eval(s:sid).'toc("eigo.md"))' ] } ,
+
+" if vim-markdown is supports change functions
+if s:markd
+    let g:startify_commands[3:4] = [ 
+    \ { 'ss' : [ 'open sec.md', 'call '.eval('s:sid()').'toc("sec.md")' ] } ,
+    \ { 'se' : [ 'open eigo.md', 'call '.eval('s:sid()').'toc("eigo.md")' ] } ]
+endif
 
 " session {{{2
 let g:startify_session_before_save = [

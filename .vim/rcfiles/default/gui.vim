@@ -100,7 +100,6 @@ if has('gui') " options for gvim {{2
 
 else " {{{2
 
-    syntax on
     set background=dark
 
     function! s:SID_PREFIX()

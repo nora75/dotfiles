@@ -15,6 +15,8 @@ nnoremap <S-Tab>            gT
 " <Space> <Nop> {{{4
 nnoremap <Space>            <Nop>
 vnoremap <Space>            <Nop>
+nnoremap <BS>            <Nop>
+vnoremap <BS>            <Nop>
 " double <Space>
 nnoremap <silent> <Space><Space>     :<C-u>echo SwitchColorScheme()<CR>
 vnoremap <silent> <Space><Space>     :<C-u>echo SwitchColorScheme()<CR>

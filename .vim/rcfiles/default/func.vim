@@ -88,7 +88,7 @@ func! DoBuffer(ncom)
     return
 endfunc
 
-" SwitchMoces() {{{2
+" SwitchMoves() {{{2
 " move mode switch over buffer
 " use error occuer when don't map yet
 func! SwitchMoves()
@@ -358,6 +358,9 @@ func! SwitchColorScheme()
     let s:colnum += 1
     high IndentGuidesOdd guifg=#42434B guibg=#2D2F37
     high IndentGuidesEven guifg=#2D2F37 guibg=#42434B
+    if has('multi_byte_ime') || has('xim')
+        highlight CursorIM guibg=Purple guifg=NONE
+    endif
     call s:restoreState(save,'se')
     redraw!
     return s:col[n]
