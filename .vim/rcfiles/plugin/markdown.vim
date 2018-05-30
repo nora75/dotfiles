@@ -11,21 +11,24 @@ let g:vim_markdown_no_default_key_mappings = 1
 " fold level setting
 let g:vim_markdown_folding_level = 2
 
-" local function {{{1
+" global function {{{1
+" Mmap() abort {{{2
+func! Mmap() abort
+    let bid = win_getid(winnr())
+    Toc
+    exe 'nnoremap <buffer><silent> <Space>mt :<C-u>call win_gotoid('.bid.')<CR>'
+    exe 'vnoremap <buffer><silent> <Space>mt :<C-u>call win_gotoid('.bid.')<CR>'
+    return bid
+endfunc!
 
-if !exists('*Mmap')
-    " Mmap() abort {{{2
-    func! Mmap() abort
-        if &ft != 'markdown'
-            echoerr 'This file isn't markdown'
-            return -1
-        endif
-        let bid = win_getid(winnr())
-        Toc
-        exe 'nnoremap <buffer> <Space>mt :<C-u>call win_gotoid('.bid.')<CR>'
-        return
-    endfunc!
-endif
+" local function {{{1
+" s:toc() abort {{{2
+func! s:toc() abort
+    nnoremap <buffer><silent> [Markdown]t :<C-u>Toc<CR>
+    vnoremap <buffer><silent> [Markdown]t :<C-u>Toc<CR>
+    call Mmap()
+    return
+endfunc
 
 " command {{{1
 " :Toc {{{2
@@ -54,7 +57,7 @@ func! Markd()
     " normal {{{3
     nnoremap <buffer> [Markdown]  <Nop>
     nmap     <buffer> <Space>m    [Markdown]
-    nnoremap <buffer><silent> [Markdown]t :<C-u>call <SID>Toce()<CR>
+    nnoremap <buffer><silent> [Markdown]t :<C-u>call <SID>toc()<CR>
     nnoremap <buffer><silent> [Markdown]i :<C-u>HeaderIncrease<CR>
     nnoremap <buffer><silent> [Markdown]d :<C-u>HeaderDecrease<CR>
     nnoremap <buffer><silent> [Markdown]w :<C-u>call MarkToc()<CR>
@@ -62,6 +65,7 @@ func! Markd()
     " visual {{{3
     vnoremap <buffer> [Markdown]  <Nop>
     vmap     <buffer> <Space>m    [Markdown]
+    vnoremap <buffer><silent> [Markdown]t :<C-u>call <SID>toc()<CR>
     vnoremap <buffer><silent> [Markdown]i :HeaderIncrease<CR>
     vnoremap <buffer><silent> [Markdown]d :HeaderDecrease<CR>
     let b:Markdown_AuToc = 0

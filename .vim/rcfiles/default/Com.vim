@@ -1,5 +1,92 @@
 scriptencoding utf-8
 
+" local functions {{{1
+" functions for :MySql {{{2
+if has('terminal')||executable('mysql')
+    let s:sql = v:true
+else
+    let s:sql = v:false
+endif
+if s:sql
+    " s:endsql(...) abort {{{3
+    func! s:endsql(...) abort
+        let date = strftime('%c')
+        let date = strcharpart(date,match(date,'/')+1)
+        let date = strcharpart(date,0,match(date,' '))
+        let date = substitute(date,'/','','g')
+        let fold = 'D:\Users\NORA\Documents\学校\DB\DB応用\提出\'
+        let head = 'k017c1066平野'
+        let fold .= head.date
+        let txt = fold.'.txt'
+        let docx = '"'.fold.'.docx"'
+        if line('$') > 11
+            if filereadable(txt)
+                let lines = '13,$'
+            else
+                let lines = '%'
+            endif
+            exe lines.'w! >> '.txt
+        endif
+        return -1
+    endif
+    q!
+    return
+endfunc
+
+" s:conv() abort{{{3
+if executable('pandoc')
+    func! s:conv() abort
+        let rl = readfile(txt)
+        echo 'output to '.substitute(fold,'"','','g')
+        call system('pandoc -f txt rl -t docx -o '.doc)
+        call delete(rl)
+        return
+    endfunc
+else
+    func! s:conv() abort
+        let rl = readfile(txt)
+        echo 'Yank all lines to clipboard'
+        call setreg('*',rl)
+        let ech = s:makeChar('Do u want to open word?(y/n)')
+        let word = '"C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Office 2013\Word 2013.lnk"'
+        if ech ==# 'y'
+            call system(word)
+        endif
+        call delete(rl)
+        return
+    endfunc
+endif
+
+" s:makeChar(msg,a,b) abort {{{3
+func! s:makeChar(msg,a,b) abort
+    let msg = a:msg.': '
+    let ret = s:getChar(a:a,a:b)
+    if len(c) < 2
+        echo 'Cancelled'
+        return -1
+    endif
+    return ret
+endfunc
+
+" s:getChar(a,b) abort {{{3
+func! s:getChar(a,b) abort
+    try
+        let c = getchar()
+        if c =~ "\<Space>" || c ==? 'y'
+            let c = 'y'
+        elseif c =~ "\<Enter>" || c ==? 'n'
+            let c = 'n'
+        else
+            throw 'Interrupt'
+        endif
+    catch
+        let c = 'E'
+    endtry
+    return c
+endfunc
+endif
+
+" commands {{{1
 " :AppendBlankLine {{{2
 " append blank line at all selected lines
 command! -range -nargs=? AppendBlankLine call AppendBlankLine(<line1>,<line2>,<q-args>)
@@ -112,14 +199,12 @@ command! -nargs=* PluginCheck exe PluginCheck(<f-args>)
 " show notes of school note dir
 command! -nargs=0 Scnote exe 'e' 'D:\Users\NORA\Documents\授業ノート'
 
-if has('terminal')||executable('mysql')
-    " :MySql {{{2
+" :MySql {{{2
+if s:sql
     " open mysql client in vertical window
-    command! -nargs=0 MySql call system('net start "MySQL"')|
-    \ call 
+    command! -nargs=0 MySql call 
     \ term_start('"C:\Program Files\MySQL\MySQL Server 5.5\bin\mysql.exe" "--defaults-file=C:\Program Files\MySQL\MySQL Server 5.5\my.ini" "-uroot" "-p"', 
-    \ { "vertical" : 1 , "term_name" : "mysql" , "term_finish" : 'call system(''net stop "MySQL"'')' } )
-    " \ { "vertical" : 1 , "term_name" : "mysql" , "term_finish" : "%y" , "term_opencmd" : "10sp|buffer %d" })
+    \ { "vertical" : 1 , "term_name" : "MySQL" , "norestore" : "1" , "term_kill" : 'call system(''net stop "MySQL"'')' , "exit_cb" : '<SID>endsql' , "stoponexit": "exit" })
 endif
 
 " }}}

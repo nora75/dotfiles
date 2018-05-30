@@ -33,9 +33,9 @@ nnoremap <silent> <Space>cd          :<C-u>CdCurrent<CR>
 nnoremap <Space>e           :<C-u>echo<Space>
 nnoremap <Space>r           :<C-u>Comcap<Space>
 " map to <Space>o + j,k
-nmap     <Space>o           [BlankLine]
-nnoremap <silent>           [BlankLine]j       :<C-u>for i in range(1, v:count1)<Bar>call append(line('.'),   '')<Bar>endfor<CR>
-nnoremap <silent>           [BlankLine]k       :<C-u>for i in range(1, v:count1)<Bar>call append(line('.')-1, '')<Bar>endfor<CR>
+nmap     <Space>o           [AppendLine]
+nnoremap <silent>           [AppendLine]j       :<C-u>for i in range(1, v:count1)<Bar>call append(line('.'),'')<Bar>endfor<CR>
+nnoremap <silent>           [AppendLine]k       :<C-u>for i in range(1, v:count1)<Bar>call append(line('.')-1,'')<Bar>endfor<CR>
 " LineMove {{{3
 nmap     <Space>l           [LineMove]
 nnoremap [LineMove]         <Nop>
@@ -58,9 +58,17 @@ nnoremap <Space>x                  x
 nnoremap <Space>X                  X
 vnoremap <Space>x                  x
 vnoremap <Space>X                  X
+nnoremap <Space>w                  :<C-u>w<CR>
+vnoremap <Space>w                  :<C-u>w<CR>
 " nnoremap dl                 d2l
 nnoremap yy                 y$
-nnoremap cc                 c$
+" nnoremap cc                 :<C-u>for i in range(1,v:count1)<Bar>call setline(line('.'),'')<Bar>endfor<CR>
+nmap <Space>d [BlankLine]
+nnoremap [BlankLine]j                 :<C-u>for i in range(1,v:count1)<Bar>call setline(line('.')+i-1,'')<Bar>endfor<CR>
+nnoremap [BlankLine]k                 :<C-u>for i in range(1,v:count1)<Bar>call setline(line('.')-i+1,'')<Bar>endfor<CR>
+vmap <Space>d [BlankLine]
+vnoremap [BlankLine]j                 :<C-u>for i in range(1,v:count1)<Bar>call setline(line('.')+i-1,'')<Bar>endfor<CR>
+vnoremap [BlankLine]k                 :<C-u>for i in range(1,v:count1)<Bar>call setline(line('.')-i+1,'')<Bar>endfor<CR>
 nnoremap <silent> <C-p>     "0p
 nnoremap <silent> <C-S-p>   "0P
 nnoremap J gJ

@@ -4,32 +4,39 @@ endif
 
 " functions {{{1
 " local {{{2
+" s:toc(file) abort {{{3
 if neobundle#is_installed('vim-markdown')
-    if !exists('*Mmap')
-        " Mmap() abort {{{2
-        func! Mmap() abort
-            if &ft != 'markdown'
-                echoerr 'This file isn't markdown'
-                return -1
-            endif
-            let bid = win_getid(winnr())
-            Toc
-            exe 'nnoremap <buffer> <Space>mt :<C-u>call win_gotoid('.bid.')<CR>'
-            return
-        endfunc!
-    endif
-
-    " s:toc(file) abort {{{3
     func! s:toc(file) abort
         call s:cd(a:file)
-        call Mmap()
+        let bid = win_getid(winnr())
+        norm 1 mt
+        call win_gotoid(bid)
         return
     endfunc
+
     " s:sid() abort {{{3
     function! s:sid() abort
         return matchstr(expand('<sfile>'), '<SNR>\d\+_')
     endfun
     let s:markd = v:true
+endif
+
+" s:db() abort {{{3
+if has('terminal')||executable('mysql')
+    func! s:db() abort
+        aug db
+            au!
+            au SessionLoadPost * call system('net start "MySQL"')
+            au VimLeavePre * echo 'end MySQL...'|call system('net stop "MySQL"')
+        aug END
+        SLoad db.vim
+        return
+    endfunc
+else
+    func! s:db() abort
+        SLoad db.vim
+        return
+    endfunc
 endif
 
 " s:cd(file) abort {{{3
@@ -65,7 +72,7 @@ let g:startify_lists = [
 let g:startify_commands = [
 \ { 'd' : [ 'open default session', 'SLoad default.vim' ] },
 \ { 'o' : [ 'open default session', 'SLoad default.vim' ] },
-\ { 'sd' : [ 'open db session', 'SLoad db.vim' ] },
+\ { 'sd' : [ 'open db session', 'call '.eval('s:sid()').'db()' ] },
 \ { 'ss' : [ 'open sec.md', 'call '.eval('s:sid()').'cd("sec.md")' ] } ,
 \ { 'se' : [ 'open eigo.md', 'call '.eval('s:sid()').'cd("eigo.md")' ] } ,
 \ { 'sm' : [ 'move note dir and open filer', 'exe "cd D:\\Users\\NORA\\Documents\\授業ノート\\"|e %:h\' ] }
