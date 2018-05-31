@@ -15,6 +15,7 @@ if neobundle#is_installed('vim-markdown')
     endfunc
 
     " s:sid() abort {{{3
+    " return this script sid
     function! s:sid() abort
         return matchstr(expand('<sfile>'), '<SNR>\d\+_')
     endfun
@@ -23,10 +24,27 @@ endif
 
 " s:db() abort {{{3
 if has('terminal')||executable('mysql')
+    " s:rec() {{{3
+    " start timer and stop timer if already exists
+    func! s:rec() abort
+        if !exists('s:m')
+            let s:m = timer_start(5,function('<SID>start'))
+        endif
+        return
+    endfunc
+
+    " s:start(...) {{{3
+    " start mysql
+    func! s:start(...) abort
+        call system('net start "MySQL"')
+        echo 'end starting mysql'
+        return
+    endfunc
+
     func! s:db() abort
         aug db
             au!
-            au SessionLoadPost * call system('net start "MySQL"')
+            au SessionLoadPost * call <SID>rec()
             au VimLeavePre * echo 'end MySQL...'|call system('net stop "MySQL"')
         aug END
         SLoad db.vim

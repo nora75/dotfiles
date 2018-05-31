@@ -64,11 +64,10 @@ vnoremap <Space>w                  :<C-u>w<CR>
 nnoremap yy                 y$
 " nnoremap cc                 :<C-u>for i in range(1,v:count1)<Bar>call setline(line('.'),'')<Bar>endfor<CR>
 nmap <Space>d [BlankLine]
-nnoremap [BlankLine]j                 :<C-u>for i in range(1,v:count1)<Bar>call setline(line('.')+i-1,'')<Bar>endfor<CR>
-nnoremap [BlankLine]k                 :<C-u>for i in range(1,v:count1)<Bar>call setline(line('.')-i+1,'')<Bar>endfor<CR>
-vmap <Space>d [BlankLine]
-vnoremap [BlankLine]j                 :<C-u>for i in range(1,v:count1)<Bar>call setline(line('.')+i-1,'')<Bar>endfor<CR>
-vnoremap [BlankLine]k                 :<C-u>for i in range(1,v:count1)<Bar>call setline(line('.')-i+1,'')<Bar>endfor<CR>
+nnoremap [BlankLine] :<C-u>set opfunc=<SID>blankLineOp<CR>g@
+nnoremap <silent> [BlankLine]k                 :<C-u>set opfunc=<SID>blanklineop<CR>g@
+nnoremap <silent> [BlankLine]d :<C-u>call <SID>blankLineOp('visual',line('.'),line('.'))<CR>
+vnoremap <silent> <Space>d :<C-u>call <SID>blankLineOp('visual',line("'<"),line("'>"))<CR>
 nnoremap <silent> <C-p>     "0p
 nnoremap <silent> <C-S-p>   "0P
 nnoremap J gJ
@@ -129,15 +128,15 @@ inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
 
 " practice for vim {{{2
 
-" s:rec() {{{3
+" functions {{{3
+
+" s:rec() {{{4
 " start timer and stop timer if already exists
 func! s:rec() abort
-    " for i in range(0,10)
     if exists('s:n')
         call timer_stop(s:n)
     endif
     let s:n = timer_start(1000,function('<SID>wafun'),{'repeat':5})
-    " endfor
     return
 endfunc
 
@@ -145,7 +144,7 @@ if !exists('g:wafun')
     source ~\.vim\rcfiles\default\wafu.vim
 endif
 
-" s:wafun(...) {{{3
+" s:wafun(...) {{{4
 " echo g:wafuw
 func! s:wafun(...) abort
     echo g:wafun
@@ -153,14 +152,14 @@ func! s:wafun(...) abort
     return
 endfunc
 
-" s:wafuw(...) {{{3
+" s:wafuw(...) {{{4
 " echo g:wafun and g:wafuw
 func! s:wafuw(...) abort
     echo g:wafuw
     return
 endfunc
 
-" s:mapkey(k) {{{3
+" s:mapkey(k) {{{4
 " map key of arg to s:rec()
 func! s:mapkey(k) abort
     exe 'nnoremap <silent>' a:k ':<C-u>call <SID>rec()<CR>'
@@ -169,7 +168,7 @@ func! s:mapkey(k) abort
     return
 endfunc
 
-" s:dontusethiskey() {{{3
+" s:dontusethiskey() {{{4
 " mapping by using s:mapkey()
 func! s:dontusethiskey() abort
     call s:mapkey('<Left>')
@@ -189,6 +188,29 @@ endfunc
 call s:dontusethiskey()
 " }}}
 " }}}
+
+" BlankLine function {{{2
+" operator func for blankline mapping
+func! s:blankLineOp(type,...) abort
+    if a:type ==# 'char'
+        let [line1,line2] = [getpos("'[")[2],getpos("']")[2]]
+        let culi = getline(line('.'))
+        let afli = strcharpart(culi,0,line1-1).repeat('',line2-line1).strcharpart(culi,line2+1)
+        call setline(line('.'),afli)
+    elseif a:type ==# 'visual'
+        let [line1,line2] = [a:1,a:2]
+        for i in range(line1,line2)
+            call setline(i,'')
+        endfor
+    else
+        let [line1,line2] = [line("'["),line("']")]
+        for i in range(line1,line2)
+            call setline(i,'')
+        endfor
+    endif
+    return
+endfunc
+
 " }}}
 
 " vim: set fdm=marker fdl=1 fmr={{{,}}} :

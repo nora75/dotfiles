@@ -10,6 +10,12 @@ endif
 if s:sql
     " s:endsql(...) abort {{{3
     func! s:endsql(...) abort
+        let msg = string(term_getline(s:sqlb,2))
+        if msg =~? 'error' && msg =~? 'connect'
+            call s:startsql('server')
+            return
+        endif
+        echo 'end MySQL...'
         let date = strftime('%c')
         let date = strcharpart(date,match(date,'/')+1)
         let date = strcharpart(date,0,match(date,' '))
@@ -17,34 +23,80 @@ if s:sql
         let fold = 'D:\Users\NORA\Documents\学校\DB\DB応用\提出\'
         let head = 'k017c1066平野'
         let fold .= head.date
-        let txt = fold.'.txt'
-        let docx = '"'.fold.'.docx"'
-        if line('$') > 11
-            if filereadable(txt)
+        let s:txt = fold.'.txt'
+        let s:docx = '"'.fold.'.docx"'
+        if line('$') > 15
+            if filereadable(s:txt)
                 let lines = '13,$'
             else
                 let lines = '%'
             endif
-            exe lines.'w! >> '.txt
+            exe lines.'w! >> '.s:txt
         endif
-        return -1
-    endif
-    q!
-    return
-endfunc
+        unlet s:sqlb
+        return
+    endfunc
+
+    " s:startsql(...) abort {{{3
+    func! s:startsql(...) abort
+        echo 'start MySQL...'
+        if a:0
+            call system('net start "MySQL"')
+            aug db
+                au!
+                au VimLeavePre * echo 'end MySQL...'|call system('net stop "MySQL"')
+            aug END
+        endif
+        vnoremap <silent> <Space>r :<C-u>call <SID>runcom(line("'<"),line("'>"))<CR>
+        nnoremap <silent> <Space>r :<C-u>call <SID>runcom(line('.'),line('.'))<CR>
+        let winn = winnr()
+        let s:sqlb = term_start('"C:\Program Files\MySQL\MySQL Server 5.5\bin\mysql.exe" "--defaults-file=C:\Program Files\MySQL\MySQL Server 5.5\my.ini" "-uroot" "-p"', 
+        \ { "vertical" : 1 , "term_name" : "MySQL" , "norestore" : "1" ,
+        \ "term_finish" : "close" ,
+        \ "exit_cb" : function('s:endsql') , "stoponexit": "exit" })
+        aug mysql
+            au!
+            " exe 'au CursorHoldI <buffer> call win_gotoid('.winn.')'
+            au VimLeavePre * call <SID>conv()
+        aug END
+        call term_sendkeys(s:sqlb,"\<CR>")
+        return
+    endfunc
+
+    " s:runcom(line1,line2) abort {{{3
+    func! s:runcom(line1,line2) abort
+        if len(term_list()) == 0
+            MySql
+        else
+            if term_getstatus(s:sqlb) ==# 'normal'
+                call term_sendkeys(s:sqlb,'i')
+            endif
+        endif
+        for i in getline(a:line1,a:line2)
+            call term_sendkeys(s:sqlb,i."\<CR>")
+        endfor
+        return
+    endfunc
+endif
 
 " s:conv() abort{{{3
 if executable('pandoc')
     func! s:conv() abort
-        let rl = readfile(txt)
-        echo 'output to '.substitute(fold,'"','','g')
-        call system('pandoc -f txt rl -t docx -o '.doc)
-        call delete(rl)
+        if !filereadable(s:txt)
+            return -1
+        endif
+        let rl = readfile(s:txt)
+        echo 'output to '.substitute(s:docx,'"','','g')
+        call system('pandoc -t docx -o '.s:docx.' '.s:txt)
+        call delete(s:txt)
         return
     endfunc
 else
     func! s:conv() abort
-        let rl = readfile(txt)
+        if !filereadable(s:txt)
+            return -1
+        endif
+        let rl = readfile(s:txt)
         echo 'Yank all lines to clipboard'
         call setreg('*',rl)
         let ech = s:makeChar('Do u want to open word?(y/n)')
@@ -84,7 +136,6 @@ func! s:getChar(a,b) abort
     endtry
     return c
 endfunc
-endif
 
 " commands {{{1
 " :AppendBlankLine {{{2
@@ -202,9 +253,7 @@ command! -nargs=0 Scnote exe 'e' 'D:\Users\NORA\Documents\授業ノート'
 " :MySql {{{2
 if s:sql
     " open mysql client in vertical window
-    command! -nargs=0 MySql call 
-    \ term_start('"C:\Program Files\MySQL\MySQL Server 5.5\bin\mysql.exe" "--defaults-file=C:\Program Files\MySQL\MySQL Server 5.5\my.ini" "-uroot" "-p"', 
-    \ { "vertical" : 1 , "term_name" : "MySQL" , "norestore" : "1" , "term_kill" : 'call system(''net stop "MySQL"'')' , "exit_cb" : '<SID>endsql' , "stoponexit": "exit" })
+    command! -nargs=* MySql call s:startsql(<f-args>)
 endif
 
 " }}}
