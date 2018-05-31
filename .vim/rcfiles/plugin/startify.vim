@@ -23,7 +23,7 @@ if neobundle#is_installed('vim-markdown')
 endif
 
 " s:db() abort {{{3
-if has('terminal')||executable('mysql')
+if has('terminal')&&executable('mysql')
     " s:rec() {{{3
     " start timer and stop timer if already exists
     func! s:rec() abort

@@ -2,7 +2,7 @@ scriptencoding utf-8
 
 " local functions {{{1
 " functions for :MySql {{{2
-if has('terminal')||executable('mysql')
+if has('terminal')&&executable('mysql')
     let s:sql = v:true
 else
     let s:sql = v:false

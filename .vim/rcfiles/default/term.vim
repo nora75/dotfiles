@@ -14,7 +14,6 @@ function! s:escape_special_key(key)
     return result
 endfunction
 
-
 " キーマッピングの設定
 " set termwinkey=<A-w>
 if exists(":tmap")
