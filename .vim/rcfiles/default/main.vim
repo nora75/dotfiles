@@ -26,9 +26,7 @@ else
 endif
 set wrapscan
 set linebreak
-set backup
-set writebackup
-set backupdir=$VIM/backup
+set nobackup
 set modeline
 set showtabline=2
 set fdm=marker
