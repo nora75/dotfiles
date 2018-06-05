@@ -36,8 +36,8 @@ if has('terminal')&&executable('mysql')
     " s:start(...) {{{3
     " start mysql
     func! s:start(...) abort
-        call system('net start "MySQL"')
-        echo 'end starting mysql'
+        " call job_start('net start MySQL')
+        echo 'started mysql'
         return
     endfunc
 
@@ -45,7 +45,7 @@ if has('terminal')&&executable('mysql')
         aug db
             au!
             au SessionLoadPost * call <SID>rec()
-            au VimLeavePre * echo 'end MySQL...'|call system('net stop "MySQL"')
+            au VimLeavePre * echo 'mysqlを終了するのです、(>ω<)わふーっ！'|call system(s:stopcom)
         aug END
         SLoad db.vim
         return

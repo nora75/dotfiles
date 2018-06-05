@@ -4,7 +4,7 @@ scriptencoding utf-8
 " set variables if not exist
 set ls=2
 if !exists('g:wafun')
-    source ~\.vim\rcfiles\default\wafu.vim
+    source ~\\.vim\\rcfiles\\default\\wafu.vim
 endif
 
 " functions {{{2

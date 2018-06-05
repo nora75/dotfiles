@@ -1,5 +1,5 @@
 scriptencoding utf-8
-if !has('terminal')||!has('windows')
+if !has('terminal')
     finish
 endif
 

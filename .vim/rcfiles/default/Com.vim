@@ -2,14 +2,49 @@ scriptencoding utf-8
 
 " local functions {{{1
 " functions for :MySql {{{2
-if has('terminal')&&executable('mysql')
+let s:dbruncom = 'mysql'
+if has('terminal') && executable(s:dbruncom)
     let s:sql = v:true
 else
     let s:sql = v:false
 endif
+
 if s:sql
+    let s:lines = []
+    let s:called = 0
+    let s:dbname = 'mysql'
+    let s:dbrunoption = '-u root -p'
+    let s:dbrun = s:dbruncom.' '.s:dbrunoption
+    let s:folder = 'D:\Users\NORA\Documents\学校\DB\DB応用\提出\'
+    let s:filename = 'k017c1066平野'
+    if s:folder !~# '\M\\$' && s:folder !=# ''
+        let s:folder .= '\'
+    endif
+    let s:folder .= s:filename
+
+    if has('win32') || has('win64')
+        let s:sy = 'net start '.s:dbname
+    elseif has('unix')
+        if executable('systemctl')
+            let s:sy = 'systemctl start'.s:dbname
+        else
+            let s:sy = 'service '.s:dbname.' start'
+        endif
+    endif
+
     " s:endsql(...) abort {{{3
     func! s:endsql(...) abort
+        if s:called > 2
+            if bufnr("%") == s:sqlb
+                q!
+            endif
+            echoerr 'MySQLが起動していないのです!(>ω<)わふーっ！'
+            return
+        endif
+        let s:called += 1
+        if !exists('s:sqlb')
+            return
+        endif
         let msg = string(term_getline(s:sqlb,2))
         if msg =~? 'error' && msg =~? 'connect'
             call s:startsql('server')
@@ -20,19 +55,19 @@ if s:sql
         let date = strcharpart(date,match(date,'/')+1)
         let date = strcharpart(date,0,match(date,' '))
         let date = substitute(date,'/','','g')
-        let fold = 'D:\Users\NORA\Documents\学校\DB\DB応用\提出\'
-        let head = 'k017c1066平野'
-        let fold .= head.date
-        let s:txt = fold.'.txt'
-        let s:docx = '"'.fold.'.docx"'
-        if line('$') > 15
-            if filereadable(s:txt)
-                let lines = '13,$'
+        let s:folder .= date
+        let s:md = s:folder.'.md'
+        let s:docx = '"'.s:folder.'.docx"'
+        let pos = s:searchall()
+        if len(pos) > 4
+            if filereadable(s:md) || filereadable(s:docx)
+                let lines = pos[3].',"$"'
             else
-                let lines = '%'
+                let lines = '1,"$"'
             endif
-            exe lines.'w! >> '.s:txt
+            exe 'call extend(s:lines,getline('.lines.'))'
         endif
+        let s:called = 0
         unlet s:sqlb
         return
     endfunc
@@ -40,23 +75,26 @@ if s:sql
     " s:startsql(...) abort {{{3
     func! s:startsql(...) abort
         echo 'start MySQL...'
+        let dict = 
+        \ { "vertical" : 1 , "term_name" : "MySQL" , "norestore" : "1" ,
+        \ "term_finish" : "close" ,
+        \ "exit_cb" : function('s:endsql') , "stoponexit": "exit" }
         if a:0
-            call system('net start "MySQL"')
-            aug db
-                au!
-                au VimLeavePre * echo 'end MySQL...'|call system('net stop "MySQL"')
-            aug END
+            if a:1 == 'server'
+                call system(s:sy)
+                aug db
+                    au!
+                    exe 'au VimLeavePre * echo '.s:dbname".'を終了するのです、(>ω<)わふーっ！'|call system(s:stopcom)"
+                aug END
+            elseif a:1 =~? 'sp'
+                call remove(dict,'vertical')
+            endif
         endif
         vnoremap <silent> <Space>r :<C-u>call <SID>runcom(line("'<"),line("'>"))<CR>
         nnoremap <silent> <Space>r :<C-u>call <SID>runcom(line('.'),line('.'))<CR>
-        let winn = winnr()
-        let s:sqlb = term_start('"C:\Program Files\MySQL\MySQL Server 5.5\bin\mysql.exe" "--defaults-file=C:\Program Files\MySQL\MySQL Server 5.5\my.ini" "-uroot" "-p"', 
-        \ { "vertical" : 1 , "term_name" : "MySQL" , "norestore" : "1" ,
-        \ "term_finish" : "close" ,
-        \ "exit_cb" : function('s:endsql') , "stoponexit": "exit" })
+        let s:sqlb = term_start(s:dbrun, dict)
         aug mysql
             au!
-            " exe 'au CursorHoldI <buffer> call win_gotoid('.winn.')'
             au VimLeavePre * call <SID>conv()
         aug END
         call term_sendkeys(s:sqlb,"\<CR>")
@@ -77,65 +115,58 @@ if s:sql
         endfor
         return
     endfunc
-endif
 
-" s:conv() abort{{{3
-if executable('pandoc')
-    func! s:conv() abort
-        if !filereadable(s:txt)
-            return -1
-        endif
-        let rl = readfile(s:txt)
-        echo 'output to '.substitute(s:docx,'"','','g')
-        call system('pandoc -t docx -o '.s:docx.' '.s:txt)
-        call delete(s:txt)
-        return
+    " s:searchall() abort {{{3
+    func! s:searchall() abort
+        let result = []
+        try
+            call setpos(".", [0, line("$"), strlen(getline("$")), 0])
+            while 1
+                silent! let pos = searchpos('mysql', "w")
+                if pos == [0, 0] || index(result, pos) != -1 || len(result) > 4
+                    break
+                endif
+                call add(result, pos)
+            endwhile
+        endtry
+        return result
     endfunc
-else
-    func! s:conv() abort
-        if !filereadable(s:txt)
-            return -1
-        endif
-        let rl = readfile(s:txt)
-        echo 'Yank all lines to clipboard'
-        call setreg('*',rl)
-        let ech = s:makeChar('Do u want to open word?(y/n)')
-        let word = '"C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Office 2013\Word 2013.lnk"'
-        if ech ==# 'y'
-            call system(word)
-        endif
-        call delete(rl)
-        return
-    endfunc
-endif
 
-" s:makeChar(msg,a,b) abort {{{3
-func! s:makeChar(msg,a,b) abort
-    let msg = a:msg.': '
-    let ret = s:getChar(a:a,a:b)
-    if len(c) < 2
-        echo 'Cancelled'
-        return -1
+    " s:conv() abort{{{3
+    if executable('pandoc')
+        func! s:conv() abort
+            if !len(s:lines)
+                echo 'no output lines'
+                return
+            endif
+            echo 'output to '.s:docx
+            call map(s:lines,'v:val."  "')
+            if filereadable(s:docx)
+                call system('pandoc -f docx -t markdown -o '.s:md.' '.s:docx)
+                call delete(s:docx)
+                call insert(s:lines,'')
+            endif
+            call writefile(s:lines,s:md,'a')
+            call system('pandoc -t docx -o '.s:docx.' '.s:md)
+            call delete(s:md)
+            let s:lines = []
+            return
+        endfunc
+    else
+        func! s:conv() abort
+            echo 'クリップボードに実行した結果をコピーしたのです、(>ω<)わふーっ！'
+            call setreg('*',s:lines)
+            if has('win32') || has('win64')
+                if confirm('Wordを開くのですか?(>ω<)わふーっ！',"&Yes\n&No") == 1
+                    let word = '"C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Office 2013\Word 2013.lnk"'
+                    call system(word)
+                endif
+            endif
+            call delete(s:md)
+            return
+        endfunc
     endif
-    return ret
-endfunc
-
-" s:getChar(a,b) abort {{{3
-func! s:getChar(a,b) abort
-    try
-        let c = getchar()
-        if c =~ "\<Space>" || c ==? 'y'
-            let c = 'y'
-        elseif c =~ "\<Enter>" || c ==? 'n'
-            let c = 'n'
-        else
-            throw 'Interrupt'
-        endif
-    catch
-        let c = 'E'
-    endtry
-    return c
-endfunc
+endif
 
 " commands {{{1
 " :AppendBlankLine {{{2
@@ -254,7 +285,14 @@ command! -nargs=0 Scnote exe 'e' 'D:\Users\NORA\Documents\授業ノート'
 if s:sql
     " open mysql client in vertical window
     command! -nargs=* MySql call s:startsql(<f-args>)
+
+    " output docx file without close vim
+    command! -nargs=0 OutPutDocx call s:conv()
 endif
+
+" :Itimura {{{2
+" open .itimura and .vimrc
+command! -nargs=0 Itimura exe 'tabe C:\Users\NORA\Downloads\その他\ほんとにその他\itimura'|vs
 
 " }}}
 " vim: set fdm=marker fdl=1 fmr={{{,}}} : }}}
