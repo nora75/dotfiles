@@ -6,6 +6,7 @@ set ls=2
 if !exists('g:wafun')
     source ~\\.vim\\rcfiles\\default\\wafu.vim
 endif
+let v:errmsg = ''
 
 " functions {{{2
 " MyStl() {{{3
@@ -101,9 +102,6 @@ endfun
 " function of wafu
 " return some variation of wafu
 function! StlWafu()
-    " if !exists('b:myvariables_iswinactive')
-    "     return ''
-    " endif
     let wafuenc = get(s:, 'wafuenc', &encoding)
     if wafuenc != &encoding
         let g:wafustr = map(g:wafustr, 'iconv(v:val,g:wafuenc,&encoding)')
@@ -196,6 +194,7 @@ aug StlAu
     au FileType * call s:stlupdate()
     au CursorMoved * call s:stlupdate()
     au BufWritePost * call s:stlupdate()
+    au VimEnter * let v:errmsg = ''|let s:lasterrormsg = ''|call s:stlupdate()
 aug END
 
 " initialize {{{2

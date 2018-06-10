@@ -22,41 +22,6 @@ if neobundle#is_installed('vim-markdown')
     let s:markd = v:true
 endif
 
-" s:db() abort {{{3
-if has('terminal')&&executable('mysql')
-    " s:rec() {{{3
-    " start timer and stop timer if already exists
-    func! s:rec() abort
-        if !exists('s:m')
-            let s:m = timer_start(5,function('<SID>start'))
-        endif
-        return
-    endfunc
-
-    " s:start(...) {{{3
-    " start mysql
-    func! s:start(...) abort
-        " call job_start('net start MySQL')
-        echo 'started mysql'
-        return
-    endfunc
-
-    func! s:db() abort
-        aug db
-            au!
-            au SessionLoadPost * call <SID>rec()
-            au VimLeavePre * echo 'mysqlを終了するのです、(>ω<)わふーっ！'|call system(s:stopcom)
-        aug END
-        SLoad db.vim
-        return
-    endfunc
-else
-    func! s:db() abort
-        SLoad db.vim
-        return
-    endfunc
-endif
-
 " s:cd(file) abort {{{3
 func! s:cd(file) abort
     exe "cd D:\\Users\\NORA\\Documents\\授業ノート\\"
@@ -90,7 +55,7 @@ let g:startify_lists = [
 let g:startify_commands = [
 \ { 'd' : [ 'open default session', 'SLoad default.vim' ] },
 \ { 'o' : [ 'open default session', 'SLoad default.vim' ] },
-\ { 'sd' : [ 'open db session', 'call '.eval('s:sid()').'db()' ] },
+\ { 'sd' : [ 'open db session', 'SLoad db.vim' ] },
 \ { 'ss' : [ 'open sec.md', 'call '.eval('s:sid()').'cd("sec.md")' ] } ,
 \ { 'se' : [ 'open eigo.md', 'call '.eval('s:sid()').'cd("eigo.md")' ] } ,
 \ { 'sm' : [ 'move note dir and open filer', 'exe "cd D:\\Users\\NORA\\Documents\\授業ノート\\"|e %:h\' ] }
@@ -163,7 +128,14 @@ let g:startify_fortune_use_unicode = 1
 
 if neobundle#is_installed('vim-indent-guides')
     aug startify
+        au!
         au User Startified IndentGuidesDisable|au BufLeave <buffer> IndentGuidesEnable
+        au User Startified let v:errmsg = ''
+    aug end
+else
+    aug startify
+        au!
+        au User Startified let v:errmsg = ''
     aug end
 endif
 

@@ -18,8 +18,8 @@ vnoremap <Space>            <Nop>
 nnoremap <BS>            <Nop>
 vnoremap <BS>            <Nop>
 " double <Space>
-nnoremap <silent> <Space><Space>     :<C-u>echo SwitchColorScheme()<CR>
-vnoremap <silent> <Space><Space>     :<C-u>echo SwitchColorScheme()<CR>
+" nnoremap <silent> <Space><Space>     :<C-u>echo SwitchColorScheme()<CR>
+" vnoremap <silent> <Space><Space>     :<C-u>echo SwitchColorScheme()<CR>
 " misc {{{4
 nnoremap <silent> <Space>a           :<C-u>keepjumps norm! ggVG<CR>
 nnoremap <silent> <Space>y           :<C-u>call DoBuffer('ggVGy')<CR>

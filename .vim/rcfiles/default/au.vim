@@ -116,8 +116,9 @@ endfunc
 aug Myau " {{{2
     au!
     " read pdf {{{3
-    au BufReadPost *.pdf silent call s:au(s:Pdftxt())
+    au FileType *.pdf silent call s:au(s:Pdftxt())
     au VimLeave call s:delalltmp()
+    au FileType *.vim au BufWritePre <buffer> call DoBuffer('gg=G')
 aug END
 
 " augroup backup take backup by name{{{1

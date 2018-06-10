@@ -5,7 +5,7 @@ filetype off
 
 if has('vim_starting')
     if &runtimepath !~# '/neobundle.vim'
-        set runtimepath+=~/.vim/bundle/neobundle.vim
+        let &runtimepath = &rtp.',~/.vim/bundle/neobundle.vim'
     else
         finish
     endif
@@ -81,6 +81,7 @@ NeoBundle 'kannokanno/previm', {
 NeoBundle 'alvan/vim-closetag'
 " NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'nora75/markdowntable'
+NeoBundle 'nora75/DatabaseTerminal'
 
 " writing {{{3
 " NeoBundle 'junegunn/goyo.vim'

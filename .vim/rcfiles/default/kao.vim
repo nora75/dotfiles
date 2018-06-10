@@ -1,4 +1,4 @@
-if expand('$VIM') =~? 'kaoriya'
+if has('kaoriya')
     " add all folder under the $vim/plugins to rtp
     for s:path in split(glob($VIM.'/plugins/*'), '\n')
         if s:path !~# '\~$' && isdirectory(s:path)
@@ -22,14 +22,10 @@ if expand('$VIM') =~? 'kaoriya'
     endif
 
     " vimproc: disable vimproc included with KaoriYa
-    if kaoriya#switch#enabled('disable-vimproc')
-        let &rtp = join(filter(split(&rtp, ','), 'v:val !~ "[/\\\\]plugins[/\\\\]vimproc$"'), ',')
-    endif
+    let &rtp = join(filter(split(&rtp, ','), 'v:val !~ "[/\\\\]plugins[/\\\\]vimproc$"'), ',')
 
     " go-extra: disable go-extra included with KaoriYa
-    if kaoriya#switch#enabled('disable-go-extra')
-        let &rtp = join(filter(split(&rtp, ','), 'v:val !~ "[/\\\\]plugins[/\\\\]golang$"'), ',')
-    endif
+    let &rtp = join(filter(split(&rtp, ','), 'v:val !~ "[/\\\\]plugins[/\\\\]golang$"'), ',')
 
 
     " Disable Screen Mode (kaoriya)
