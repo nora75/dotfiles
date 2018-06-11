@@ -36,7 +36,7 @@ let g:lightline.colorscheme = 'default'
 
 " component {{{3
 let g:lightline.component = {
-\ 'modified': '%{(&ft!=#"unite")&&(&ft!=#"help")&&(&mod)?"+":""}',
+\ 'modified': '%{(&ft!=#"unite")&&(&ft!=#"help")&&(&mod)&&(&buftype!="terminal")?"+":""}',
 \ 'bufnum': '%n',
 \ 'readonly': '%{(&ft!=#"unite")&&(&ft!=#"help")&&(&ro)?"R":""}',
 \ 'filetype': '%{(&ft!=#"unite")?&ft:""}',
@@ -65,7 +65,7 @@ let g:lightline.component_visible_condition = {
 \ 'myfname': 'v:true' ,
 \ 'myff' : '(&ft!=#"help")&&(&ft!=#"unite")' ,
 \ 'filetype' : '(&ft!=#"")&&(&ft!=#"unite")' ,
-\ 'modified': '(expand("%:t:r")!=#"")&&(&modified)&&(&ft!="unite")&&(&ft!=?"help")' ,
+\ 'modified': '(expand("%:t:r")!=#"")&&(&modified)&&(&ft!="unite")&&(&ft!=?"help")&&(&buftype!="terminal")' ,
 \ 'readonly': '(&readonly)&&(&ft!="unite")&&(&ft!=?"help")' }
 " \ 'mycwd' : '' ,
 " \ 'mycurfiledir' : '' ,

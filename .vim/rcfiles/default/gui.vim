@@ -87,7 +87,7 @@ if has('gui') " options for gvim {{2
         endif
         " add '+' when modified
         for bufnr in bufnrlist
-            if getbufvar(bufnr, '&modified')
+            if getbufvar(bufnr, '&modified') && getbufvar(bufnr, '&buftype') != 'terminal'
                 let tabbufname .= ' +'
                 break
             endif

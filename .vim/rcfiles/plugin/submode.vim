@@ -131,6 +131,13 @@ command! -nargs=0 SubmUnmap call s:unmap()
 " :SubmodeRemap {{{2
 command! -nargs=0 SubmRemap call s:remap()
 
+" au {{{1
+aug terminal
+    au!
+    au FileType terminal SubmUnmap
+    au FileType terminal au BufWinLeave <buffer> SubmRemap
+aug END
+
 " }}}
 
 " vim: set fdm=marker fmr={{{,}}} fdl=1 :

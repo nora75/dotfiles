@@ -142,7 +142,7 @@ endfunc
 " s:mod() {{{3
 " function of modified
 func! s:mod() abort
-    return (&mod)?'| + ':''
+    return (&mod && &buftype != 'terminal' )?'| + ':''
 endfunc
 
 func! s:ro() abort
