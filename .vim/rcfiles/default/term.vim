@@ -6,7 +6,7 @@ endif
 " vital-palette-keymapping
 " <A-w> みたいなのを \<A-w> にして feedkeys() で呼び出せるようにするためのエスケープ関数
 function! s:escape_special_key(key)
-   " Workaround : <C-?> https://github.com/osyo-manga/vital-palette/issues/5
+    " Workaround : <C-?> https://github.com/osyo-manga/vital-palette/issues/5
     if a:key ==# "<^?>"
         return "\<C-?>"
     endif
@@ -29,8 +29,8 @@ endfunction
 
 
 function! s:filetype()
-   " set filetype=terminal のタイミングでは動作しなかったので
-   " timer_start() で遅延して設定する
+    " set filetype=terminal のタイミングでは動作しなかったので
+    " timer_start() で遅延して設定する
     call timer_start(0, { -> feedkeys(s:escape_special_key(&termwinkey) . "\<S-n>") })
 endfunction
 
@@ -45,10 +45,10 @@ augroup END
 function! s:open(args) abort
     if empty(term_list())
         execute "terminal" a:args
+        let s:bufwin = bufwinid(bufnr(''))
     else
-        let bufnr = term_list()[0]
-        execute term_getsize(bufnr)[0] . "new"
-        execute "buffer + " bufnr
+        exe 'tabn '.win_id2tabwin(s:bufwin)[0]
+        call win_gotoid(s:bufwin)
     endif
 endfunction
 

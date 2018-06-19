@@ -48,13 +48,16 @@ func! s:remap() abort
     call submode#map('TabWidthn', 'n', '', '<', '<<')
     call submode#map('TabWidthn', 'n', '', ',', '<<')
     " TabWidth visual {{{3
-    " can't move must fix it
-    " call submode#enter_with('TabWidthv', 'v', '', '>', '>')
-    " call submode#enter_with('TabWidthv', 'v', '', '<', '<')
-    " call submode#map('TabWidthv', 'n', '', '>', 'gv>')
-    " call submode#map('TabWidthv', 'n', '', '.', 'gv>')
-    " call submode#map('TabWidthv', 'n', '', '<', 'gv<')
-    " call submode#map('TabWidthv', 'n', '', ',', 'gv<')
+    call submode#enter_with('TabWidthv', 'v', '', '>', '>gv')
+    call submode#enter_with('TabWidthv', 'v', '', '<', '<gv')
+    call submode#map('TabWidthv', 'v', '', '>', '>gv')
+    call submode#map('TabWidthv', 'v', '', '.', '>gv')
+    call submode#map('TabWidthv', 'v', '', '<', '<gv')
+    call submode#map('TabWidthv', 'v', '', ',', '<gv')
+    call submode#map('TabWidthv', 'v', '', 'j', 'j')
+    call submode#map('TabWidthv', 'v', '', 'k', 'k')
+    call submode#map('TabWidthv', 'v', '', 'h', 'h')
+    call submode#map('TabWidthv', 'v', '', 'l', 'l')
 
     " TabPageMove {{{2
     call submode#enter_with('TabPageMove', 'n', '', 'gt', 'gt')
@@ -84,40 +87,43 @@ endfunc
 
 " s:unmap() abort {{{2
 func! s:unmap() abort
-    nunmap <C-w>>
-    nunmap <C-w><
-    nunmap <C-w>+
-    nunmap <C-w>-
+    try
+        nunmap <C-w>>
+        nunmap <C-w><
+        nunmap <C-w>+
+        nunmap <C-w>-
 
-    " WinMove {{{2
-    " nunmap <C-w>t
-    " nunmap <C-w>b
-    nunmap <C-w>h
-    nunmap <C-w>j
-    nunmap <C-w>k
-    nunmap <C-w>l
+        " WinMove {{{2
+        " nunmap <C-w>t
+        " nunmap <C-w>b
+        nunmap <C-w>h
+        nunmap <C-w>j
+        nunmap <C-w>k
+        nunmap <C-w>l
 
-    " TabWidth {{{2
-    " TabWidth normal {{{3
-    nunmap g>
-    nunmap g<
-    " TabWidth visual {{{3
-    " can't move must fix it
-    " >vunmap 
-    " vunmap <
+        " TabWidth {{{2
+        " TabWidth normal {{{3
+        nunmap g>
+        nunmap g<
+        " TabWidth visual {{{3
+        " can't move must fix it
+        " >vunmap 
+        " vunmap <
 
-    " TabPageMove {{{2
-    nunmap gt
-    nunmap gT
+        " TabPageMove {{{2
+        nunmap gt
+        nunmap gT
 
-    " TabMove {{{2
-    nunmap <Space>th
-    nunmap <Space>tl
+        " TabMove {{{2
+        nunmap <Space>th
+        nunmap <Space>tl
 
-    " LineMove {{{2
-    " swap current line to up or down
-    nunmap <Space>lj
-    nunmap <Space>lk
+        " LineMove {{{2
+        " swap current line to up or down
+        nunmap <Space>lj
+        nunmap <Space>lk
+    catch
+    endtry
 
     return
 endfunc
@@ -125,17 +131,17 @@ endfunc
 call s:remap()
 
 " command {{{1
-" :SubmodeUnmap {{{2
-command! -nargs=0 SubmUnmap call s:unmap()
+" :SubUnmap {{{2
+command! -nargs=0 SubUnmap call s:unmap()
 
-" :SubmodeRemap {{{2
-command! -nargs=0 SubmRemap call s:remap()
+" :SubRemap {{{2
+command! -nargs=0 SubRemap call s:remap()
 
 " au {{{1
 aug terminal
     au!
-    au FileType terminal SubmUnmap
-    au FileType terminal au BufWinLeave <buffer> SubmRemap
+    au FileType terminal SubUnmap
+    au FileType terminal au BufWinLeave <buffer> SubRemap
 aug END
 
 " }}}

@@ -15,8 +15,10 @@ nnoremap <S-Tab>            gT
 " <Space> <Nop> {{{4
 nnoremap <Space>            <Nop>
 vnoremap <Space>            <Nop>
-nnoremap <BS>            <Nop>
-vnoremap <BS>            <Nop>
+nnoremap <BS>               <Nop>
+vnoremap <BS>               <Nop>
+nnoremap <CR>               <Nop>
+vnoremap <CR>               <Nop>
 " double <Space>
 " nnoremap <silent> <Space><Space>     :<C-u>echo SwitchColorScheme()<CR>
 " vnoremap <silent> <Space><Space>     :<C-u>echo SwitchColorScheme()<CR>
@@ -38,9 +40,15 @@ nnoremap <silent>           [AppendLine]j       :<C-u>for i in range(1, v:count1
 nnoremap <silent>           [AppendLine]k       :<C-u>for i in range(1, v:count1)<Bar>call append(line('.')-1,'')<Bar>endfor<CR>
 " LineMove {{{3
 nmap     <Space>l           [LineMove]
-nnoremap [LineMove]         <Nop>
-nmap     [LineMove]j        dd]p
-nmap     [LineMove]k        ddk[p
+nnoremap <silent> [LineMove]j        :<C-u>call <SID>lineMove('j')<CR>
+nnoremap <silent> [LineMove]k        :<C-u>call <SID>lineMove('k')<CR>
+nnoremap <silent> [LineMove]    <Nop>
+" Balnkline {{{3
+nmap <Space>d [BlankLine]
+nnoremap <silent> [BlankLine] :<C-u>set opfunc=<SID>blankLineOp<CR>g@
+nnoremap <silent> [BlankLine]d :<C-u>call <SID>blankLineOp('visual',line('.'),line('.'))<CR>
+vnoremap <silent> <Space>d :<C-u>call <SID>blankLineOp('visual',line("'<"),line("'>"))<CR>
+nnoremap <silent> [BlankLine]    <Nop>
 " search {{{3
 nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
 nnoremap /          :<C-u>set hlsearch<CR>/
@@ -54,20 +62,15 @@ nnoremap x                  "_x
 nnoremap X                  "_X
 vnoremap x                  "_x
 vnoremap X                  "_X
-nnoremap <Space>x                  x
-nnoremap <Space>X                  X
-vnoremap <Space>x                  x
-vnoremap <Space>X                  X
-nnoremap <Space>w                  :<C-u>w<CR>
-vnoremap <Space>w                  :<C-u>w<CR>
-" nnoremap dl                 d2l
+nnoremap <Space>x           x
+nnoremap <Space>X           X
+vnoremap <Space>x           x
+vnoremap <Space>X           X
+nnoremap <Space>w           :<C-u>w<CR>
+vnoremap <Space>w           :<C-u>w<CR>
+" nnoremap dl                d2l
 nnoremap yy                 y$
 " nnoremap cc                 :<C-u>for i in range(1,v:count1)<Bar>call setline(line('.'),'')<Bar>endfor<CR>
-nmap <Space>d [BlankLine]
-nnoremap [BlankLine] :<C-u>set opfunc=<SID>blankLineOp<CR>g@
-nnoremap <silent> [BlankLine]k                 :<C-u>set opfunc=<SID>blanklineop<CR>g@
-nnoremap <silent> [BlankLine]d :<C-u>call <SID>blankLineOp('visual',line('.'),line('.'))<CR>
-vnoremap <silent> <Space>d :<C-u>call <SID>blankLineOp('visual',line("'<"),line("'>"))<CR>
 nnoremap <silent> <C-p>     "0p
 nnoremap <silent> <C-S-p>   "0P
 nnoremap J gJ
@@ -161,7 +164,20 @@ endfunc
 
 " s:mapkey(k) {{{4
 " map key of arg to s:rec()
-func! s:mapkey(k) abort
+func! s:mapkey(k,...) abort
+    if a:0
+        let arg = string(a:000)
+        if arg !~ 'n'
+            exe 'nnoremap <silent>' a:k ':<C-u>call <SID>rec()<CR>'
+        endif
+        if arg !~ 'v'
+            exe 'vnoremap <silent>' a:k ':<C-u>call <SID>rec()<CR>'
+        endif
+        if arg !~ 'i'
+            exe 'inoremap <silent>' a:k '<C-o>:<C-u>call <SID>rec()<CR>'
+        endif
+        return
+    endif
     exe 'nnoremap <silent>' a:k ':<C-u>call <SID>rec()<CR>'
     exe 'vnoremap <silent>' a:k ':<C-u>call <SID>rec()<CR>'
     exe 'inoremap <silent>' a:k '<C-o>:<C-u>call <SID>rec()<CR>'
@@ -181,6 +197,9 @@ func! s:dontusethiskey() abort
     call s:mapkey('<End>')
     call s:mapkey('<Insert>')
     call s:mapkey('<Del>')
+    call s:mapkey('<CR>','i')
+    call s:mapkey('<BS>','i')
+    call s:mapkey('<Space>','i')
     return
 endfunc
 
@@ -208,6 +227,29 @@ func! s:blankLineOp(type,...) abort
             call setline(i,'')
         endfor
     endif
+    return
+endfunc
+
+" LineMove function {{{2
+" function for linemove mapping
+func! s:lineMove(type) abort
+    let line1 = line('.')
+    if a:type == 'j'
+        let line2 = line1 + 1
+        if line2 == line('$')
+            return
+        endif
+    else
+        let line2 = line1 - 1
+        if line2 == 0
+            return
+        endif
+    endif
+    let bline = getline(line1)
+    let aline = getline(line2)
+    call setline(line2,bline)
+    call setline(line1,aline)
+    exe 'keepjumps norm '.a:type
     return
 endfunc
 

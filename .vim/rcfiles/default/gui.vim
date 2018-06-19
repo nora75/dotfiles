@@ -113,7 +113,7 @@ else " {{{2
             let bufnrs = tabpagebuflist(i)
             let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
             let no = i  " display 0-origin tabpagenr.
-            let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
+            let mod = getbufvar(bufnr, '&modified') ? '+' : ' '
             let title = fnamemodify(bufname(bufnr), ':t')
             let title = '[' . title . ']'
             let s .= '%'.i.'T'

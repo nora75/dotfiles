@@ -29,6 +29,42 @@ func! s:cd(file) abort
     return
 endfunc
 
+" s:debugit(file) abort
+func! s:debugit(file) abort
+    new
+    only
+    colorscheme default
+    mapc
+    comc
+    let funcl = split(execute('function'),"\n")
+    let funcl = map(funcl,'substitute(v:val,"^function","","g")')
+    let funcl = map(funcl,'substitute(v:val,"(.*$","","g")')
+    call filter(funcl,'v:val !~ "#"')
+    for i in funcl
+        exe 'silent! delfunc'.i
+    endfor
+    let augl = split(substitute(execute('aug'), "\n","","g"),'\s\+')
+    for i in augl
+        exe 'aug '.i
+        au!
+        exe 'aug END'
+        exe 'silent! aug! '.i
+    endfor
+    clearjumps
+    set all&
+    set cpo&vim
+    for s:file in filter(glob('~/.vim/rcfiles/default/*.vim','','1'), '(v:val !~? "bundle") && (v:val !~? "color")')
+        exe 'source '.s:file
+    endfor
+    exe 'source '.expand('~\'.a:file)
+    return
+endfunc
+
+func! TEST() abort
+    call s:debugit('test')
+    return
+endfunc
+
 " settings {{{1
 " custom list {{{2
 let g:startify_bookmarks = [ { 'v':'~/.vim/rcfiles/' } ]
@@ -58,7 +94,9 @@ let g:startify_commands = [
 \ { 'sd' : [ 'open db session', 'SLoad db.vim' ] },
 \ { 'ss' : [ 'open sec.md', 'call '.eval('s:sid()').'cd("sec.md")' ] } ,
 \ { 'se' : [ 'open eigo.md', 'call '.eval('s:sid()').'cd("eigo.md")' ] } ,
-\ { 'sm' : [ 'move note dir and open filer', 'exe "cd D:\\Users\\NORA\\Documents\\授業ノート\\"|e %:h\' ] }
+\ { 'sm' : [ 'move note dir and open filer', 'exe "cd D:\\Users\\NORA\\Documents\\授業ノート\\"|e %:h\' ] } ,
+\ { 'dd' : [ 'debug DatabaseTerminal', 'call '.eval('s:sid()').'debugit("t.vim")' ] } ,
+\ { 'dm' : [ 'debug markdowntable', 'call '.eval('s:sid()').'debugit("d.vim")' ] }
 \ ]
 
 " if vim-markdown is supports change functions
