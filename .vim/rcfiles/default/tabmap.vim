@@ -26,9 +26,9 @@ nnoremap <silent> [TabG]h :<C-u>for i in range(1,v:count1)<Bar>tabm-<Bar>endfor<
 " tl move tab to right
 nnoremap <silent> [TabG]l :<C-u>for i in range(1,v:count1)<Bar>tabm+<Bar>endfor<CR>
 " tj move tab to first
-nnoremap <silent> [TabG]j :<C-u>tabm0<CR>
+nnoremap <silent> [TabG]k :<C-u>tabm0<CR>
 " tk move tab to last
-nnoremap <silent> [TabG]k :<C-u>tabm<CR>
+nnoremap <silent> [TabG]j :<C-u>tabm<CR>
 nnoremap <silent> [TabG]s :<C-u>call NewTabScratch()<CR>
 
 " vim:set fmr={{{,}}} fdl=1 fdm=marker :

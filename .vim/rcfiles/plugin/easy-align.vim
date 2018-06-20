@@ -1,4 +1,4 @@
-if !neobundle#is_installed('vim-easy-align')
+if !dein#is_sourced('vim-easy-align')
     finish
 endif
 " not live

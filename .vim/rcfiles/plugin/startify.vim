@@ -1,11 +1,11 @@
-if !neobundle#is_installed('vim-startify')
+if !dein#is_sourced('vim-startify')
     finish
 endif
 
 " functions {{{1
 " local {{{2
 " s:toc(file) abort {{{3
-if neobundle#is_installed('vim-markdown')
+if dein#is_sourced('vim-markdown')
     func! s:toc(file) abort
         call s:cd(a:file)
         let bid = win_getid(winnr())
@@ -53,9 +53,6 @@ func! s:debugit(file) abort
     clearjumps
     set all&
     set cpo&vim
-    for s:file in filter(glob('~/.vim/rcfiles/default/*.vim','','1'), '(v:val !~? "bundle") && (v:val !~? "color")')
-        exe 'source '.s:file
-    endfor
     exe 'source '.expand('~\'.a:file)
     return
 endfunc
@@ -164,7 +161,7 @@ let g:startify_custom_footer = s:StartifyFooter.center()
 let g:startify_padding_left = 4
 let g:startify_fortune_use_unicode = 1
 
-if neobundle#is_installed('vim-indent-guides')
+if dein#is_sourced('vim-indent-guides')
     aug startify
         au!
         au User Startified IndentGuidesDisable|au BufLeave <buffer> IndentGuidesEnable

@@ -1,4 +1,4 @@
-if !neobundle#is_installed('nerdtree')
+if !dein#is_sourced('nerdtree')
     finish
 endif
 let g:NERDTreeDirArrowExpandable = '+'

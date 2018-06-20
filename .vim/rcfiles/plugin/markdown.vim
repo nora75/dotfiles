@@ -1,4 +1,4 @@
-if !neobundle#is_installed('vim-markdown')
+if !dein#is_sourced('vim-markdown')
     finish
 endif
 " markdown option {{{1

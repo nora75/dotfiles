@@ -1,4 +1,4 @@
-if !neobundle#is_installed('vim-easymotion')
+if !dein#is_sourced('vim-easymotion')
     finish
 endif
 " dont use now

@@ -1,4 +1,4 @@
-if !neobundle#is_installed('quick-run')
+if !dein#is_sourced('quick-run')
     finish
 endif
 "" dont use now

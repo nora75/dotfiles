@@ -1,4 +1,4 @@
-if !neobundle#is_installed('vim-table-mode')
+if !dein#is_sourced('vim-table-mode')
     finish
 endif
 " table mode

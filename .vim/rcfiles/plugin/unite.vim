@@ -1,4 +1,4 @@
-if !neobundle#is_installed('unite.vim')
+if !dein#is_sourced('unite.vim')
     finish
 endif
 " unite general settings {{{2

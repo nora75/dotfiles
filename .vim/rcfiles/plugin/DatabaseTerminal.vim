@@ -1,4 +1,4 @@
-if !neobundle#is_installed('DatabaseTerminal')
+if !dein#is_sourced('DatabaseTerminal')
     finish
 endif
 let g:DatabaseTerminal_dbName = 'MySQL'

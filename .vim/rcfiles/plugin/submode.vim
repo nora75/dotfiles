@@ -1,4 +1,4 @@
-if !neobundle#is_installed('vim-submode')
+if !dein#is_sourced('vim-submode')
     finish
 endif
 " options {{{1

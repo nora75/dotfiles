@@ -1,4 +1,4 @@
-if !neobundle#is_installed('winresizer')
+if !dein#is_sourced('winresizer')
     finish
 endif
 
@@ -20,7 +20,7 @@ let g:winresizer_keycode_finish = 32 " <Space>
 " au {{{2
 aug Winresize " {{{3
     au!
-    if neobundle#is_installed('vim-startify')
+    if dein#is_sourced('vim-startify')
         au User Startified nnoremap <C-e> :<C-u>call <SID>winres()<CR>
     else
         au VimEnter nnoremap <C-e> :<C-u>call <SID>winres()<CR>

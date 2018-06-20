@@ -1,4 +1,4 @@
-if !neobundle#is_installed('lightline.vim')
+if !dein#is_sourced('lightline.vim')
     finish
 endif
 " options {{{2
@@ -49,7 +49,7 @@ let g:lightline.component = {
 \ 'mymdtoc' : '%{(&ft==#"markdown")&&(b:Markdown_AuToc)?"T":""}' ,
 \ 'mymove' : '%{hasmapto("gj")?"M":""}' }
 
-if neobundle#is_installed('unite.vim')
+if dein#is_sourced('unite.vim')
     call extend(g:lightline.component,{'myunite' : '%{(&ft!="unite")?matchstr(unite#get_status_string(),"\M|\.\+$"):""}'})
 endif
 

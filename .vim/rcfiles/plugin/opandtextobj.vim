@@ -1,5 +1,5 @@
 " vim-operator-replace {{{2
-if !neobundle#is_installed('vim-operator-replace')
+if !dein#is_sourced('vim-operator-replace')
     finish
 endif
 nmap _  <Plug>(operator-replace)
@@ -13,7 +13,7 @@ if hasmapto('<C-S-p>')
     vunmap <C-S-p>
 endif
 " vim-operator-stay-cursor {{{2
-if !neobundle#is_installed('vim-operator-stay-cursor')
+if !dein#is_sourced('vim-operator-stay-cursor')
     finish
 endif
 map y <Plug>(operator-stay-cursor-yank)
@@ -21,7 +21,7 @@ map gu <Plug>(operator-stay-cursor-gu)
 map gU <Plug>(operator-stay-cursor-gU)
 map g~ <Plug>(operator-stay-cursor-g~)
 " textobj-wiw {{{2
-if !neobundle#is_installed('textobj-wiw')
+if !dein#is_sourced('textobj-wiw')
     finish
 endif
 " nmap ,w  <Plug>(textobj-wiw-n)

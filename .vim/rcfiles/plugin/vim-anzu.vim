@@ -1,4 +1,4 @@
-if !neobundle#is_installed('vim-anzu')
+if !dein#is_sourced('vim-anzu')
     finish
 endif
 " mapping

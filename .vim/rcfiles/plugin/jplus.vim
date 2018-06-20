@@ -1,4 +1,4 @@
-if !neobundle#is_installed('vim-jplus')
+if !dein#is_sourced('vim-jplus')
     finish
 endif
 " mapping {{{2

@@ -1,4 +1,4 @@
-if !neobundle#is_installed('vim-session')
+if !dein#is_sourced('vim-session')
     finish
 endif
 " vim default session's options

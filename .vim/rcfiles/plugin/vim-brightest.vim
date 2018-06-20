@@ -1,4 +1,4 @@
-if !neobundle#is_installed('vim-brightest')
+if !dein#is_sourced('vim-brightest')
     finish
 endif
 " let g:brightest#enable_on_CursorHold = 0

@@ -1,7 +1,7 @@
-if !neobundle#is_installed('matchit.vim')
+if !dein#is_sourced('matchit.vim')
     finish
 endif
-if !neobundle#is_installed('hl_matchit.vim')
+if !dein#is_sourced('hl_matchit.vim')
     finish
 endif
 " func {{{2

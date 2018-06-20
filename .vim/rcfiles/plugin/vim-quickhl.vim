@@ -1,4 +1,4 @@
-if !neobundle#is_installed('vim-quickhl')
+if !dein#is_sourced('vim-quickhl')
     finish
 endif
 let g:quickhl_manual_enable_at_startup = 1
