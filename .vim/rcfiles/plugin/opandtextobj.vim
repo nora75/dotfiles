@@ -1,7 +1,5 @@
 " vim-operator-replace {{{2
-if !dein#is_sourced('vim-operator-replace')
-    finish
-endif
+if dein#is_sourced('vim-operator-replace')
 nmap _  <Plug>(operator-replace)
 vmap _  <Plug>(operator-replace)
 if hasmapto('<C-p>')
@@ -12,18 +10,16 @@ if hasmapto('<C-S-p>')
     nunmap <C-S-p>
     vunmap <C-S-p>
 endif
-" vim-operator-stay-cursor {{{2
-if !dein#is_sourced('vim-operator-stay-cursor')
-    finish
 endif
+" vim-operator-stay-cursor {{{2
+if dein#is_sourced('vim-operator-stay-cursor')
 map y <Plug>(operator-stay-cursor-yank)
 map gu <Plug>(operator-stay-cursor-gu)
 map gU <Plug>(operator-stay-cursor-gU)
 map g~ <Plug>(operator-stay-cursor-g~)
-" textobj-wiw {{{2
-if !dein#is_sourced('textobj-wiw')
-    finish
 endif
+" textobj-wiw {{{2
+if dein#is_sourced('textobj-wiw')
 " nmap ,w  <Plug>(textobj-wiw-n)
 " nmap ,b  <Plug>(textobj-wiw-p)
 " nmap ,e  <Plug>(textobj-wiw-N)
@@ -36,3 +32,4 @@ endif
 " omap ,b  <Plug>(textobj-wiw-p)
 " omap ,e  <Plug>(textobj-wiw-N)
 " omap ,ge  <Plug>(textobj-wiw-P)
+endif

@@ -2,10 +2,15 @@ if !dein#is_sourced('vim-startify')
     finish
 endif
 
+let s:marked = 0
+if dein#tap('vim-markdown')
+    let s:marked = 1
+endif
+
 " functions {{{1
 " local {{{2
 " s:toc(file) abort {{{3
-if dein#is_sourced('vim-markdown')
+if s:marked == 1
     func! s:toc(file) abort
         call s:cd(a:file)
         let bid = win_getid(winnr())
@@ -19,7 +24,6 @@ if dein#is_sourced('vim-markdown')
     function! s:sid() abort
         return matchstr(expand('<sfile>'), '<SNR>\d\+_')
     endfun
-    let s:markd = v:true
 endif
 
 " s:cd(file) abort {{{3
@@ -92,12 +96,12 @@ let g:startify_commands = [
 \ { 'ss' : [ 'open sec.md', 'call '.eval('s:sid()').'cd("sec.md")' ] } ,
 \ { 'se' : [ 'open eigo.md', 'call '.eval('s:sid()').'cd("eigo.md")' ] } ,
 \ { 'sm' : [ 'move note dir and open filer', 'exe "cd D:\\Users\\NORA\\Documents\\授業ノート\\"|e %:h\' ] } ,
-\ { 'dd' : [ 'debug DatabaseTerminal', 'call '.eval('s:sid()').'debugit("t.vim")' ] } ,
-\ { 'dm' : [ 'debug markdowntable', 'call '.eval('s:sid()').'debugit("d.vim")' ] }
 \ ]
+" \ { 'dd' : [ 'debug DatabaseTerminal', 'call '.eval('s:sid()').'debugit("t.vim")' ] } ,
+" \ { 'dm' : [ 'debug markdowntable', 'call '.eval('s:sid()').'debugit("d.vim")' ] }
 
 " if vim-markdown is supports change functions
-if s:markd
+if s:marked
     let g:startify_commands[3:4] = [ 
     \ { 'ss' : [ 'open sec.md', 'call '.eval('s:sid()').'toc("sec.md")' ] } ,
     \ { 'se' : [ 'open eigo.md', 'call '.eval('s:sid()').'toc("eigo.md")' ] } ]

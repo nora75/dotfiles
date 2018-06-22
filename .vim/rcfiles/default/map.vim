@@ -197,9 +197,6 @@ func! s:dontusethiskey() abort
     call s:mapkey('<End>')
     call s:mapkey('<Insert>')
     call s:mapkey('<Del>')
-    call s:mapkey('<CR>','i')
-    call s:mapkey('<BS>','i')
-    call s:mapkey('<Space>','i')
     return
 endfunc
 

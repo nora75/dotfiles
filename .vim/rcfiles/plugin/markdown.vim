@@ -1,4 +1,4 @@
-if !dein#is_sourced('vim-markdown')
+if !dein#tap('vim-markdown')
     finish
 endif
 " markdown option {{{1
@@ -15,11 +15,12 @@ let g:vim_markdown_folding_level = 2
 " Mmap() abort {{{2
 func! Mmap() abort
     let bid = win_getid(winnr())
-    Toc
+    " Toc
     exe 'nnoremap <buffer><silent> <Space>mt :<C-u>call win_gotoid('.bid.')<CR>'
     exe 'vnoremap <buffer><silent> <Space>mt :<C-u>call win_gotoid('.bid.')<CR>'
+    call win_gotoid(bid)
     return bid
-endfunc!
+endfunc
 
 " local function {{{1
 " s:toc() abort {{{2
@@ -32,7 +33,7 @@ endfunc
 
 " command {{{1
 " :Toc {{{2
-command! -nargs=0 Toce call Mmap()
+" command! -nargs=0 Toce call Mmap()
 
 " au {{{1
 augroup markdown " {{{2
@@ -73,7 +74,7 @@ endfunc
 
 " TocToggle {{{ 2
 func! MarkToc()
-    " auto do Toc command when bufwritepost in markdown file
+    " auto execute Toc command when bufwritepost in markdown file
     if (b:Markdown_AuToc)
         aug Toc
             au!

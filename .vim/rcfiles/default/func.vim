@@ -647,7 +647,7 @@ endfunc
 " Using in :PluginCheck
 " return executable command of view plugins directory by case
 func! PluginCheck(...) abort
-    let ret = 'e ~\.vim\bundle\'
+    let ret = 'e ~\.vim\dein\repos\github.com\'
     if a:0 == 0
         return ret
     endif
