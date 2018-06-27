@@ -29,16 +29,6 @@ if has('gui') " options for gvim {{2
     syntax enable
     set background=dark
     " change to if statement
-    if has('vim_starting')
-        try
-            " colorscheme wombat256mod
-            colorscheme iceberg
-            " colorscheme twilight
-        catch
-            colorscheme default
-        endtry
-    endif
-
     if has('win32')
         " for windows
         " set guifont=MS_Gothic:h12:cSHIFTJIS
@@ -129,6 +119,17 @@ else " {{{2
     let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
     " }}}
 endif
+
+if has('vim_starting')
+    try
+        " colorscheme wombat256mod
+        colorscheme iceberg
+        " colorscheme twilight
+    catch
+        colorscheme industry
+    endtry
+endif
+
 " move tabpage command
 " command! -bar TabMoveNext :execute 'tabmove ' tabpagenr() % tabpagenr('$') + (tabpagenr('$') == tabpagenr() ? 0 : 1)
 " command! -bar TabMovePrev :execute 'tabmove' (tabpagenr() + tabpagenr('$') - 2) % tabpagenr('$') + (tabpagenr() == 1 ? 1 : 0)

@@ -18,7 +18,7 @@ endfunction
 " set termwinkey=<A-w>
 if exists(":tmap")
     tnoremap <Esc> <C-w><S-n>
-    tnoremap p i<C-w>""
+    " tnoremap p i<C-w>""
 endif
 
 function! s:bufnew()

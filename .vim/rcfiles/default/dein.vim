@@ -3,15 +3,15 @@ scriptencoding utf-8
 " neobundle initialize {{{1
 syntax off
 if &compatible
-  set nocompatible
+    set nocompatible
 endif
 
 if has('vim_starting')
     if &runtimepath !~# '/dein.vim'
         let &runtimepath = &rtp.',~/.vim/dein/dein.vim'
-    else
-        finish
     endif
+else
+    finish
 endif
 
 " add plugin {{{1
@@ -24,7 +24,9 @@ if dein#load_state('~/.vim/dein')
     call dein#add('tpope/vim-surround')
     call dein#add('tpope/vim-commentary')
     call dein#add('tpope/vim-repeat')
-    call dein#add('nathanaelkane/vim-indent-guides')
+    call dein#add('nathanaelkane/vim-indent-guides', {
+    \ 'on_i' : 1
+    \ } )
     call dein#add('osyo-manga/vim-anzu')
     call dein#add('kana/vim-submode')
     call dein#add('mhinz/vim-startify')
@@ -41,7 +43,7 @@ if dein#load_state('~/.vim/dein')
     " call dein#add('powerline/fonts')
 
     " highlight {{{3
-    call dein#add('t9md/vim-quickhl')
+    " call dein#add('t9md/vim-quickhl')
     call dein#add('tmhedberg/matchit')
     call dein#add('vimtaku/hl_matchit.vim', {
     \ 'depends' : 'tmhedberg/matchit',
@@ -88,23 +90,27 @@ if dein#load_state('~/.vim/dein')
 
     " colorscheme {{{3
     call dein#add('vim-scripts/twilight')
+    " call dein#add('cocopon/iceberg.vim')
     " too many colorschemes
     call dein#add('flazz/vim-colorschemes')
     " たのしー!すっごーい!
     " call dein#add('machakann/vim-colorscheme-kemonofriends')
 
     " test {{{3
-    call dein#add('vim-scripts/AdvancedSorters')
+    " call dein#add('vim-scripts/AdvancedSorters')
     " call dein#add('gyim/vim-boxdraw')
 
     call dein#end()
     call dein#save_state()
 endif
 
-if dein#check_install()
-    mess 'Recommend to update plugins'
+" if dein#check_install()
+"     mess 'Recommend to update plugins'
+" endif
+
+if has('win32') || has('win64')
+    let g:vimproc#download_windows_dll = 1
 endif
-let g:vimproc#download_windows_dll = 1
 
 filetype plugin indent on
 syntax enable

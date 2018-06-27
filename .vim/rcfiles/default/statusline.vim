@@ -79,9 +79,20 @@ func! StlCurFileDir() abort
     if (cwd==?cfd)||(cfd==#'')
         return ''
     endif
-    let cdr = strcharpart(cfd,-1,2)
-    let cfd = matchstr(cfd,'[^\\]\+\\[^\\]\+$')
-    if (strcharpart(cwd,-1,2)!=cdr) && (cfd!~'\M^'.cdr)
+    if has('win32') &&  has('win64')
+        let sep = '\'
+        let s = 0
+        let e = 1
+        let pat = '[^\\]\+\\[^\\]\+$'
+    elseif has('unix')
+        let sep = '/'
+        let s = 1
+        let e = 1
+        let pat = '[^\/]\+/[^\/]\+$'
+    endif
+    let cdr = strcharpart(cfd,s,e)
+    let cfd = matchstr(cfd,pat)
+    if (strcharpart(cwd,s,e)!=cdr) && (cfd!~'\M^'.cdr)
         let cdr = cdr.':'
     else
         let cdr = ''

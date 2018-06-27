@@ -664,6 +664,18 @@ func! PluginCheck(...) abort
     return
 endfunc
 
+" s:lastWindow()
+" save last window when close buffer and restore it when call function
+augroup bufclosetrack
+    au!
+    autocmd WinLeave * let s:lastWinName = @%
+augroup END
+
+function! s:lastWindow()
+    exe "vsplit " . s:lastWinName
+endfunction
+command! -nargs=0 LastWindow call s:lastWindow()
+
 " base functions{{{1
 " s:saveState() {{{2
 " save current buffer's state and return it
