@@ -105,7 +105,7 @@ if dein#load_state('~/.vim/dein')
 endif
 
 " if dein#check_install()
-"     mess 'Recommend to update plugins'
+"     echom 'Recommend to update plugins'
 " endif
 
 if has('win32') || has('win64')
