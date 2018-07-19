@@ -50,6 +50,8 @@ augroup END
 function! s:unite_my_settings()" {{{2
     " exit unite with <ESC>
     nmap <buffer> <ESC> <Plug>(unite_exit)
+    " exit unite with qq in insert mode
+    imap <buffer> qq <Plug>(unite_exit)
     " type jj to exit insert mode
     imap <buffer> jj <Plug>(unite_insert_leave)
     " extend <C-w> command to delete /

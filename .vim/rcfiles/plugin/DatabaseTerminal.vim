@@ -10,3 +10,9 @@ let g:DatabaseTerminal_outputFormat = 'docx'
 let g:DatabaseTerminal_outputExtens = 'docx'
 let g:DatabaseTerminal_autodate = 1
 let g:DatabaseTerminal_autoOutput = 1
+let g:DatabaseTerminal_dontStop = 1
+aug Dterminal
+    au!
+    au FileType DbTerminal SubUnmap
+    au FileType DbTerminal au BufWinLeave <buffer> SubRemap
+aug END

@@ -3,7 +3,7 @@ scriptencoding utf-8
 " initialize {{{2
 " set variables if not exist
 set ls=2
-if !exists('g:wafun')
+if !exists('g:echostr')
     source ~\\.vim\\rcfiles\\default\\wafu.vim
 endif
 let v:errmsg = ''
@@ -21,7 +21,7 @@ func! s:stl(active) abort
     let second = ' %#StlLeft1# %f '
     if !a:active
         let cwd = StlCwd()
-        let waf = ' | '.StlWafu()
+        let waf = ' | '.StlEch()
         let first = '%#StlLeft0# '
     endif
     let mo = s:mod()
@@ -109,33 +109,33 @@ func! StlCurFileDir() abort
     return cdr.cwd
 endfun
 
-" StlWafu() {{{3
+" StlEch() {{{3
 " function of wafu
 " return some variation of wafu
-function! StlWafu()
-    let wafuenc = get(s:, 'wafuenc', &encoding)
-    if wafuenc != &encoding
-        let g:wafustr = map(g:wafustr, 'iconv(v:val,g:wafuenc,&encoding)')
-        let g:wafuerrlong = map(g:wafuerrlong, 'iconv(v:val,g:wafuenc,&encoding)')
+function! StlEch()
+    let echoenc = get(s:, 'echoenc', &encoding)
+    if echoenc != &encoding
+        let g:echostr = map(g:echostr, 'iconv(v:val,g:echoenc,&encoding)')
+        let g:echoerrlong = map(g:echoerrlong, 'iconv(v:val,g:echoenc,&encoding)')
     endif
-    let g:wafuenc = &encoding
-    let wafupos = get(w:, 'wafupos', -1) + 1
-    if len(v:errmsg) && wafupos >= 0
-        let wafupos = -24
+    let g:echoenc = &encoding
+    let echopos = get(w:, 'echopos', -1) + 1
+    if len(v:errmsg) && echopos >= 0
+        let echopos = -24
         let s:lasterrormsg = v:errmsg
         let v:errmsg = ''
     endif
-    if wafupos >= 0
-        let wafupos = wafupos % len(g:wafustr)
+    if echopos >= 0
+        let echopos = echopos % len(g:echostr)
     endif
-    let w:['wafupos'] = wafupos
-    if wafupos >= 0
-        return g:wafustr[wafupos]
+    let w:['echopos'] = echopos
+    if echopos >= 0
+        return g:echostr[echopos]
     else
         if winwidth('') >= 100
-            return g:wafuerrlong[(wafupos+24) % len(g:wafuerrlong)].' '.matchstr(get(s:, 'lasterrormsg', ''),'^E\d\+')
+            return g:echoerrlong[(echopos+24) % len(g:echoerrlong)].' '.matchstr(get(s:, 'lasterrormsg', ''),'^E\d\+')
         else
-            return g:wafuerrshort[(wafupos+24) % len(g:wafuerrshort)].' '.matchstr(get(s:, 'lasterrormsg', ''),'^E\d\+')
+            return g:echoerrshort[(echopos+24) % len(g:echoerrshort)].' '.matchstr(get(s:, 'lasterrormsg', ''),'^E\d\+')
         endif
     endif
 endfunction

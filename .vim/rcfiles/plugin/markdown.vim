@@ -15,7 +15,7 @@ let g:vim_markdown_folding_level = 2
 " Mmap() abort {{{2
 func! Mmap() abort
     let bid = win_getid(winnr())
-    " Toc
+    Toc
     exe 'nnoremap <buffer><silent> <Space>mt :<C-u>call win_gotoid('.bid.')<CR>'
     exe 'vnoremap <buffer><silent> <Space>mt :<C-u>call win_gotoid('.bid.')<CR>'
     call win_gotoid(bid)

@@ -96,9 +96,18 @@ if dein#load_state('~/.vim/dein')
     " たのしー!すっごーい!
     " call dein#add('machakann/vim-colorscheme-kemonofriends')
 
+    " game {{{3
+    call dein#add('rbtnn/game_engine.vim')
+    call dein#add('rbtnn/mario.vim')
+    call dein#add('rbtnn/rabbit-ui.vim')
+    call dein#add('rbtnn/rabbit-ui-collection.vim')
+    call dein#add('rbtnn/puyo.vim')
+
     " test {{{3
     " call dein#add('vim-scripts/AdvancedSorters')
     " call dein#add('gyim/vim-boxdraw')
+    call dein#add('osyo-manga/vim-over')
+    call dein#add('LeafCage/yankround.vim')
 
     call dein#end()
     call dein#save_state()

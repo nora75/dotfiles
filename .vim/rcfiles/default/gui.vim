@@ -38,20 +38,33 @@ if has('gui') " options for gvim {{2
         " set guifont=MyricaM_M:h12:cSHIFTJIS
         " want use directx, but move very slow in my device
         " if v:version >= 800
-        "     let s:gf = &guifont
-        "     if s:gf =~? '\M^MS'
-        "         set rop=type:directx,gamma:3.4,contrast:6.0,geom:2,renmode:2,level:1.0,taamode:1
-        "     elseif s:gf =~ '\M^Myrica'
-        "         set rop=type:directx,gamma:0.0,contrast:0.0,geom:2,renmode:1,level:1.0,taamode:1
-        "     else
-        "         set rop=
-        "     endif
+        " let s:gf = &guifont
+        " if s:gf =~? '\M^MS'
+        "     set rop=type:directx,gamma:3.4,contrast:6.0,geom:2,renmode:2,level:1.0,taamode:1
+        " elseif s:gf =~ '\M^Myrica'
+        "     set rop=type:directx,gamma:0.0,contrast:0.0,geom:2,renmode:1,level:1.0,taamode:1
+        " else
+        "     set rop=
+        " endif
+        " set guifont=Fira_Code_light:h9.5:cANSI:qDRAFT
+        " set guifontwide=Myrica_M:h9.5:cSHIFTJIS:qDRAFT
+        " set rop=type:directx,gamma:0.0,contrast:0.0,geom:2,renmode:1,level:5.0,taamode:1
+        " aug Ligature
+        "     au!
+        "     au CursorHold * normal! <C-l>
+        " aug END
         " endif
         " set linespace(vertical space)
         set linespace=1
         " Automatically measure the width of some UCS characters and decide
         if has('kaoriya')
             set ambiwidth=auto
+            aug kaogui
+                au!
+                autocmd GuiEnter * set transparency=180
+                autocmd FocusGained * if &transparency < 180|set transparency=180|endif
+                autocmd FocusLost * if &transparency > 50|set transparency=50|endif
+            aug END
         endif
     elseif has('xfontset')
         " for unix

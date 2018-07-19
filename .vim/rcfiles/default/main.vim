@@ -31,6 +31,7 @@ set modeline
 set showtabline=2
 set fdm=marker
 set noswf
+set noshowmode
 " set foldmarker={{{,}}}
 " movement over line wrap in this char
 set whichwrap=b,s,h,l

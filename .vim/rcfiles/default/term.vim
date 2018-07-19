@@ -27,20 +27,17 @@ function! s:bufnew()
     endif
 endfunction
 
-
 function! s:filetype()
     " set filetype=terminal のタイミングでは動作しなかったので
     " timer_start() で遅延して設定する
     call timer_start(0, { -> feedkeys(s:escape_special_key(&termwinkey) . "\<S-n>") })
 endfunction
 
-
 augroup my-terminal
     autocmd!
     autocmd BufNew * call timer_start(0, { -> s:bufnew() })
     " autocmd FileType terminal call s:filetype()
 augroup END
-
 
 function! s:open(args) abort
     if empty(term_list())
@@ -51,7 +48,6 @@ function! s:open(args) abort
         call win_gotoid(s:bufwin)
     endif
 endfunction
-
 
 " すでに :terminal が存在していればその :terminal を使用する
 command! -nargs=*

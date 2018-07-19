@@ -76,8 +76,8 @@ nnoremap <silent> <C-S-p>   "0P
 nnoremap J gJ
 nnoremap gJ J
 " funcion key
-nnoremap <F11>              :<C-u>tabnew<bar>e $vim\file1<bar>silent! exe 'vs $vim\file2'<bar>windo setl bt=nofile noswf noma nobl bh=wipe<bar><CR>
-vnoremap <F11>              :<C-u>tabnew<bar>e $vim\file1<bar>silent! exe 'vs $vim\file2'<bar>setl bt=nofile noswf noma nobl bh=wipe<bar><CR>
+nnoremap <F11>              :<C-u>tabnew<bar>e $vim\file1<bar>silent! exe 'vs $vim\file2'<bar>windo setl bt=nofile noswf noma nobl bh=wipe<bar>windo au WinEnter <bufer> silent! e!<CR>
+vnoremap <F11>              :<C-u>tabnew<bar>e $vim\file1<bar>silent! exe 'vs $vim\file2'<bar>windo setl bt=nofile noswf noma nobl bh=wipe<bar>windo au WinEnter <bufer> silent! e!<CR>
 nnoremap <F1>               :<C-u>ReloadVimrc<CR>
 vnoremap <F1>               :<C-u>ReloadVimrc<CR>
 nnoremap <F3>               :<C-u>Windom norm zR<CR>
@@ -203,7 +203,49 @@ endfunc
 " map {{{3
 call s:dontusethiskey()
 " }}}
-" }}}
+
+" change transparency when gui and kaoriya {{{2
+if has('gui') && has('kaoriya')
+    nnoremap <silent> <Space>+ :<C-u>let &transparency=&transparency+10
+    nnoremap <silent> <Space>- :<C-u>let &transparency=&transparency-10
+endif
+
+" tabmaps {{{2
+
+" Tab jump {{{3
+" t1: jump to first(1) tabpage,t2: jump to second(2) tabpage...
+for n in range(1, 9)
+    execute 'nnoremap <silent> [TabG]'.n  ':<C-u>tabnext'.n.'<CR>'
+endfor
+
+" map {{{3
+
+" Tab prefix key.
+nmap     <Space>t [TabG]
+
+" tI make new tab at last
+nnoremap <silent> [TabG]I :<C-u>tabl<Bar>tabnew<CR>
+" tx close! current tab
+nnoremap <silent> [TabG]x :<C-u>try<Bar>tabc!<Bar>catch<Bar>qa!<Bar>endtry<CR>
+" tc same as above one
+nnoremap <silent> [TabG]c :<C-u>try<Bar>tabc<Bar>catch<Bar>qa<Bar>endtry<CR>
+" tn go to next tab
+" nnoremap <silent> [TabG]n :tabnext<CR>
+" tp go to previous tab
+" nnoremap <silent> [TabG]p :tabprevious<CR>
+" ti make tab at next by current tab
+nnoremap <silent> [TabG]i :<C-u>tabnew<CR>
+" tn make tab at next by current tab
+nnoremap <silent> [TabG]n :<C-u>tabnew<CR>
+" th move tab to left
+nnoremap <silent> [TabG]h :<C-u>for i in range(1,v:count1)<Bar>tabm-<Bar>endfor<CR>
+" tl move tab to right
+nnoremap <silent> [TabG]l :<C-u>for i in range(1,v:count1)<Bar>tabm+<Bar>endfor<CR>
+" tj move tab to first
+nnoremap <silent> [TabG]k :<C-u>tabm0<CR>
+" tk move tab to last
+nnoremap <silent> [TabG]j :<C-u>tabm<CR>
+nnoremap <silent> [TabG]s :<C-u>call NewTabScratch()<CR>
 
 " BlankLine function {{{2
 " operator func for blankline mapping
@@ -244,9 +286,12 @@ func! s:lineMove(type) abort
     endif
     let bline = getline(line1)
     let aline = getline(line2)
+    let old_undolevels = &undolevels
+    setl undolevels=-1
     call setline(line2,bline)
     call setline(line1,aline)
     exe 'keepjumps norm '.a:type
+    let &undolevels = old_undolevels
     return
 endfunc
 

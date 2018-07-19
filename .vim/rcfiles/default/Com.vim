@@ -7,7 +7,7 @@ command! -range -nargs=? AppendBlankLine call AppendBlankLine(<line1>,<line2>,<q
 
 " :CdCurrent {{{2
 "  Change current directory to current file's one
-command! -nargs=0 CdCurrent exe 'cd %:p:h'|cd
+command! -nargs=0 CdCurrent cd %:p:h
 
 " :CheckCom {{{2
 " Get command content by input command name
@@ -115,8 +115,16 @@ command! -nargs=0 Scnote exe 'e' 'D:\Users\NORA\Documents\授業ノート'
 
 
 " :Itimura {{{2
-" open .itimura and .vimrc
-command! -nargs=0 Itimura exe 'tabe C:\Users\NORA\Downloads\その他\ほんとにその他\itimura'|vs
+" open .itimura
+command! -nargs=0 Itimura exe 'tabe C:\Users\NORA\test\Itimura\plugin\Itimura.vim'|vs
+
+" :Tutor {{{2
+" open tutor.txt
+command! -nargs=0 Tutor exe 'tabe C:\Users\NORA\test\noraTutor\tutor\tutor.txt|vs'
+
+" :Docom {{{2
+" open tutor.txt
+" command! -nargs=0 Docom exe 'tabe C:\Users\NORA\test\noraTutor\tutor\tutor.txt|vs'
 
 " }}}
 " vim: set fdm=marker fdl=1 fmr={{{,}}} : }}}

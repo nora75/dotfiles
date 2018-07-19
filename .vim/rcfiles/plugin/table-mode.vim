@@ -1,4 +1,4 @@
-if !dein#is_sourced('vim-table-mode')
+if !dein#tap('vim-table-mode')
     finish
 endif
 " table mode

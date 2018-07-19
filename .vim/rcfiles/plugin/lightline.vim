@@ -57,7 +57,7 @@ endif
 let g:lightline.component_function = {
 \ 'mycurfiledir' : 'LightlineCurFileDir' ,
 \ 'mycwd' : 'StlCwd' ,
-\ 'mywafu' : 'StlWafu' ,
+\ 'mywafu' : 'StlEch' ,
 \ 'myfenc' : 'LightlineFenc' }
 
 " component visible {{{3
