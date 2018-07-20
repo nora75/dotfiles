@@ -9,11 +9,6 @@ if has('kaoriya')
 
     "---------------------------------------------------------------------------
     " Setting for read file in Japanese
-    "
-    " change detection which encoding automatically when read file
-    " If you want to use this.You need iconv.dll
-    " see also README_w32j.txt, set by reading utility script
-    source $VIM/plugins/kaoriya/encode_japan.vim
 
     " fix for windows
     " don't add $vim not yet can't read exe files on windows
