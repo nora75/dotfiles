@@ -76,16 +76,16 @@ nnoremap <silent> <C-S-p>   "0P
 nnoremap J gJ
 nnoremap gJ J
 " funcion key
-nnoremap <F11>              :<C-u>tabnew<bar>e $vim\file1<bar>silent! exe 'vs $vim\file2'<bar>windo setl bt=nofile noswf noma nobl bh=wipe<bar>windo au WinEnter <bufer> silent! e!<CR>
-vnoremap <F11>              :<C-u>tabnew<bar>e $vim\file1<bar>silent! exe 'vs $vim\file2'<bar>windo setl bt=nofile noswf noma nobl bh=wipe<bar>windo au WinEnter <bufer> silent! e!<CR>
-nnoremap <F1>               :<C-u>ReloadVimrc<CR>
-vnoremap <F1>               :<C-u>ReloadVimrc<CR>
-nnoremap <F3>               :<C-u>Windom norm zR<CR>
-vnoremap <F3>               :<C-u>Windom norm zR<CR>
-nnoremap <F5>               :<C-u>silent! e!<CR>
-vnoremap <F5>               :<C-u>silent! e!<CR>
-nnoremap <F12>              :<C-u>tabe $MYVIMRC<CR>
-vnoremap <F12>              :<C-u>tabe $MYVIMRC<CR>
+nnoremap <silent> <F11>              :<C-u>tabnew<bar>e $vim\file1<bar>silent! exe 'vs $vim\file2'<bar>windo setl bt=nofile noswf noma nobl bh=wipe<bar>windo au WinEnter <bufer> silent! e!<CR>
+vnoremap <silent> <F11>              :<C-u>tabnew<bar>e $vim\file1<bar>silent! exe 'vs $vim\file2'<bar>windo setl bt=nofile noswf noma nobl bh=wipe<bar>windo au WinEnter <bufer> silent! e!<CR>
+nnoremap <silent> <F1>               :<C-u>ReloadVimrc<CR>
+vnoremap <silent> <F1>               :<C-u>ReloadVimrc<CR>
+nnoremap <silent> <F3>               :<C-u>Windom norm zR<CR>
+vnoremap <silent> <F3>               :<C-u>Windom norm zR<CR>
+nnoremap <silent> <F5>               :<C-u>silent! e!<CR>
+vnoremap <silent> <F5>               :<C-u>silent! e!<CR>
+nnoremap <silent> <F12>              :<C-u>tabe $MYVIMRC<CR>
+vnoremap <silent> <F12>              :<C-u>tabe $MYVIMRC<CR>
 
 " help file {{{3
 augroup  helpf

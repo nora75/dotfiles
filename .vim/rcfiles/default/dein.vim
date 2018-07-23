@@ -106,8 +106,9 @@ if dein#load_state('~/.vim/dein')
     " test {{{3
     " call dein#add('vim-scripts/AdvancedSorters')
     " call dein#add('gyim/vim-boxdraw')
-    call dein#add('osyo-manga/vim-over')
     call dein#add('LeafCage/yankround.vim')
+    call dein#add('osyo-manga/vim-sound')
+    call dein#add('skywind3000/vim-keysound')
 
     call dein#end()
     call dein#save_state()

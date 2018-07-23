@@ -16,6 +16,7 @@ let g:unite_source_bookmark_directory = $HOME . '/.vim/ubookmark'
 " unite prefix key. {{{2
 nnoremap [unite] <Nop>
 nmap <Space>u [unite]
+nnoremap <silent> [unite] :<C-u>Unite<Space>
 
 " open current files directory on unite filer 
 " when no file opened open current directory
@@ -70,5 +71,12 @@ function! s:unite_my_settings()" {{{2
     " inoremap <silent> <buffer> <expr> o unite#do_action('open')
 endfunction
 " }}}
+
+" settings for yankround.vim {{{2
+if !dein#is_sourced('yankround.vim')
+    finish
+endif
+
+nnoremap <silent> [unite]y :<C-u>Unite<Space>yankround<CR>
 
 " vim: set fdm=marker fdl=1 fmr={{{,}}} :

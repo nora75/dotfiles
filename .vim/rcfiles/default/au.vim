@@ -66,7 +66,7 @@ endfunc
 func! s:delalltmp() abort
     let i = 0
     while i < s:tmpn.count
-        call delete(get(eval('s:tmpn.file'.co),'name'))
+        silent! call delete(get(eval('s:tmpn.file'.i),'name'))
     endwhile
     return
 endfunc
@@ -76,28 +76,37 @@ endfunc
 " optional argument is used when execute file needs output file earier than
 " input in argument and optional command only must use in the execute file
 func! s:Pdftxt() abort
-    let input = ' "%"'
+    let input = shellescape(expand('%:p'))
     " if v:true
     " endif
     let [tmpn,co] = s:gettmpn()
+    let tmpns = shellescape(tmpn)
     if executable('pdftotext')
-        let vexe = 'pdftotext -nopgbrk -enc UTF-8 -eol unix -q '.input.' '.tmpn
+        let vexe = 'pdftotext -nopgbrk -enc UTF-8 -eol unix -q '.input.' '.tmpns
     elseif executable('mutool')
-        let vexe = 'mutool draw -F txt -o '.tmpn.' '.input
+        let vexe = 'mutool draw -F txt -o '.tmpns.' '.input
     else
         echohl WarningMsg
         echo "Vim can't convert pdf to text.Because You don't have pdftotext or mutool"
         echohl NONE
-        return
+        return -1
     endif
-    exe 'silent !'.vexe
-    exe 'e' tmpn
+    echo 'wait until convert complete'
+    exe 'silent call string(system('.string(vexe).'))'
+    try
+        exe 'silent e' tmpn
+    catch
+        return -1
+    endtry
     return co
 endfunc
 
-" s:au(co) {{{2
+" s:au(co,...) {{{2
 " declare autocmd in current buffer
-func! s:au(co) abort
+func! s:au(co,...) abort
+    if a:co == -1
+        return
+    endif
     silent! exe 'g//d_'
     if getline(1,line('$')) ==# ['']
         echohl WarningMsg
@@ -112,13 +121,23 @@ func! s:au(co) abort
     return
 endfunc
 
+" s:rec() {{{2
+" set timer and make calling function only once by autocommand
+func! s:rec() abort
+    if exists('s:n')
+        return
+    endif
+    let s:n = timer_start(1000,function('<SID>au',[s:Pdftxt()]))
+    return
+endfunc
+
 " au groups {{{1
 aug Myau " {{{2
     au!
     " read pdf {{{3
-    au FileType *.pdf silent call s:au(s:Pdftxt())
-    au VimLeave call s:delalltmp()
-    au FileType *.vim au BufWritePre <buffer> call DoBuffer('gg=G')
+    au FileType pdf call s:rec()
+    au VimLeavePre call s:delalltmp()
+    au FileType vim au BufWritePre <buffer> call DoBuffer('gg=G')
 aug END
 
 " augroup backup take backup by name{{{1
