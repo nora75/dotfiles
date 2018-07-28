@@ -16,7 +16,7 @@ let g:unite_source_bookmark_directory = $HOME . '/.vim/ubookmark'
 " unite prefix key. {{{2
 nnoremap [unite] <Nop>
 nmap <Space>u [unite]
-nnoremap <silent> [unite] :<C-u>Unite<Space>
+nnoremap [unite] :<C-u>Unite<Space>
 
 " open current files directory on unite filer 
 " when no file opened open current directory

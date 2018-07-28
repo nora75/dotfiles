@@ -81,6 +81,18 @@ func! s:remap() abort
     call submode#enter_with('LineMove', 'n', 'r', '<Space>lk', '[LineMove]k')
     call submode#map('LineMove', 'n', 'r', 'j', '[LineMove]j')
     call submode#map('LineMove', 'n', 'r', 'k', '[LineMove]k')
+
+    " Trans {{{2
+    " change transparency
+    call submode#enter_with('Trans', 'n', 'r', '<Space>+', '[TransP]')
+    call submode#enter_with('Trans', 'n', 'r', '<Space>-', '[TransM]')
+    call submode#map('Trans', 'n', 'r', 'k', '[TransP]')
+    call submode#map('Trans', 'n', 'r', 'j', '[TransM]')
+    call submode#map('Trans', 'n', 'r', '+', '[TransP]')
+    call submode#map('Trans', 'n', 'r', '-', '[TransM]')
+    call submode#map('Trans', 'n', 'r', 'l', '[TransP]')
+    call submode#map('Trans', 'n', 'r', 'h', '[TransM]')
+
     return
 endfunc
 " }}}
@@ -93,7 +105,6 @@ func! s:unmap() abort
         nunmap <C-w>+
         nunmap <C-w>-
 
-        " WinMove {{{2
         " nunmap <C-w>t
         " nunmap <C-w>b
         nunmap <C-w>h
@@ -101,25 +112,17 @@ func! s:unmap() abort
         nunmap <C-w>k
         nunmap <C-w>l
 
-        " TabWidth {{{2
-        " TabWidth normal {{{3
         nunmap g>
         nunmap g<
-        " TabWidth visual {{{3
-        " can't move must fix it
         " >vunmap 
         " vunmap <
 
-        " TabPageMove {{{2
         nunmap gt
         nunmap gT
 
-        " TabMove {{{2
         nunmap <Space>th
         nunmap <Space>tl
 
-        " LineMove {{{2
-        " swap current line to up or down
         nunmap <Space>lj
         nunmap <Space>lk
     catch

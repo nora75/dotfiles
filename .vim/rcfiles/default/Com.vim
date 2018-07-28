@@ -120,7 +120,7 @@ command! -nargs=0 Itimura exe 'tabe C:\Users\NORA\test\Itimura\plugin\Itimura.vi
 
 " :Tutor {{{2
 " open tutor.txt
-command! -nargs=0 Tutor exe 'tabe C:\Users\NORA\test\noraTutor\tutor\tutor.txt|vs'
+command! -nargs=0 Tutor exe 'tabe C:\Users\NORA\test\noraTutor\tutor\tutor1.txt|vs tutor2.txt'
 
 " :Docom {{{2
 " open tutor.txt

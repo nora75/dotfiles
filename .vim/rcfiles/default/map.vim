@@ -206,8 +206,10 @@ call s:dontusethiskey()
 
 " change transparency when gui and kaoriya {{{2
 if has('gui') && has('kaoriya')
-    nnoremap <silent> <Space>+ :<C-u>let &transparency=&transparency+10
-    nnoremap <silent> <Space>- :<C-u>let &transparency=&transparency-10
+    nnoremap <silent> <Space>+ [TransP]
+    nnoremap <silent> <Space>- [TransM]
+    nnoremap <silent> [TransP] :<C-u>let &transparency=&transparency+10<CR>
+    nnoremap <silent> [TransM] :<C-u>let &transparency=&transparency-10<CR>
 endif
 
 " tabmaps {{{2
