@@ -1,4 +1,4 @@
-scriptencoding utf-8
+
 
 " neobundle initialize {{{1
 syntax off
@@ -90,7 +90,7 @@ if dein#load_state('~/.vim/dein')
 
     " colorscheme {{{3
     call dein#add('vim-scripts/twilight')
-    " call dein#add('cocopon/iceberg.vim')
+    call dein#add('cocopon/iceberg.vim')
     " too many colorschemes
     call dein#add('flazz/vim-colorschemes')
     " たのしー!すっごーい!
