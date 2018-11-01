@@ -33,7 +33,11 @@ if has('gui') " options for gvim {{2
         " for windows
         " set guifont=MS_Gothic:h12:cSHIFTJIS
         " set guifont=MS_Mincho:h12:cSHIFTJIS
+        try
         set guifont=Myrica_M:h11:cSHIFTJIS
+        catch
+            set guifont=MS_Gothic:h12:cSHIFTJIS
+        endtry
         " set linespace=2
         " set guifont=MyricaM_M:h12:cSHIFTJIS
         " want use directx, but move very slow in my device
@@ -61,8 +65,8 @@ if has('gui') " options for gvim {{2
             set ambiwidth=auto
             aug kaogui
                 au!
-                autocmd GuiEnter * set transparency=180
-                autocmd FocusGained * if &transparency < 180|set transparency=180|endif
+                autocmd GuiEnter * set transparency=200
+                autocmd FocusGained * if &transparency < 180|set transparency=200|endif
                 autocmd FocusLost * if &transparency > 50|set transparency=50|endif
             aug END
         endif
@@ -135,11 +139,9 @@ endif
 
 if has('vim_starting')
     try
-        " colorscheme wombat256mod
         colorscheme iceberg
-        " colorscheme twilight
     catch
-        colorscheme industry
+        colorscheme default
     endtry
 endif
 

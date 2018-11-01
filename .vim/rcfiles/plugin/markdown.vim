@@ -3,7 +3,7 @@ if !dein#tap('vim-markdown')
 endif
 " markdown option {{{1
 " let g:vim_markdown_folding_disabled = 1
-let g:vim_markdown_toc_autofit = 1
+" let g:vim_markdown_toc_autofit = 1
 " disable ge mapping
 let g:vim_markdown_follow_anchor = 1
 " disable default mapping
@@ -27,9 +27,22 @@ endfunc
 func! s:toc() abort
     nnoremap <buffer><silent> [Markdown]t :<C-u>Toc<CR>
     vnoremap <buffer><silent> [Markdown]t :<C-u>Toc<CR>
-    call Mmap()
+    let b:Markdown_IsToc = Mmap()
     return
 endfunc
+
+" s:updateToc() abort {{{2
+func! s:updateToc()
+    echom 'updatetoc'
+    if !exist('b:Markdown_IsToc') || b:Markdown_IsToc == 0
+        return
+    endif
+    let bid = win_getid(winnr())
+    Toc
+    call win_gotoid(bid)
+    return
+endfunc
+
 
 " command {{{1
 " :Toc {{{2
@@ -44,6 +57,11 @@ augroup markdown " {{{2
     " autocmd FileType markdown au WinEnter <buffer> if exists('t:toc')|call <SID>backmap()|endif
     " autocmd FileType markdown au QuickfixCmdPost <buffer> au WinEnter <buffer> if exists('t:toc')|call <SID>backmap()|endif
     " autocmd FileType markdown au QuickfixCmdPost <buffer> au WinEnter <buffer> nnoremap <buffer><silent> :<C-u>call win_gotoid(w:toc)<CR>
+
+    " auto update when modified
+    " maybe use timer is better(best)
+    " an error occured!!
+    " autocmd BufRead *.markdown au CursorHold <buffer><silent> if &modified|echom 'mod'|call <SID>updateToc()|endif
 
     " preview by OpenBrowser
     autocmd FileType html nnoremap <buffer> <Space>p :execute "OpenBrowser" expand("%:p")<CR>
@@ -70,6 +88,7 @@ func! Markd()
     vnoremap <buffer><silent> [Markdown]i :HeaderIncrease<CR>
     vnoremap <buffer><silent> [Markdown]d :HeaderDecrease<CR>
     let b:Markdown_AuToc = 0
+    let b:Markdown_IsToc = 0
 endfunc
 
 " TocToggle {{{ 2
@@ -88,6 +107,7 @@ func! MarkToc()
         aug END
         let b:Markdown_AuToc = 1
     endif
+    return
 endfunc
 
 " vim:set fdm=marker fdl=1 :

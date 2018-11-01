@@ -1,5 +1,4 @@
 
-
 " neobundle initialize {{{1
 syntax off
 if &compatible
@@ -10,6 +9,7 @@ if has('vim_starting')
     if &runtimepath !~# '/dein.vim'
         let &runtimepath = &rtp.',~/.vim/dein/dein.vim'
     endif
+let g:dein#types#git#default_protocol = 'ssh'
 else
     finish
 endif
@@ -32,18 +32,12 @@ if dein#load_state('~/.vim/dein')
     call dein#add('mhinz/vim-startify')
     call dein#add('scrooloose/nerdtree')
     call dein#add('junegunn/vim-easy-align')
+    call dein#add('LeafCage/yankround.vim')
 
-    " powerline's classification(分類) {{{4
-    " call dein#add('powerline/powerline', { 'rtp' :
-    " 'powerline/bindings/vim'})
     call dein#add('itchyny/lightline.vim')
     call dein#add('simeji/winresizer')
-    " fonts for powerline {{{5
-    " call dein#add('ryanoasis/vim-devicons')
-    " call dein#add('powerline/fonts')
 
     " highlight {{{3
-    " call dein#add('t9md/vim-quickhl')
     call dein#add('tmhedberg/matchit')
     call dein#add('vimtaku/hl_matchit.vim', {
     \ 'depends' : 'tmhedberg/matchit',
@@ -80,6 +74,8 @@ if dein#load_state('~/.vim/dein')
     \ } )
     call dein#add('alvan/vim-closetag',{'on_ft':['html','markdown']})
     " call dein#add('thinca/vim-quickrun')
+    "
+    " mine {{{4
     call dein#add('nora75/markdowntable',{'on_ft':'markdown'})
 
     call dein#add('nora75/DatabaseTerminal')
@@ -89,26 +85,15 @@ if dein#load_state('~/.vim/dein')
     " call dein#add('junegunn/limelight.vim')
 
     " colorscheme {{{3
-    call dein#add('vim-scripts/twilight')
     call dein#add('cocopon/iceberg.vim')
-    " too many colorschemes
-    call dein#add('flazz/vim-colorschemes')
-    " たのしー!すっごーい!
-    " call dein#add('machakann/vim-colorscheme-kemonofriends')
-
-    " game {{{3
-    call dein#add('rbtnn/game_engine.vim')
-    call dein#add('rbtnn/mario.vim')
-    call dein#add('rbtnn/rabbit-ui.vim')
-    call dein#add('rbtnn/rabbit-ui-collection.vim')
-    call dein#add('rbtnn/puyo.vim')
 
     " test {{{3
     " call dein#add('vim-scripts/AdvancedSorters')
     " call dein#add('gyim/vim-boxdraw')
-    call dein#add('LeafCage/yankround.vim')
-    call dein#add('osyo-manga/vim-sound')
-    call dein#add('skywind3000/vim-keysound')
+    " call dein#add('osyo-manga/vim-sound')
+    " call dein#add('skywind3000/vim-keysound')
+    call dein#add('kshenoy/vim-signature')
+    call dein#add('mbbill/undotree')
 
     call dein#end()
     call dein#save_state()
@@ -125,4 +110,4 @@ endif
 filetype plugin indent on
 syntax enable
 
-" " vim: set fdm=marker fmr={{{,}}} fdl=1 :
+" vim: set fdm=marker fmr={{{,}}} fdl=1 :

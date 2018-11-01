@@ -23,13 +23,15 @@ if s:marked == 1
     " return this script sid
     function! s:sid() abort
         return matchstr(expand('<sfile>'), '<SNR>\d\+_')
-    endfun
+    endfunc
 endif
 
-" s:cd(file) abort {{{3
-func! s:cd(file) abort
+" s:cd(...) abort {{{3
+func! s:cd(...) abort
     exe "cd D:\\Users\\NORA\\Documents\\授業ノート\\"
-    exe 'e' a:file
+    if a:0
+        silent exe 'e' a:1
+    endif
     return
 endfunc
 
@@ -37,26 +39,24 @@ endfunc
 func! s:debugit(file) abort
     new
     only
-    colorscheme default
-    mapc
-    comc
-    let funcl = split(execute('function'),"\n")
-    let funcl = map(funcl,'substitute(v:val,"^function","","g")')
-    let funcl = map(funcl,'substitute(v:val,"(.*$","","g")')
-    call filter(funcl,'v:val !~ "#"')
-    for i in funcl
-        exe 'silent! delfunc'.i
-    endfor
-    let augl = split(substitute(execute('aug'), "\n","","g"),'\s\+')
-    for i in augl
-        exe 'aug '.i
-        au!
-        exe 'aug END'
-        exe 'silent! aug! '.i
-    endfor
-    clearjumps
-    set all&
-    set cpo&vim
+    " colorscheme default
+    " mapc
+    " comc
+    " let funcl = split(execute('function'),"\n")
+    " let funcl = map(funcl,'substitute(v:val,"^function","","g")')
+    " let funcl = map(funcl,'substitute(v:val,"(.*$","","g")')
+    " call filter(funcl,'v:val !~ "#"')
+    " for i in funcl
+    "     exe 'silent! delfunc'.i
+    " endfor
+    " let augl = split(substitute(execute('aug'), "\n","","g"),'\s\+')
+    " for i in augl
+    "     exe 'aug '.i
+    "     au!
+    "     exe 'aug END'
+    "     exe 'silent! aug! '.i
+    " endfor
+    " clearjumps
     exe 'source '.expand('~\'.a:file)
     return
 endfunc
@@ -95,10 +95,10 @@ let g:startify_commands = [
 \ { 'sd' : [ 'open db session', 'SLoad db.vim' ] },
 \ { 'ss' : [ 'open sec.md', 'call '.eval('s:sid()').'cd("sec.md")' ] } ,
 \ { 'se' : [ 'open eigo.md', 'call '.eval('s:sid()').'cd("eigo.md")' ] } ,
-\ { 'sm' : [ 'move note dir and open filer', 'exe "cd D:\\Users\\NORA\\Documents\\授業ノート\\"|e %:h\' ] } ,
+\ { 'sm' : [ 'move note dir and open filer', 'exe "call "'.string(eval('s:sid()').'cd("%:p:h")') ] } ,
+\ { 'dd' : [ 'debug DatabaseTerminal', 'call '.eval('s:sid()').'debugit("t.vim")' ] } ,
+\ { 'dm' : [ 'debug markdowntable', 'call '.eval('s:sid()').'debugit("d.vim")' ] }
 \ ]
-" \ { 'dd' : [ 'debug DatabaseTerminal', 'call '.eval('s:sid()').'debugit("t.vim")' ] } ,
-" \ { 'dm' : [ 'debug markdowntable', 'call '.eval('s:sid()').'debugit("d.vim")' ] }
 
 " if vim-markdown is supports change functions
 if s:marked

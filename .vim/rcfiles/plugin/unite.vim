@@ -48,7 +48,8 @@ augroup unite
     autocmd FileType unite call s:unite_my_settings()
 augroup END
 
-function! s:unite_my_settings()" {{{2
+" {{{2 keymaps on unite
+function! s:unite_my_settings()
     " exit unite with <ESC>
     nmap <buffer> <ESC> <Plug>(unite_exit)
     " exit unite with qq in insert mode
