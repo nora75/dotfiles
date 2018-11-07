@@ -30,7 +30,7 @@ while i < 6
     let i += 1
 endwhile
 
-let g:mugyun = 'むぎゅ～～～♪'
+let g:mugyun = 'むぎゅぎゅ～～～♪'
 let g:mugyuw = 'むぎゅーーー!'
 let g:mugyuel = 'むぎぃぃぃぃ...むぎぎぃぃーーーー'
 let g:mugyues = 'むぎゅ?'

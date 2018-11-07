@@ -1,9 +1,9 @@
 " map {{{1
 " normal mode {{{2
 " command (ex) {{{3
-nnoremap ;                  :
-nnoremap :                  ;
-nmap     q;                 q:<C-u>
+" nnoremap ;                  :
+" nnoremap :                  ;
+" nmap     q;                 q:<C-u>
 " movement {{{3
 nnoremap j                  gj
 nnoremap k                  gk
@@ -96,9 +96,9 @@ augroup END
 
 " visual mode {{{2
 " command {{{3
-vnoremap ;        :
-vnoremap :        ;
-vmap     q;       q:
+" vnoremap ;        :
+" vnoremap :        ;
+" vmap     q;       q:
 " move {{{3
 vnoremap j        gj
 vnoremap k        gk

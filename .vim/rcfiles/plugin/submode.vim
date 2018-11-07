@@ -3,7 +3,7 @@ if !dein#is_sourced('vim-submode')
 endif
 " options {{{1
 let g:submode_always_show_submode = 1
-let g:submode_keep_leaving_key = 0
+let g:submode_keep_leaving_key = 1
 " let g:submode_timeoutlen = 500
 let g:submode_keyseqs_to_leave = [ '<Space>', '<ESC>' ]
 
