@@ -65,8 +65,8 @@ if has('gui') " options for gvim {{2
             set ambiwidth=auto
             aug kaogui
                 au!
-                autocmd GuiEnter * set transparency=200
-                autocmd FocusGained * if &transparency < 180|set transparency=200|endif
+                autocmd GuiEnter * set transparency=210
+                autocmd FocusGained * if &transparency < 180|set transparency=210|endif
                 autocmd FocusLost * if &transparency > 50|set transparency=50|endif
             aug END
         endif

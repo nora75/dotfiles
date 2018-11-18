@@ -67,12 +67,11 @@ func! TEST() abort
 endfunc
 
 " settings {{{1
+" misc {{{2
+" let g:startify_fortune_use_unicode = 1
+let g:startify_change_to_dir = 1
 " custom list {{{2
-let g:startify_bookmarks = [ { 'v':'~/.vim/rcfiles/' } ]
-let g:startify_session_dir = '~/.vim/session'
-let g:startify_session_number = 10
-let g:startify_session_sort = 1
-let g:startify_session_persistence = 1
+let g:startify_bookmarks = [ { 'r':'~/.vim/rcfiles/' , 'g' : 'D:/Users/NORA/Documents/授業ノート' } ]
 let g:startify_lists = [
 \ { 'type': 'sessions', 'header': ['Sessions'] },
 \ { 'type': 'bookmarks', 'header': ['Bookmarks'] },
@@ -92,6 +91,8 @@ let g:startify_lists = [
 let g:startify_commands = [
 \ { 'd' : [ 'open default session', 'SLoad default.vim' ] },
 \ { 'o' : [ 'open default session', 'SLoad default.vim' ] },
+\ { 'p' : [ 'open plugin session', 'SLoad plugin.vim' ] },
+\ { 'n' : [ 'open notes session', 'SLoad notes.vim' ] },
 \ { 'sd' : [ 'open db session', 'SLoad db.vim' ] },
 \ { 'ss' : [ 'open sec.md', 'call '.eval('s:sid()').'cd("sec.md")' ] } ,
 \ { 'se' : [ 'open eigo.md', 'call '.eval('s:sid()').'cd("eigo.md")' ] } ,
@@ -108,6 +109,10 @@ if s:marked
 endif
 
 " session {{{2
+let g:startify_session_dir = '~/.vim/session'
+let g:startify_session_number = 10
+let g:startify_session_sort = 1
+let g:startify_session_persistence = 1
 let g:startify_session_before_save = [
 \ 'echo "Cleaning up before saving.."',
 \ 'silent! NERDTreeTabsClose'

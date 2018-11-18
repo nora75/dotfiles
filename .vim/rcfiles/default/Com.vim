@@ -19,7 +19,8 @@ command! -nargs=0 -complete=file EFFC call Effc()
 
 " :FPTC {{{2
 " File Path To Clipboard
-command! -nargs=0 FPTC call FPTC()
+" not implemented
+" command! -nargs=0 FPTC call FPTC()
 
 " :ReloadVimrc {{{2
 " Reload .vimrc files
