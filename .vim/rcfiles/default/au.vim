@@ -138,6 +138,10 @@ aug Myau " {{{2
     au FileType pdf call s:rec()
     au VimLeavePre call s:delalltmp()
     au FileType vim au BufWritePre <buffer> call DoBuffer('gg=G')
+    au VimEnter cd ~
+    " I doooooon't like .bat file can't move on other ff and fenc
+    au BufWrite *.bat if &ff != 'dos' | setl ff=dos fenc=sjis | endif
+    au BufWrite *.sh if &ff != 'unix' | setl ff=unix fenc=utf-8 | endif
 aug END
 
 " augroup backup take backup by name{{{1
