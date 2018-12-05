@@ -82,8 +82,8 @@ nnoremap <silent> <F1>               :<C-u>ReloadVimrc<CR>
 vnoremap <silent> <F1>               :<C-u>ReloadVimrc<CR>
 nnoremap <silent> <F3>               :<C-u>Windom norm zR<CR>
 vnoremap <silent> <F3>               :<C-u>Windom norm zR<CR>
-nnoremap <silent> <F5>               :<C-u>silent! e!<CR>
-vnoremap <silent> <F5>               :<C-u>silent! e!<CR>
+nnoremap <silent> <F5>               :<C-u>call Rel()<CR>
+vnoremap <silent> <F5>               :<C-u>call Rel()<CR>
 nnoremap <silent> <F12>              :<C-u>tabe $MYVIMRC<CR>
 vnoremap <silent> <F12>              :<C-u>tabe $MYVIMRC<CR>
 

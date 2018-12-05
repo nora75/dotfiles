@@ -126,6 +126,10 @@ command! -nargs=0 Tutor exe 'tabe C:\Users\NORA\test\noraTutor\tutor\tutor1.txt|
 " :Docom {{{2
 " open tutor.txt
 " command! -nargs=0 Docom exe 'tabe C:\Users\NORA\test\noraTutor\tutor\tutor.txt|vs'
+"
+" :Kud {{{2
+" open vuffer of kud
+command! -nargs=0 Kud call Kud()
 
 " }}}
 " vim: set fdm=marker fdl=1 fmr={{{,}}} : }}}
