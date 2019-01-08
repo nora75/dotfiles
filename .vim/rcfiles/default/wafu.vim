@@ -49,3 +49,5 @@ while i < 6
     call add(g:echoerrlong,g:mugyuel)
     let i += 1
 endwhile
+
+" vim: set fdm=marker fdl=1 fmr={{{,}}} :

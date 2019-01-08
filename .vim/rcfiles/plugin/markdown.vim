@@ -110,4 +110,4 @@ func! MarkToc()
     return
 endfunc
 
-" vim:set fdm=marker fdl=1 :
+" vim:set fdm=marker fdl=1:

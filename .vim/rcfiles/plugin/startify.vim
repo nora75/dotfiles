@@ -73,7 +73,6 @@ let g:startify_change_to_dir = 1
 " custom list {{{2
 let g:startify_bookmarks = [ { 'r':'~/.vim/rcfiles/' , 'g' : 'D:/Users/NORA/Documents/授業ノート' } ]
 let g:startify_lists = [
-\ { 'type': 'sessions', 'header': ['Sessions'] },
 \ { 'type': 'bookmarks', 'header': ['Bookmarks'] },
 \ { 'type': 'commands', 'header': ['Commands'] }
 \ ]
@@ -89,17 +88,17 @@ let g:startify_lists = [
 
 " custom commands {{{2
 let g:startify_commands = [
+\ { 'o' : [ 'open session', 'SLoad' ] },
 \ { 'd' : [ 'open default session', 'SLoad default.vim' ] },
-\ { 'o' : [ 'open default session', 'SLoad default.vim' ] },
 \ { 'p' : [ 'open plugin session', 'SLoad plugin.vim' ] },
 \ { 'n' : [ 'open notes session', 'SLoad notes.vim' ] },
 \ { 'sd' : [ 'open db session', 'SLoad db.vim' ] },
 \ { 'ss' : [ 'open sec.md', 'call '.eval('s:sid()').'cd("sec.md")' ] } ,
 \ { 'se' : [ 'open eigo.md', 'call '.eval('s:sid()').'cd("eigo.md")' ] } ,
 \ { 'sm' : [ 'move note dir and open filer', 'exe "call "'.string(eval('s:sid()').'cd("%:p:h")') ] } ,
-\ { 'dd' : [ 'debug DatabaseTerminal', 'call '.eval('s:sid()').'debugit("t.vim")' ] } ,
-\ { 'dm' : [ 'debug markdowntable', 'call '.eval('s:sid()').'debugit("d.vim")' ] }
 \ ]
+" \ { 'dd' : [ 'debug DatabaseTerminal', 'call '.eval('s:sid()').'debugit("t.vim")' ] } ,
+" \ { 'dm' : [ 'debug markdowntable', 'call '.eval('s:sid()').'debugit("d.vim")' ] }
 
 " if vim-markdown is supports change functions
 if s:marked
@@ -166,8 +165,6 @@ func! s:StartifyHeader.center()
 endfunc
 
 let s:StartifyKud = [
-\ '//++//oso+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::://///++ossoso++o+:-.-//////-```-//:.`````...````````.-.`````````..:+syyys//::::::::::::::::::::::::::',
-\ '///++ossossoo+//::::::::::::::::::::::::::::::::::::::::::::::::::///+ossssooooso++++....///-.://.`..///-`````.-.````````.--````````..``-/oosss+/:::::::::::::::::::::::::',
 \ '//::/ssooooooooo++//:::::::::::::::::::::::::::::::::::::://////+oosssyysoooo++o+////...:/:-``.:/:`..////.`````.-`````````.:-```````-.```.:+oooo+:::::::::::::::::::::::::',
 \ '//:/ooooooooooooooooo++////::::::::::::::::::::::::://///++ooossssooossso+//--/+///::..-//.````.:/-../://:.`````-.`````````-:.``````.-````.-/oooo+//::::::::::::::::::::::',
 \ '//:/::/+++++++++oo++ooooooo++++//////////////////+++ooossssysssooooooso+-..``-///:.--..//-``````.::..:-::/:`````.-.````````.::.`````.-``````-/+oooo+//::::::::::::::::::::',
@@ -227,12 +224,13 @@ if dein#is_sourced('vim-indent-guides')
         au!
         au User Startified IndentGuidesDisable|au BufLeave <buffer> IndentGuidesEnable
         au User Startified let v:errmsg = ''
+        au User Startified 1|simalt ~x
     aug end
 else
     aug startify
         au!
         au User Startified let v:errmsg = ''
-        au User Startified 1
+        au User Startified 1|simalt ~x
     aug end
 endif
 
