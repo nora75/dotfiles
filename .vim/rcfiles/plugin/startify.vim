@@ -224,13 +224,13 @@ if dein#is_sourced('vim-indent-guides')
         au!
         au User Startified IndentGuidesDisable|au BufLeave <buffer> IndentGuidesEnable
         au User Startified let v:errmsg = ''
-        au User Startified 1|simalt ~x
+        au User Startified 1|if has('win32')|simalt ~x|endif
     aug end
 else
     aug startify
         au!
         au User Startified let v:errmsg = ''
-        au User Startified 1|simalt ~x
+        au User Startified 1|if has('win32')|simalt ~x|endif
     aug end
 endif
 
