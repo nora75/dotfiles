@@ -1,4 +1,3 @@
-
 " neobundle initialize {{{1
 syntax off
 if &compatible

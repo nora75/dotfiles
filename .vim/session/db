@@ -1,0 +1,149 @@
+let SessionLoad = 1
+if &cp | set nocp | endif
+let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
+let v:this_session=expand("<sfile>:p")
+silent only
+cd D:\Users\NORA\Documents\授業ノート
+if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
+  let s:wipebuf = bufnr('%')
+endif
+set shortmess=aoO
+badd +1 DBPra.md
+badd +1 dbcom.md
+badd +226 DB2.md
+badd +36 DB3.md
+badd +16 C:\xampp\htdocs\kantan.html
+badd +11 C:\xampp\htdocs\kantan_delete.php
+badd +11 C:\xampp\htdocs\kantan_search.php
+badd +19 C:\xampp\htdocs\kantan_clear.php
+badd +6 C:\xampp\htdocs\keijiban1\data\db_info.php
+badd +43 C:\xampp\htdocs\keijiban1\keiji_top.php
+badd +10 C:\xampp\htdocs\keijiban1\keiji_kanri.php
+badd +1 C:\xampp\htdocs\keijiban1\keiji_shokika.php
+badd +1 C:\xampp\htdocs\keijiban1\keiji_search.php
+badd +25 C:\xampp\htdocs\keijiban1\yume.php
+badd +103 C:\xampp\htdocs\dashboard\docs\troubleshoot-apache.html
+badd +22 C:\xampp\htdocs\keijiban1\DB・表作成.txt
+badd +22 C:\xampp\htdocs\keijiban1\keiji.php
+badd +7 C:\Program\ Files\vim-kaoriya\g_logon.html
+badd +46 C:\Program\ Files\vim-kaoriya\g_logon2.php
+badd +1 C:\Program\ Files\vim-kaoriya\g_up.php
+badd +8 C:\Program\ Files\vim-kaoriya\g_up_set.php
+badd +30 C:\Program\ Files\vim-kaoriya\g.php
+argglobal
+silent! argdel *
+edit DBPra.md
+set splitbelow splitright
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+argglobal
+setlocal fdm=expr
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=5
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+126
+normal! zo
+126
+normal! zo
+225
+normal! zo
+225
+normal! zo
+261
+normal! zo
+285
+normal! zo
+285
+normal! zo
+let s:l = 1 - ((0 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+tabedit DB3.md
+set splitbelow splitright
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+argglobal
+setlocal fdm=expr
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=3
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 46 - ((24 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+46
+normal! 0
+tabedit dbcom.md
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+argglobal
+setlocal fdm=expr
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=1
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 1245 - ((41 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1245
+normal! 0
+wincmd w
+argglobal
+if bufexists('dbcom.md') | buffer dbcom.md | else | edit dbcom.md | endif
+setlocal fdm=marker
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=1
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 240 - ((22 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+240
+normal! 0
+wincmd w
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+tabnext 3
+if exists('s:wipebuf') && s:wipebuf != bufnr('%')
+  silent exe 'bwipe ' . s:wipebuf
+endif
+unlet! s:wipebuf
+set winheight=1 winwidth=10 shortmess=filnxtToO
+set winminheight=1 winminwidth=10
+let s:sx = expand("<sfile>:p:r")."x.vim"
+if file_readable(s:sx)
+  exe "source " . fnameescape(s:sx)
+endif
+let &so = s:so_save | let &siso = s:siso_save
+doautoall SessionLoadPost
+unlet SessionLoad
+" vim: set ft=vim :

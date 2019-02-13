@@ -1,0 +1,283 @@
+let SessionLoad = 1
+if &cp | set nocp | endif
+let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
+let v:this_session=expand("<sfile>:p")
+silent only
+cd D:\Users\NORA\Documents\授業ノート
+if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
+  let s:wipebuf = bufnr('%')
+endif
+set shortmess=aoO
+badd +1 vimsc.md
+badd +1 vim.md
+badd +1 git.md
+badd +1 solve.md
+badd +551 C:\Program\ Files\vim-kaoriya\plugins\vimdoc-ja\doc\options.jax
+badd +1 qmk.md
+badd +1 mail.md
+badd +1 fight.md
+argglobal
+silent! argdel *
+edit vimsc.md
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 85 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 84 + 85) / 170)
+argglobal
+setlocal fdm=expr
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 1 - ((0 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+wincmd w
+argglobal
+if bufexists('vim.md') | buffer vim.md | else | edit vim.md | endif
+setlocal fdm=expr
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+6
+normal! zo
+6
+normal! zc
+let s:l = 23 - ((22 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+23
+normal! 0
+wincmd w
+exe 'vert 1resize ' . ((&columns * 85 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 84 + 85) / 170)
+tabedit git.md
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+argglobal
+setlocal fdm=expr
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+20
+normal! zo
+let s:l = 25 - ((21 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+25
+normal! 02|
+wincmd w
+argglobal
+if bufexists('qmk.md') | buffer qmk.md | else | edit qmk.md | endif
+setlocal fdm=expr
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=3
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+110
+normal! zo
+110
+normal! zo
+let s:l = 161 - ((13 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+161
+normal! 04|
+wincmd w
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+tabedit solve.md
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+argglobal
+setlocal fdm=expr
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+73
+normal! zo
+73
+normal! zo
+79
+normal! zo
+79
+normal! zo
+79
+normal! zo
+89
+normal! zo
+89
+normal! zo
+93
+normal! zo
+99
+normal! zo
+99
+normal! zo
+103
+normal! zo
+let s:l = 89 - ((23 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+89
+normal! 0
+wincmd w
+argglobal
+if bufexists('solve.md') | buffer solve.md | else | edit solve.md | endif
+setlocal fdm=expr
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=4
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+114
+normal! zo
+114
+normal! zo
+246
+normal! zo
+246
+normal! zo
+252
+normal! zo
+264
+normal! zo
+let s:l = 296 - ((1 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+296
+normal! 0
+wincmd w
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+tabedit mail.md
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 85 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 84 + 85) / 170)
+argglobal
+setlocal fdm=marker
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=2
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 112 - ((31 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+112
+normal! 0
+wincmd w
+argglobal
+if bufexists('mail.md') | buffer mail.md | else | edit mail.md | endif
+setlocal fdm=marker
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=2
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 48 - ((42 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+48
+normal! 0
+wincmd w
+exe 'vert 1resize ' . ((&columns * 85 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 84 + 85) / 170)
+tabedit fight.md
+set splitbelow splitright
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+argglobal
+setlocal fdm=expr
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=1
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 21 - ((20 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+21
+normal! 0
+tabnext 2
+if exists('s:wipebuf') && s:wipebuf != bufnr('%')
+  silent exe 'bwipe ' . s:wipebuf
+endif
+unlet! s:wipebuf
+set winheight=1 winwidth=20 shortmess=filnxtToOI
+set winminheight=1 winminwidth=1
+let s:sx = expand("<sfile>:p:r")."x.vim"
+if file_readable(s:sx)
+  exe "source " . fnameescape(s:sx)
+endif
+let &so = s:so_save | let &siso = s:siso_save
+doautoall SessionLoadPost
+unlet SessionLoad
+" vim: set ft=vim :

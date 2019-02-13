@@ -89,14 +89,14 @@ let g:startify_lists = [
 " custom commands {{{2
 let g:startify_commands = [
 \ { 'o' : [ 'open session', 'SLoad' ] },
-\ { 'd' : [ 'open default session', 'SLoad default.vim' ] },
-\ { 'p' : [ 'open plugin session', 'SLoad plugin.vim' ] },
-\ { 'n' : [ 'open notes session', 'SLoad notes.vim' ] },
-\ { 'sd' : [ 'open db session', 'SLoad db.vim' ] },
+\ { 'd' : [ 'open default session', 'SLoad default' ] },
+\ { 'p' : [ 'open plugin session', 'SLoad plugin' ] },
+\ { 'sd' : [ 'open db session', 'SLoad db' ] },
 \ { 'ss' : [ 'open sec.md', 'call '.eval('s:sid()').'cd("sec.md")' ] } ,
 \ { 'se' : [ 'open eigo.md', 'call '.eval('s:sid()').'cd("eigo.md")' ] } ,
 \ { 'sm' : [ 'move note dir and open filer', 'exe "call "'.string(eval('s:sid()').'cd("%:p:h")') ] } ,
 \ ]
+" \ { 'n' : [ 'open notes session', 'SLoad notes.vim' ] },
 " \ { 'dd' : [ 'debug DatabaseTerminal', 'call '.eval('s:sid()').'debugit("t.vim")' ] } ,
 " \ { 'dm' : [ 'debug markdowntable', 'call '.eval('s:sid()').'debugit("d.vim")' ] }
 

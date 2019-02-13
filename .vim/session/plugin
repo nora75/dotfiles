@@ -1,0 +1,603 @@
+let SessionLoad = 1
+if &cp | set nocp | endif
+let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
+let v:this_session=expand("<sfile>:p")
+silent only
+cd ~\test
+if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
+  let s:wipebuf = bufnr('%')
+endif
+set shortmess=aoO
+badd +1 \Users\NORA\d.vim
+badd +157 DatabaseTerminal\autoload\DatabaseTerminal.vim
+badd +1 DatabaseTerminal\plugin\DatabaseTerminal.vim
+badd +1 DatabaseTerminal\doc\DatabaseTerminal.txt
+badd +1 DatabaseTerminal\README.md
+badd +1 markdowntable\autoload\markdowntable.vim
+badd +1 markdowntable\ftplugin\markdown.vim
+badd +1 markdowntable\doc\markdowntable.txt
+badd +1 markdowntable\README.md
+badd +1 vim-map-help\README.md
+badd +20 markdowntable\map_help.vim
+badd +1 vim-map-help\plugin\map-help.vim
+badd +1 vim-map-help\doc\map-help.vim
+badd +4 DatabaseTerminal\.gitignore
+badd +1 vim-map-help\autoload\map_help.vim
+badd +1 unite.vim\plugin\unite.vim
+badd +625 unite.vim\autoload\unite\helper.vim
+badd +1 unite.vim\autoload\unite.vim
+badd +1 unite.vim\autoload\unite\start.vim
+badd +1 unite.vim\autoload\unite\init.vim
+badd +1 \Program\ Files\vim-kaoriya\plugins\vimdoc-ja\doc\eval.jax
+badd +1 \Program\ Files\vim-kaoriya\plugins\vimdoc-ja\doc\usr_41.jax
+badd +1 NERD_tree_6
+badd +1 NERD_tree_8
+argglobal
+silent! argdel *
+edit DatabaseTerminal\autoload\DatabaseTerminal.vim
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+argglobal
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 308 - ((38 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+308
+normal! 010|
+wincmd w
+argglobal
+if bufexists('DatabaseTerminal\plugin\DatabaseTerminal.vim') | buffer DatabaseTerminal\plugin\DatabaseTerminal.vim | else | edit DatabaseTerminal\plugin\DatabaseTerminal.vim | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 26 - ((25 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+26
+normal! 028|
+wincmd w
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+tabedit DatabaseTerminal\doc\DatabaseTerminal.txt
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+argglobal
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 2 - ((1 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+2
+normal! 0
+wincmd w
+argglobal
+if bufexists('DatabaseTerminal\README.md') | buffer DatabaseTerminal\README.md | else | edit DatabaseTerminal\README.md | endif
+setlocal fdm=expr
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 6 - ((5 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+6
+normal! 0
+wincmd w
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+tabedit markdowntable\autoload\markdowntable.vim
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+argglobal
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 14 - ((13 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+14
+normal! 0
+wincmd w
+argglobal
+if bufexists('markdowntable\ftplugin\markdown.vim') | buffer markdowntable\ftplugin\markdown.vim | else | edit markdowntable\ftplugin\markdown.vim | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 13 - ((12 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+13
+normal! 0
+wincmd w
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+tabedit markdowntable\doc\markdowntable.txt
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+argglobal
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 9 - ((8 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+9
+normal! 0
+wincmd w
+argglobal
+if bufexists('markdowntable\README.md') | buffer markdowntable\README.md | else | edit markdowntable\README.md | endif
+setlocal fdm=expr
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 21 - ((20 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+21
+normal! 0
+lcd ~\test\markdowntable
+wincmd w
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+tabedit C:\Program\ Files\vim-kaoriya\plugins\vimdoc-ja\doc\eval.jax
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd _ | wincmd |
+split
+wincmd _ | wincmd |
+split
+2wincmd k
+wincmd w
+wincmd w
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe '1resize ' . ((&lines * 15 + 24) / 48)
+exe 'vert 1resize ' . ((&columns * 85 + 85) / 170)
+exe '2resize ' . ((&lines * 14 + 24) / 48)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+exe '3resize ' . ((&lines * 14 + 24) / 48)
+exe 'vert 3resize ' . ((&columns * 85 + 85) / 170)
+exe 'vert 4resize ' . ((&columns * 84 + 85) / 170)
+argglobal
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal nofen
+silent! normal! zE
+let s:l = 2710 - ((0 * winheight(0) + 7) / 15)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+2710
+normal! 057|
+wincmd w
+argglobal
+if bufexists('C:\Program\ Files\vim-kaoriya\plugins\vimdoc-ja\doc\usr_41.jax') | buffer C:\Program\ Files\vim-kaoriya\plugins\vimdoc-ja\doc\usr_41.jax | else | edit C:\Program\ Files\vim-kaoriya\plugins\vimdoc-ja\doc\usr_41.jax | endif
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal nofen
+silent! normal! zE
+let s:l = 772 - ((11 * winheight(0) + 7) / 14)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+772
+normal! 010|
+wincmd w
+argglobal
+if bufexists('~\test\vim-map-help\autoload\map_help.vim') | buffer ~\test\vim-map-help\autoload\map_help.vim | else | edit ~\test\vim-map-help\autoload\map_help.vim | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 15 - ((1 * winheight(0) + 7) / 14)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+15
+normal! 018|
+wincmd w
+argglobal
+if bufexists('~\test\vim-map-help\plugin\map-help.vim') | buffer ~\test\vim-map-help\plugin\map-help.vim | else | edit ~\test\vim-map-help\plugin\map-help.vim | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 20 - ((18 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+20
+normal! 016|
+wincmd w
+exe '1resize ' . ((&lines * 15 + 24) / 48)
+exe 'vert 1resize ' . ((&columns * 85 + 85) / 170)
+exe '2resize ' . ((&lines * 14 + 24) / 48)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+exe '3resize ' . ((&lines * 14 + 24) / 48)
+exe 'vert 3resize ' . ((&columns * 85 + 85) / 170)
+exe 'vert 4resize ' . ((&columns * 84 + 85) / 170)
+tabedit ~\test\vim-map-help\doc\map-help.vim
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+argglobal
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 40 - ((39 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+40
+normal! 09|
+wincmd w
+argglobal
+if bufexists('~\test\vim-map-help\README.md') | buffer ~\test\vim-map-help\README.md | else | edit ~\test\vim-map-help\README.md | endif
+setlocal fdm=expr
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=2
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+22
+normal! zo
+30
+normal! zo
+let s:l = 21 - ((20 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+21
+normal! 0
+wincmd w
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+tabedit ~\test\NERD_tree_6
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+wincmd _ | wincmd |
+vsplit
+wincmd _ | wincmd |
+vsplit
+wincmd _ | wincmd |
+vsplit
+4wincmd h
+wincmd w
+wincmd w
+wincmd w
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 31 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 34 + 85) / 170)
+exe 'vert 3resize ' . ((&columns * 34 + 85) / 170)
+exe 'vert 4resize ' . ((&columns * 33 + 85) / 170)
+exe 'vert 5resize ' . ((&columns * 34 + 85) / 170)
+argglobal
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal nofen
+silent! normal! zE
+let s:l = 1 - ((0 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+wincmd w
+argglobal
+if bufexists('~\test\unite.vim\plugin\unite.vim') | buffer ~\test\unite.vim\plugin\unite.vim | else | edit ~\test\unite.vim\plugin\unite.vim | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 40 - ((16 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+40
+normal! 020|
+wincmd w
+argglobal
+if bufexists('~\test\unite.vim\autoload\unite\helper.vim') | buffer ~\test\unite.vim\autoload\unite\helper.vim | else | edit ~\test\unite.vim\autoload\unite\helper.vim | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+610
+normal! zo
+let s:l = 625 - ((15 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+625
+normal! 054|
+wincmd w
+argglobal
+if bufexists('~\test\unite.vim\autoload\unite.vim') | buffer ~\test\unite.vim\autoload\unite.vim | else | edit ~\test\unite.vim\autoload\unite.vim | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+22
+normal! zo
+106
+normal! zo
+264
+normal! zo
+let s:l = 265 - ((3 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+265
+normal! 0
+wincmd w
+argglobal
+if bufexists('~\test\unite.vim\autoload\unite\start.vim') | buffer ~\test\unite.vim\autoload\unite\start.vim | else | edit ~\test\unite.vim\autoload\unite\start.vim | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+10
+normal! zo
+106
+normal! zo
+118
+normal! zo
+let s:l = 91 - ((38 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+91
+normal! 07|
+wincmd w
+exe 'vert 1resize ' . ((&columns * 31 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 34 + 85) / 170)
+exe 'vert 3resize ' . ((&columns * 34 + 85) / 170)
+exe 'vert 4resize ' . ((&columns * 33 + 85) / 170)
+exe 'vert 5resize ' . ((&columns * 34 + 85) / 170)
+tabedit ~\test\NERD_tree_8
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+wincmd _ | wincmd |
+vsplit
+2wincmd h
+wincmd w
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 31 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 68 + 85) / 170)
+exe 'vert 3resize ' . ((&columns * 69 + 85) / 170)
+argglobal
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal nofen
+silent! normal! zE
+let s:l = 1 - ((0 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+wincmd w
+argglobal
+if bufexists('~\test\unite.vim\autoload\unite\init.vim') | buffer ~\test\unite.vim\autoload\unite\init.vim | else | edit ~\test\unite.vim\autoload\unite\init.vim | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 133 - ((15 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+133
+normal! 0
+wincmd w
+argglobal
+if bufexists('~\test\unite.vim\autoload\unite\init.vim') | buffer ~\test\unite.vim\autoload\unite\init.vim | else | edit ~\test\unite.vim\autoload\unite\init.vim | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+118
+normal! zo
+let s:l = 160 - ((0 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+160
+normal! 05|
+wincmd w
+exe 'vert 1resize ' . ((&columns * 31 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 68 + 85) / 170)
+exe 'vert 3resize ' . ((&columns * 69 + 85) / 170)
+tabedit ~\d.vim
+set splitbelow splitright
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+argglobal
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 9 - ((8 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+9
+normal! 0
+tabnext 1
+if exists('s:wipebuf') && s:wipebuf != bufnr('%')
+  silent exe 'bwipe ' . s:wipebuf
+endif
+unlet! s:wipebuf
+set winheight=1 winwidth=20 shortmess=filnxtToOI
+set winminheight=1 winminwidth=1
+let s:sx = expand("<sfile>:p:r")."x.vim"
+if file_readable(s:sx)
+  exe "source " . fnameescape(s:sx)
+endif
+let &so = s:so_save | let &siso = s:siso_save
+doautoall SessionLoadPost
+unlet SessionLoad
+" vim: set ft=vim :
