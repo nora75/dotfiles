@@ -1,0 +1,623 @@
+let SessionLoad = 1
+if &cp | set nocp | endif
+let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
+let v:this_session=expand("<sfile>:p")
+silent only
+cd ~\qmk_firmware\quantum
+if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
+  let s:wipebuf = bufnr('%')
+endif
+set shortmess=aoO
+badd +146 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora\keymap.c
+badd +51 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora\config.h
+badd +1 \Users\NORA\qmk_firmware\keyboards\niu_mini\config.h
+badd +70 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora\rules.mk
+badd +2 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora\nora_lead.h
+badd +1 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora\nora_tap.h
+badd +1 \Users\NORA\qmk_firmware\tmk_core\common\action.c
+badd +1 \Users\NORA\qmk_firmware\tmk_core\common\action.h
+badd +71 \Users\NORA\qmk_firmware\docs\config_options.md
+badd +36 \Users\NORA\qmk_firmware\tmk_core\common\host.h
+badd +1 \Users\NORA\qmk_firmware\tmk_core\common\keycode.h
+badd +40 \Users\NORA\qmk_firmware\tmk_core\common\keyboard.h
+badd +156 \Users\NORA\qmk_firmware\tmk_core\common\command.h
+badd +100 \Users\NORA\qmk_firmware\tmk_core\common\action_layer.h
+badd +16 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\keymap.c
+badd +1 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\nora_lead.h
+badd +18 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\nora_tap.h
+badd +1 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\config.h
+badd +1 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\rules.mk
+badd +4 nora_custom_keys.h
+badd +1 quantum.h
+badd +549 quantum.c
+badd +6 tools\readme.md
+badd +24 process_keycode\process_tap_dance.h
+badd +59 process_keycode\process_tap_dance.c
+badd +24 process_keycode\process_printer.h
+badd +211 process_keycode\process_printer.c
+badd +43 serial_link\system\serial_link.h
+badd +55 template\avr\config.h
+badd +1 tools\eeprom_reset.hex
+badd +388 matrix.c
+badd +1 quantum_keycodes.h
+badd +50 keymap.h
+badd +1 keymap_common.c
+badd +1 keycode_config.c
+badd +1 keycode_config.h
+badd +1 \Users\NORA\qmk_firmware\tmk_core\common\eeprom.h
+badd +116 \Users\NORA\qmk_firmware\tmk_core\common\eeconfig.h
+badd +156 \Users\NORA\qmk_firmware\tmk_core\common\eeconfig.c
+badd +282 \Users\NORA\qmk_firmware\tmk_core\avr.mk
+badd +7 \Users\NORA\qmk_firmware\tmk_core\common\uart.c
+badd +163 \Users\NORA\qmk_firmware\tmk_core\common\avr\bootloader.c
+badd +160 \Users\NORA\qmk_firmware\docs\feature_tap_dance.md
+badd +163 \Users\NORA\qmk_firmware\keyboards\cu75\cu75.c
+badd +21 \Users\NORA\qmk_firmware\keyboards\lfkeyboards\lfk65_hs\lfk65_hs.c
+badd +1 \Users\NORA\qmk_firmware\keyboards\massdrop\alt\keymaps\default\keymap.c
+badd +18 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\custom_keys.h
+badd +5 keymap_extras\keymap_jp.h
+badd +1 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\nora_macro.h
+badd +1 process_keycode\process_auto_shift.c
+badd +20 process_keycode\process_auto_shift.h
+badd +1 $
+badd +1 process_keycode\process_terminal.c
+badd +1 process_keycode\process_terminal.h
+badd +17 process_keycode\process_terminal_nop.h
+badd +1 nora_autoshift.h
+badd +20 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\readme.md
+badd +10 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\nora_custom_keys.h
+badd +1 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\nora_lead.c
+badd +12 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\nora_tap.c
+badd +1 nora_autoshift.c
+badd +1 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\nora_macro.c
+badd +1 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\NERD_tree_3
+badd +1 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\NERD_tree_2
+badd +1 NERD_tree_1
+badd +1 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\keymap.json
+badd +3 \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\keymap
+argglobal
+silent! argdel *
+edit \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\keymap.c
+set splitbelow splitright
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+argglobal
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=1
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 148 - ((14 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+148
+normal! 01|
+tabedit process_keycode\process_auto_shift.c
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
+wincmd w
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe '1resize ' . ((&lines * 22 + 24) / 48)
+exe 'vert 1resize ' . ((&columns * 85 + 85) / 170)
+exe '2resize ' . ((&lines * 22 + 24) / 48)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+exe '3resize ' . ((&lines * 22 + 24) / 48)
+exe 'vert 3resize ' . ((&columns * 84 + 85) / 170)
+exe '4resize ' . ((&lines * 22 + 24) / 48)
+exe 'vert 4resize ' . ((&columns * 84 + 85) / 170)
+argglobal
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 210 - ((18 * winheight(0) + 11) / 22)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+210
+normal! 0
+wincmd w
+argglobal
+if bufexists('process_keycode\process_auto_shift.c') | buffer process_keycode\process_auto_shift.c | else | edit process_keycode\process_auto_shift.c | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 193 - ((18 * winheight(0) + 11) / 22)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+193
+normal! 0
+wincmd w
+argglobal
+if bufexists('process_keycode\process_auto_shift.c') | buffer process_keycode\process_auto_shift.c | else | edit process_keycode\process_auto_shift.c | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 21 - ((13 * winheight(0) + 11) / 22)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+21
+normal! 0
+wincmd w
+argglobal
+if bufexists('process_keycode\process_auto_shift.c') | buffer process_keycode\process_auto_shift.c | else | edit process_keycode\process_auto_shift.c | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 64 - ((15 * winheight(0) + 11) / 22)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+64
+normal! 0
+wincmd w
+exe '1resize ' . ((&lines * 22 + 24) / 48)
+exe 'vert 1resize ' . ((&columns * 85 + 85) / 170)
+exe '2resize ' . ((&lines * 22 + 24) / 48)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+exe '3resize ' . ((&lines * 22 + 24) / 48)
+exe 'vert 3resize ' . ((&columns * 84 + 85) / 170)
+exe '4resize ' . ((&lines * 22 + 24) / 48)
+exe 'vert 4resize ' . ((&columns * 84 + 85) / 170)
+tabedit \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\config.h
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+argglobal
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 33 - ((28 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+33
+normal! 026|
+wincmd w
+argglobal
+if bufexists('\Users\NORA\qmk_firmware\keyboards\niu_mini\config.h') | buffer \Users\NORA\qmk_firmware\keyboards\niu_mini\config.h | else | edit \Users\NORA\qmk_firmware\keyboards\niu_mini\config.h | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 38 - ((37 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+38
+normal! 0
+wincmd w
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+tabedit \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\rules.mk
+set splitbelow splitright
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+argglobal
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 10 - ((9 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+10
+normal! 0
+tabedit \Users\NORA\qmk_firmware\tmk_core\common\action.c
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 85 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 84 + 85) / 170)
+argglobal
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 1 - ((0 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 03|
+wincmd w
+argglobal
+if bufexists('\Users\NORA\qmk_firmware\tmk_core\common\action.h') | buffer \Users\NORA\qmk_firmware\tmk_core\common\action.h | else | edit \Users\NORA\qmk_firmware\tmk_core\common\action.h | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 1 - ((0 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+wincmd w
+exe 'vert 1resize ' . ((&columns * 85 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 84 + 85) / 170)
+tabedit quantum.h
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+argglobal
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 1 - ((0 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 029|
+wincmd w
+argglobal
+if bufexists('quantum.c') | buffer quantum.c | else | edit quantum.c | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 1 - ((0 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 04|
+wincmd w
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+tabedit quantum_keycodes.h
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 85 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 84 + 85) / 170)
+argglobal
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 13 - ((12 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+13
+normal! 022|
+wincmd w
+argglobal
+if bufexists('keycode_config.h') | buffer keycode_config.h | else | edit keycode_config.h | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 27 - ((26 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+27
+normal! 035|
+wincmd w
+exe 'vert 1resize ' . ((&columns * 85 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 84 + 85) / 170)
+tabedit \Users\NORA\qmk_firmware\keyboards\massdrop\alt\keymaps\default\keymap.c
+set splitbelow splitright
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+argglobal
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 189 - ((28 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+189
+normal! 02|
+tabedit quantum.c
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe '1resize ' . ((&lines * 22 + 24) / 48)
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe '2resize ' . ((&lines * 22 + 24) / 48)
+exe 'vert 2resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 3resize ' . ((&columns * 85 + 85) / 170)
+argglobal
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 1 - ((0 * winheight(0) + 11) / 22)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 036|
+wincmd w
+argglobal
+if bufexists('quantum.c') | buffer quantum.c | else | edit quantum.c | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 1 - ((0 * winheight(0) + 11) / 22)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+wincmd w
+argglobal
+if bufexists('quantum.c') | buffer quantum.c | else | edit quantum.c | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 1 - ((0 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 028|
+wincmd w
+exe '1resize ' . ((&lines * 22 + 24) / 48)
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe '2resize ' . ((&lines * 22 + 24) / 48)
+exe 'vert 2resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 3resize ' . ((&columns * 85 + 85) / 170)
+tabedit quantum.c
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+argglobal
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 44 - ((0 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+44
+normal! 0
+wincmd w
+argglobal
+if bufexists('quantum.c') | buffer quantum.c | else | edit quantum.c | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 1 - ((0 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 025|
+wincmd w
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+tabedit process_keycode\process_terminal.c
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+argglobal
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 31 - ((30 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+31
+normal! 031|
+wincmd w
+argglobal
+if bufexists('process_keycode\process_terminal.h') | buffer process_keycode\process_terminal.h | else | edit process_keycode\process_terminal.h | endif
+setlocal fdm=marker
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 20 - ((19 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+20
+normal! 021|
+wincmd w
+exe 'vert 1resize ' . ((&columns * 84 + 85) / 170)
+exe 'vert 2resize ' . ((&columns * 85 + 85) / 170)
+tabedit \Users\NORA\qmk_firmware\keyboards\niu_mini\keymaps\nora75\readme.md
+set splitbelow splitright
+set nosplitbelow
+wincmd t
+set winminheight=1 winheight=1 winminwidth=1 winwidth=1
+argglobal
+setlocal fdm=expr
+setlocal fde=Foldexpr_markdown(v:lnum)
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=1
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 55 - ((44 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+55
+normal! 0
+tabnext 3
+if exists('s:wipebuf') && s:wipebuf != bufnr('%')
+  silent exe 'bwipe ' . s:wipebuf
+endif
+unlet! s:wipebuf
+set winheight=1 winwidth=20 shortmess=filnxtToOI
+set winminheight=1 winminwidth=1
+let s:sx = expand("<sfile>:p:r")."x.vim"
+if file_readable(s:sx)
+  exe "source " . fnameescape(s:sx)
+endif
+let &so = s:so_save | let &siso = s:siso_save
+doautoall SessionLoadPost
+unlet SessionLoad
+" vim: set ft=vim :
