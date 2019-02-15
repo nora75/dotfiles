@@ -84,15 +84,11 @@ setlocal fdl=1
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-3
-normal! zo
-56
-normal! zo
-let s:l = 52 - ((44 * winheight(0) + 22) / 45)
+let s:l = 45 - ((37 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-52
+45
 normal! 0
 wincmd w
 argglobal
@@ -314,15 +310,19 @@ setlocal fdm=marker
 setlocal fde=0
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=1
+setlocal fdl=4
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 1 - ((0 * winheight(0) + 22) / 45)
+16
+normal! zo
+22
+normal! zo
+let s:l = 36 - ((6 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
+36
 normal! 0
 tabedit default\map.vim
 set splitbelow splitright
@@ -443,11 +443,11 @@ setlocal fdl=1
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 9 - ((8 * winheight(0) + 22) / 45)
+let s:l = 42 - ((41 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-9
+42
 normal! 0
 tabedit \Users\NORA\.vim\rcfiles\plugin\markdown.vim
 set splitbelow splitright
@@ -469,7 +469,7 @@ exe s:l
 normal! zt
 47
 normal! 0
-tabnext 10
+tabnext 7
 if exists('s:wipebuf') && s:wipebuf != bufnr('%')
   silent exe 'bwipe ' . s:wipebuf
 endif

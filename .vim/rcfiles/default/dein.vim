@@ -35,6 +35,7 @@ if dein#load_state('~/.vim/dein')
 
     call dein#add('itchyny/lightline.vim')
     call dein#add('simeji/winresizer')
+    call dein#add('fatih/vim-go')
 
     " highlight {{{3
     call dein#add('tmhedberg/matchit')
