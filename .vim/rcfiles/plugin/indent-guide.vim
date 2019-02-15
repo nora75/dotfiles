@@ -8,7 +8,7 @@ endif
 
 augroup indent
     au!
-    au InsertEnter * IndentGuidesEnable|au! indent InsertEnter *
+    au InsertEnter * try|IndentGuidesEnable|au! indent InsertEnter *|catch|endtry
 aug END
 
 " let g:indent_guides_enable_on_vim_startup = 1
