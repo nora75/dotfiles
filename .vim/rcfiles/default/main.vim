@@ -59,10 +59,10 @@ let g:html_hover_unfold = 1
 
 " else {{{2
 
-if has('persistent_undo')
-    set undodir=$VIM/undo
-    set undofile
-endif
+" if has('persistent_undo')
+"     set undodir=~/.vim/undo
+"     set undofile
+" endif
 
 " Setting for using Japanese
 "

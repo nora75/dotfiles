@@ -17,7 +17,6 @@ if has('gui') " options for gvim {{2
 
     " don't blink coursor
     set guicursor=a:blinkon0
-    "  no mouse
     set mouse+=a
 
     " Maximize when starting gui vim
@@ -34,7 +33,7 @@ if has('gui') " options for gvim {{2
         " set guifont=MS_Gothic:h12:cSHIFTJIS
         " set guifont=MS_Mincho:h12:cSHIFTJIS
         try
-        set guifont=Myrica_M:h11:cSHIFTJIS
+            set guifont=Myrica_M:h11:cSHIFTJIS
         catch
             set guifont=MS_Gothic:h12:cSHIFTJIS
         endtry
@@ -134,7 +133,9 @@ else " {{{2
     endfunction
 
     let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
-    " }}}
+    if has('nvim')
+        set mouse+=a
+    endif
 endif
 
 if has('vim_starting')

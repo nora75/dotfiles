@@ -10,15 +10,18 @@ nnoremap k                  gk
 nnoremap gj                 j
 nnoremap gk                 k
 nnoremap <S-Space>          gt
+nnoremap <C-Space>          gt
+nnoremap gl                 gt
 nnoremap <S-Tab>            gT
+nnoremap gh                 gT
 " <Space>map {{{3
 " <Space> <Nop> {{{4
 nnoremap <Space>            <Nop>
 vnoremap <Space>            <Nop>
 nnoremap <BS>               <Nop>
 vnoremap <BS>               <Nop>
-nnoremap <CR>               <Nop>
-vnoremap <CR>               <Nop>
+" nnoremap <CR>               <Nop>
+" vnoremap <CR>               <Nop>
 " double <Space>
 " nnoremap <silent> <Space><Space>     :<C-u>echo SwitchColorScheme()<CR>
 " vnoremap <silent> <Space><Space>     :<C-u>echo SwitchColorScheme()<CR>
