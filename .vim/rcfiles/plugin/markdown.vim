@@ -5,7 +5,9 @@ endif
 " let g:vim_markdown_folding_disabled = 1
 " let g:vim_markdown_toc_autofit = 1
 " disable ge mapping
-let g:vim_markdown_follow_anchor = 1
+"
+let g:vim_markdown_folding_style_pythonic = 1
+" let g:vim_markdown_follow_anchor = 1
 " disable default mapping
 let g:vim_markdown_no_default_key_mappings = 1
 " fold level setting
@@ -64,6 +66,7 @@ augroup markdown " {{{2
     " autocmd BufRead *.markdown au CursorHold <buffer><silent> if &modified|echom 'mod'|call <SID>updateToc()|endif
 
     " preview by OpenBrowser
+    " mapping on html files
     autocmd FileType html nnoremap <buffer> <Space>p :execute "OpenBrowser" expand("%:p")<CR>
 
     " auto close Toc when buffer leaving
@@ -109,5 +112,49 @@ func! MarkToc()
     endif
     return
 endfunc
+
+" Create Markdown Hyperlink Automatically {{{1
+if !dein#tap('vim-surround') || !dein#tap('vim-textobj-user') || !dein#tap('vim-textobj-url') || !dein#tap('webapi-vim')
+    finish
+endif
+" Create Markdown Hyperlink Automatically
+" Requires mattn/webapi-vim (or vital.vim), tpope/vim-surround,
+" kana/vim-textobj-user, mattn/vim-textobj-url
+" functions {{{2
+function! GetWebPageTitle(url)
+    let url = substitute(a:url,'\n\|\r\|\r\n','','g')
+    let res = webapi#http#get(url)
+    let dom = webapi#html#parse(res.content)
+    return dom.childNode('head').childNode('title').value()
+endfunction
+function! CreateMarkdownHyperLinkWithTitle()
+    let areg = @a
+    normal viu
+    normal! "ay
+    let url = @a
+    try
+        let title = GetWebPageTitle(url)
+    catch
+        echo "Can't get title.Please input title by yourself."
+        call <SID>createMarkdownHyperLink()
+        return
+    endtry
+    execute 'normal viuS)i['.title.']'
+    let @a = areg
+endfunction
+function! s:createMarkdownHyperLink()
+    execute 'normal viuS)i[]'
+    startinsert
+endfunction
+" mappings {{{2
+function! Marklink()
+    if !mapcheck('[Markdown]','n')
+        call Markd()
+    endif
+    nnoremap <buffer><silent>  [Markdown]u :<C-u>call CreateMarkdownHyperLinkWithTitle()<CR>
+endfunction
+aug markdown
+    autocmd FileType markdown call Marklink()
+aug END
 
 " vim:set fdm=marker fdl=1:

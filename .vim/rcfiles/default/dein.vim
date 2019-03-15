@@ -8,8 +8,10 @@ if has('vim_starting')
     if &runtimepath !~# '/dein.vim'
         let &runtimepath = &rtp.',~/.vim/dein/dein.vim'
     endif
-let g:dein#types#git#default_protocol = 'ssh'
+    let g:dein#types#git#default_protocol = 'ssh'
 else
+    filetype plugin indent on
+    syntax on
     finish
 endif
 
@@ -52,6 +54,7 @@ if dein#load_state('~/.vim/dein')
     call dein#add('osyo-manga/vim-operator-stay-cursor')
     call dein#add('osyo-manga/vim-textobj-blockwise')
     call dein#add('kana/vim-textobj-function')
+    call dein#add('mattn/vim-textobj-url')
     " call dein#add('h1mesuke/textobj-wiw')
 
     " unite {{{3
@@ -73,6 +76,8 @@ if dein#load_state('~/.vim/dein')
     \ 'on_ft':['html','markdown']
     \ } )
     call dein#add('alvan/vim-closetag',{'on_ft':['html','markdown']})
+    call dein#add('mattn/webapi-vim')
+    " call dein#add('nelstrom/vim-markdown-folding')
     " call dein#add('thinca/vim-quickrun')
     "
     " mine {{{4
@@ -112,7 +117,7 @@ filetype plugin indent on
 syntax enable
 
 if dein#check_install()
-  call dein#install()
+    call dein#install()
 endif
 
 " vim: set fdm=marker fmr={{{,}}} fdl=1 :

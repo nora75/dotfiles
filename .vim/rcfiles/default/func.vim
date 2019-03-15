@@ -721,6 +721,20 @@ function! Rel() abort
     return
 endfunc
 
+" Apchar() {{{2
+" Append Included between the specified characters end of line
+function! Apchar(st,en,...) abort
+    let startpoint = match(getline(line('.')),a:st)
+    let length = match(getline(line('.')),a:en) - startpoint
+    let line = getline(line('.'))
+    let string = strcharpart(getline(line('.')),startpoint,lenght)
+    if a:0
+        let line .= string
+    else
+        let line = string . line
+    endif
+    call setline(line('.'),line)
+endfunc
 " base functions{{{1
 " s:saveState() {{{2
 " save current buffer's state and return it

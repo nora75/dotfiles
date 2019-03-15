@@ -1,7 +1,10 @@
 scriptencoding utf-8
-if !has('terminal')
+if !has('terminal') && !has('nvim')
     finish
 endif
+
+" bashを利用してるので。bashで。変わった時とかよう、後今後の拡張用に。
+let s:termName = 'bash'
 
 " vital-palette-keymapping
 " <A-w> みたいなのを \<A-w> にして feedkeys() で呼び出せるようにするためのエスケープ関数
@@ -16,8 +19,13 @@ endfunction
 
 " キーマッピングの設定
 " set termwinkey=<A-w>
-if exists(":tmap")
-    tnoremap <Esc> <C-w><S-n>
+if exists(':tmap')
+    if has('nvim')
+        let s:termNormKey = '<C-\><C-n>'
+    else
+        let s:termNormKey = '<C-w><S-n>'
+    endif
+    exe 'tnoremap <Esc> '.s:termNormKey
     " tnoremap p i<C-w>""
 endif
 
@@ -36,6 +44,10 @@ endfunction
 augroup my-terminal
     autocmd!
     autocmd BufNew * call timer_start(0, { -> s:bufnew() })
+    if has('nvim')
+        " これほんま、ターミナルにnumberいらないじゃーん。むぎゅー。
+        au TermOpen * setl nonu
+    endif
     " autocmd FileType terminal call s:filetype()
 augroup END
 
@@ -49,6 +61,19 @@ function! s:open(args) abort
     endif
 endfunction
 
+function! s:nopen(args) abort
+    if a:args != ''
+        execute 'terminal' a:args
+    else
+        execute 'vnew term://'.s:termName
+    endif
+endfunction
+
 " すでに :terminal が存在していればその :terminal を使用する
-command! -nargs=*
-\   Terminal call s:open(<q-args>)
+if !has('nvim')
+    command! -nargs=*
+    \   Terminal call s:open(<q-args>)
+else
+    command! -nargs=*
+    \   Terminal call s:nopen(<q-args>)
+endif

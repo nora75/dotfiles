@@ -11,9 +11,9 @@ nnoremap gj                 j
 nnoremap gk                 k
 nnoremap <S-Space>          gt
 nnoremap <C-Space>          gt
-nnoremap gl                 gt
+nmap     gl                 gt
 nnoremap <S-Tab>            gT
-nnoremap gh                 gT
+nmap     gh                 gT
 " <Space>map {{{3
 " <Space> <Nop> {{{4
 nnoremap <Space>            <Nop>

@@ -120,13 +120,13 @@ fi
 
 set -o vi
 export GOPATH=$HOME/go
-export PATH=$GOPATH:$PATH
+export PATH=$GOPATH/bin:$PATH
 export EDITOR=nvim
 alias sl='ls'
 alias vim='nvim'
 
 if [ "`id -u`" -eq 0 ]; then
-    export PS1="\[\033[1;32m\]\D{%m/%d %H:%m} (｡･ω･)<\uだよー。 \[\033[0m\]\w \$ "
+    export PS1="\[\033[1;32m\]\D{%m/%d %H:%m} (｡･ω･)<\uだよー。 \[\033[0m\]\w # "
 else
-    export PS1="\[\033[1;36m\]\D{%m/%d %H:%m} (*'-')<\uだよー。\[\033[0m\]\[\033[37m\]\w\[\033[0m\] \$ "
+    export PS1="\[\033[1;36m\]\D{%m/%d %H:%m} (*'-')<\uだよー。\[\033[0m\]\[\033[37m\]\w\[\033[0m\] $ "
 fi
