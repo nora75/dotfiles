@@ -122,10 +122,12 @@ endif
 " kana/vim-textobj-user, mattn/vim-textobj-url
 " functions {{{2
 function! GetWebPageTitle(url)
-    let url = substitute(a:url,'\n\|\r\|\r\n','','g')
+    let url = s:remove(a:url)
     let res = webapi#http#get(url)
     let dom = webapi#html#parse(res.content)
-    return dom.childNode('head').childNode('title').value()
+    let title = dom.childNode('head').childNode('title').value()
+    let title = s:remove(title)
+    return title
 endfunction
 function! CreateMarkdownHyperLinkWithTitle()
     let areg = @a
@@ -153,6 +155,22 @@ function! Marklink()
     endif
     nnoremap <buffer><silent>  [Markdown]u :<C-u>call CreateMarkdownHyperLinkWithTitle()<CR>
 endfunction
+func! s:remove(...) abort
+    if a:0 > 1
+        let curline = a:2
+    else
+        let curline = a:1
+    endif
+    let curline = substitute(curline,'\M\n\|\r\|\r\n','','g')
+    let curline = matchstr(curline,'\M\S\.\*')
+    let curline = substitute(curline,'\M\s\*$','','g')
+    if curline == ''
+        throw 1
+    endif
+    return curline
+endfunc
+
+
 aug markdown
     autocmd FileType markdown call Marklink()
 aug END

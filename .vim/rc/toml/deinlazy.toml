@@ -1,0 +1,111 @@
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+
+# [[plugins]]
+# repo = 'thinca/vim-quickrun'
+
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
+on_i = 1
+
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+on_i = 1
+
+[[plugins]]
+repo = 'rcmdnk/vim-markdown',
+on_ft = 'markdown'
+
+[[plugins]]
+repo = 'nora75/markdowntable',
+on_ft = 'markdown'
+
+[[plugins]]
+repo = 'rhysd/vim-gfm-syntax'
+on_ft = 'markdown'
+
+[[plugins]]
+repo = 'kannokanno/previm'
+on_cmd = 'PrevimOpen'
+depends = 'open-browser.vim'
+
+[[plugins]]
+repo = 'dhruvasagar/vim-table-mode',
+on_ft = 'markdown'
+
+[[plugins]]
+repo = 'tyru/open-browser.vim',
+on_ft = ['html','markdown']
+
+[[plugins]]
+repo = 'alvan/vim-closetag',
+on_ft = ['html','markdown']
+
+[[plugins]]
+repo = 'fatih/vim-go'
+on_ft = 'go'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+[[plugins]]
+repo = 'osyo-manga/vim-textobj-blockwise'
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'kana/vim-textobj-function'
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'mattn/vim-textobj-url'
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'kana/vim-operator-replace'
+depends = 'vim-operator-user'
+
+[[plugins]]
+repo = 'sgur/vim-textobj-parameter'
+depends = 'vim-textobj-user'
+
+[[plugins]]
+repo = 'thinca/vim-scouter'
+
+[[plugins]]
+repo = 'vimtaku/hl_matchit.vim'
+depends = 'matchit'
+
+[[plugins]]
+repo = 'nora75/DatabaseTerminal'
+
+# [[plugins]]
+# repo = 'h1mesuke/textobj-wiw'
+# depends = 'vim-textobj-user'
+
+# [[plugins]]
+# repo = 'junegunn/goyo.vim'
+
+# [[plugins]]
+# repo = 'junegunn/limelight.vim'
+
+# [[plugins]]
+# repo = 'vim-scripts/AdvancedSorters'
+
+# [[plugins]]
+# repo = 'gyim/vim-boxdraw'
+
+# [[plugins]]
+# repo = 'osyo-manga/vim-sound'
+
+# [[plugins]]
+# repo = 'skywind3000/vim-keysound'
+
+# [[plugins]]
+# repo = 'kshenoy/vim-signature'
+
+# [[plugins]]
+# repo = 'mbbill/undotree'
+
+# [[plugins]]
+# repo = 'tyru/stoptypofile.vim'

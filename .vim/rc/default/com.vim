@@ -53,13 +53,17 @@ command! -nargs=1 -complete=command Comcap call Comcap(<f-args>)
 " go to last error of help file
 command! -nargs=0 GoError exe 'help' matchstr(v:errmsg,'\ME\d\+')
 
+" :Memo {{{2
+" open new buffer for memo
+command! -nargs=* Memo call NewScratch('',<line1>,<line2>,<args>)
+
 " :Memot {{{2
 " open new tab for memo
-command! -nargs=0 Memot call NewTabScratch()
+command! -nargs=* Memot call NewScratch('tab',<line1>,<line2>,<args>)
 
-" :Memoo {{{2
+" :Memov {{{2
 " open new buffer for memo
-command! -nargs=0 Memoo call NewBufScratch()
+command! -nargs=* Memov call NewScratch('v',<line1>,<line2>,<args>)
 
 " :ChangeUpper {{{2
 " change all argument text in current buffer to uppercase 

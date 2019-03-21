@@ -267,22 +267,15 @@ func! GetScNum(scname) abort
     return result[0]
 endfunc
 
-" NewTabScratch() {{{2
-" function for memo
-" make new tab for memo
-func! NewTabScratch() abort
-    tabnew
-    silent file \#MEMO
-    setl nonu bt=nofile noswf nobl bh=wipe ft=vim
-endfunc
-
-" NewBufScratch() {{{2
+" NewScratch() {{{2
 " function for memo
 " make new buffer for memo
-func! NewBufScratch() abort
-    new
+" you can select open buffer command
+func! NewScratch(type,line1,line2,...) abort
+    let lines = getline(line1,line2)
+    exe a:type.'new'
     silent file \#MEMO
-    setl nonu bt=nofile noswf noma nobl bh=wipe ft=vim
+    setl nonu bt=nofile noswf nobl bh=wipe ft=vim
 endfunc
 
 " GetComCont(com) {{{2

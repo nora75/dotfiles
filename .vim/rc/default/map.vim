@@ -14,6 +14,7 @@ nnoremap <C-Space>          gt
 nmap     gl                 gt
 nnoremap <S-Tab>            gT
 nmap     gh                 gT
+nnoremap <Tab>              <Nop>
 " <Space>map {{{3
 " <Space> <Nop> {{{4
 nnoremap <Space>            <Nop>

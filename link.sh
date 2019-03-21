@@ -7,4 +7,3 @@ if [ -n $XDG_CONFIG_HOME ]; then
 else
     ln -fs dotfiles/.vimrc ~/.config/nvim/init.vim
 fi
-git clone https://github.com/shougo/dein.vim.git dotfiles/.vim/dein/dein.vim
