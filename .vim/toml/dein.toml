@@ -66,7 +66,6 @@ repo = 'osyo-manga/vim-anzu'
 [[plugins]]
 repo = 'mattn/webapi-vim'
 
-
 [[plugins]]
 repo = 'Shougo/vimproc'
 hook_post_update = '''
@@ -81,3 +80,15 @@ hook_post_update = '''
   endif
   let g:dein#plugin.build = cmd
 '''
+
+[[plugins]]
+repo = 'rcmdnk/vim-markdown',
+on_ft = 'markdown'
+
+[[plugins]]
+repo = 'nora75/markdowntable',
+on_ft = 'markdown'
+
+[[plugins]]
+repo = 'dhruvasagar/vim-table-mode',
+on_ft = 'markdown'

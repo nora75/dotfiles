@@ -147,10 +147,6 @@ func! s:rec() abort
     return
 endfunc
 
-if !exists('g:wafun')
-    source ~\.vim\rcfiles\default\wafu.vim
-endif
-
 " s:wafun(...) {{{4
 " echo g:wafuw
 func! s:wafun(...) abort

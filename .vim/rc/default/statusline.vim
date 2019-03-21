@@ -3,10 +3,20 @@ scriptencoding utf-8
 " initialize {{{2
 " set variables if not exist
 set ls=2
-if !exists('g:echostr')
-    source ~\\.vim\\rcfiles\\default\\wafu.vim
+if exists('#Myau')
+    aug Myau
+        au VimEnter * let v:errmsg = ''
+    aug END
+else
+    aug Myau
+        au!
+        au VimEnter * let v:errmsg = ''
+    aug END
 endif
-let v:errmsg = ''
+if !exists('g:echoerrlong') && !exists('g:echoerrshort')
+    let g:echoerrlong = ''
+    let g:echoerrshort = ''
+endif
 
 " functions {{{2
 " MyStl() {{{3

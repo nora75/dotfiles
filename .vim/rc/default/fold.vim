@@ -3,16 +3,6 @@
 if !has('folding')
     finish
 endif
-if !exists('g:wafun')
-    if has('win32') || has('win64')
-        "exe 'source '.expand('%:h').'\wafu.vim'
-        source ~\.vim\rcfiles\default\wafu.vim
-    else
-        source ~/.vim/rcfiles/default/wafu.vim
-        "exe 'source '.expand('%:h').'/wafu.vim'
-    endif
-endif
-
 " script variables of folding {{{2
 let s:leftbar = 4
 
