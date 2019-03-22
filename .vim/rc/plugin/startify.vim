@@ -1,81 +1,72 @@
-if !dein#is_sourced('vim-startify')
-    finish
-endif
-
-let s:marked = 0
-if dein#tap('vim-markdown')
-    let s:marked = 1
-endif
-
 " functions {{{1
 " local {{{2
 " s:toc(file) abort {{{3
-if s:marked == 1
-    func! s:toc(file) abort
-        call s:cd(a:file)
-        let bid = win_getid(winnr())
-        norm 1 mt
-        call win_gotoid(bid)
-        return
-    endfunc
+" if s:marked == 1
+"     func! s:toc(file) abort
+"         call s:cd(a:file)
+"         let bid = win_getid(winnr())
+"         norm 1 mt
+"         call win_gotoid(bid)
+"         return
+"     endfunc
 
-    " s:sid() abort {{{3
-    " return this script sid
-    function! s:sid() abort
-        return matchstr(expand('<sfile>'), '<SNR>\d\+_')
-    endfunc
-endif
+"     " s:sid() abort {{{3
+"     " return this script sid
+"     function! s:sid() abort
+"         return matchstr(expand('<sfile>'), '<SNR>\d\+_')
+"     endfunc
+" endif
 
 " s:cd(...) abort {{{3
-func! s:cd(...) abort
-    exe "cd D:\\Users\\NORA\\Documents\\授業ノート\\"
-    if a:0
-        silent exe 'e' a:1
-    endif
-    return
-endfunc
+" func! s:cd(...) abort
+"     exe "cd D:\\Users\\NORA\\Documents\\授業ノート\\"
+"     if a:0
+"         silent exe 'e' a:1
+"     endif
+"     return
+" endfunc
 
 " s:debugit(file) abort
-func! s:debugit(file) abort
-    new
-    only
-    " colorscheme default
-    " mapc
-    " comc
-    " let funcl = split(execute('function'),"\n")
-    " let funcl = map(funcl,'substitute(v:val,"^function","","g")')
-    " let funcl = map(funcl,'substitute(v:val,"(.*$","","g")')
-    " call filter(funcl,'v:val !~ "#"')
-    " for i in funcl
-    "     exe 'silent! delfunc'.i
-    " endfor
-    " let augl = split(substitute(execute('aug'), "\n","","g"),'\s\+')
-    " for i in augl
-    "     exe 'aug '.i
-    "     au!
-    "     exe 'aug END'
-    "     exe 'silent! aug! '.i
-    " endfor
-    " clearjumps
-    exe 'source '.expand('~\'.a:file)
-    return
-endfunc
+" func! s:debugit(file) abort
+"     new
+"     only
+"     " colorscheme default
+"     " mapc
+"     " comc
+"     " let funcl = split(execute('function'),"\n")
+"     " let funcl = map(funcl,'substitute(v:val,"^function","","g")')
+"     " let funcl = map(funcl,'substitute(v:val,"(.*$","","g")')
+"     " call filter(funcl,'v:val !~ "#"')
+"     " for i in funcl
+"     "     exe 'silent! delfunc'.i
+"     " endfor
+"     " let augl = split(substitute(execute('aug'), "\n","","g"),'\s\+')
+"     " for i in augl
+"     "     exe 'aug '.i
+"     "     au!
+"     "     exe 'aug END'
+"     "     exe 'silent! aug! '.i
+"     " endfor
+"     " clearjumps
+"     exe 'source '.expand('~\'.a:file)
+"     return
+" endfunc
 
-func! TEST() abort
-    call s:debugit('test')
-    return
-endfunc
+" func! TEST() abort
+"     call s:debugit('test')
+"     return
+" endfunc
 
 " settings {{{1
 " misc {{{2
 " let g:startify_fortune_use_unicode = 1
 let g:startify_change_to_dir = 1
 " custom list {{{2
-let g:startify_bookmarks = [ { 'r':'~/.vim/rcfiles/' , 'g' : 'D:/Users/NORA/Documents/授業ノート' } ]
-let g:startify_lists = [
-\ { 'type': 'bookmarks', 'header': ['Bookmarks'] },
-\ { 'type': 'commands', 'header': ['Commands'] }
-\ ]
+" let g:startify_bookmarks = [ { 'r':'~/.vim/rcfiles/' , 'g' : 'D:/Users/NORA/Documents/授業ノート' } ]
+" let g:startify_lists = [
+" \ { 'type': 'bookmarks', 'header': ['Bookmarks'] },
+" \ { 'type': 'commands', 'header': ['Commands'] }
+" \ ]
 " \ { 'type': 'files',     'header': [   'MRU']            },
 " \ { 'type': 'dir',       'header': [   'MRU '. getcwd()] },
 " let g:startify_skiplist = [
@@ -87,35 +78,35 @@ let g:startify_lists = [
 " \ ]
 
 " custom commands {{{2
-let g:startify_commands = [
-\ { 'o' : [ 'open session', 'SLoad' ] },
-\ { 'd' : [ 'open default session', 'SLoad default' ] },
-\ { 'p' : [ 'open plugin session', 'SLoad plugin' ] },
-\ { 'sd' : [ 'open db session', 'SLoad db' ] },
-\ { 'ss' : [ 'open sec.md', 'call '.eval('s:sid()').'cd("sec.md")' ] } ,
-\ { 'se' : [ 'open eigo.md', 'call '.eval('s:sid()').'cd("eigo.md")' ] } ,
-\ { 'sm' : [ 'move note dir and open filer', 'exe "call "'.string(eval('s:sid()').'cd("%:p:h")') ] } ,
-\ ]
+" let g:startify_commands = [
+" \ { 'o' : [ 'open session', 'SLoad' ] },
+" \ { 'd' : [ 'open default session', 'SLoad default' ] },
+" \ { 'p' : [ 'open plugin session', 'SLoad plugin' ] },
+" \ { 'sd' : [ 'open db session', 'SLoad db' ] },
+" \ { 'ss' : [ 'open sec.md', 'call '.eval('s:sid()').'cd("sec.md")' ] } ,
+" \ { 'se' : [ 'open eigo.md', 'call '.eval('s:sid()').'cd("eigo.md")' ] } ,
+" \ { 'sm' : [ 'move note dir and open filer', 'exe "call "'.string(eval('s:sid()').'cd("%:p:h")') ] } ,
+" \ ]
 " \ { 'n' : [ 'open notes session', 'SLoad notes.vim' ] },
 " \ { 'dd' : [ 'debug DatabaseTerminal', 'call '.eval('s:sid()').'debugit("t.vim")' ] } ,
 " \ { 'dm' : [ 'debug markdowntable', 'call '.eval('s:sid()').'debugit("d.vim")' ] }
 
 " if vim-markdown is supports change functions
-if s:marked
-    let g:startify_commands[3:4] = [ 
-    \ { 'ss' : [ 'open sec.md', 'call '.eval('s:sid()').'toc("sec.md")' ] } ,
-    \ { 'se' : [ 'open eigo.md', 'call '.eval('s:sid()').'toc("eigo.md")' ] } ]
-endif
+" if s:marked
+"     let g:startify_commands[3:4] = [ 
+"     \ { 'ss' : [ 'open sec.md', 'call '.eval('s:sid()').'toc("sec.md")' ] } ,
+"     \ { 'se' : [ 'open eigo.md', 'call '.eval('s:sid()').'toc("eigo.md")' ] } ]
+" endif
 
 " session {{{2
-let g:startify_session_dir = '~/.vim/session'
-let g:startify_session_number = 10
-let g:startify_session_sort = 1
-let g:startify_session_persistence = 1
-let g:startify_session_before_save = [
-\ 'echo "Cleaning up before saving.."',
-\ 'silent! NERDTreeTabsClose'
-\ ]
+" let g:startify_session_dir = '~/.vim/session'
+" let g:startify_session_number = 10
+" let g:startify_session_sort = 1
+" let g:startify_session_persistence = 1
+" let g:startify_session_before_save = [
+" \ 'echo "Cleaning up before saving.."',
+" \ 'silent! NERDTreeTabsClose'
+" \ ]
 
 " custom header {{{2
 let s:StartifyHeader = { 'data' : [
@@ -218,20 +209,5 @@ let g:startify_custom_header = s:StartifyKud
 let g:startify_custom_footer = s:StartifyKud
 let g:startify_padding_left = 4
 let g:startify_fortune_use_unicode = 1
-
-if dein#is_sourced('vim-indent-guides')
-    aug startify
-        au!
-        au User Startified IndentGuidesDisable|au BufLeave <buffer> IndentGuidesEnable
-        au User Startified let v:errmsg = ''
-        au User Startified 1|if has('win32')|simalt ~x|endif
-    aug end
-else
-    aug startify
-        au!
-        au User Startified let v:errmsg = ''
-        au User Startified 1|if has('win32')|simalt ~x|endif
-    aug end
-endif
 
 " vim: set fdm=marker fmr={{{,}}} fdl=1 :

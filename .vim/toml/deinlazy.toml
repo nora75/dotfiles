@@ -1,16 +1,169 @@
 [[plugins]]
+repo = 'tpope/vim-repeat'
+on_map = {n = '<Plug>'}
+# hook_add = '''
+# nnoremap <silent> [AppendLine]j :<C-u>for i in range(1, v:count1)|call append(line('.'), '')|endfor|silent! call repeat#set('<Space>o', v:count1)<CR>
+# nnoremap <silent> [AppendLine]k :<C-u>for i in range(1, v:count1)| call append(line('.')-1, '')|endfor|silent! call repeat#set('<Space>o', v:count1)<CR>
+# '''
+
+[[plugins]]
+repo = 'Shougo/echodoc.vim'
+on_event = 'CompleteDone'
+hook_post_source = '''
+let g:echodoc#type = 'virtual'
+call echodoc#enable()
+'''
+
+[[plugins]]
+repo = 'osyo-manga/vim-jplus'
+on_map = {nv = '<Plug>'}
+hook_add = '''
+nmap J <Plug>(jplus-input)<CR>
+vmap J <Plug>(jplus-input)<CR>
+nmap gJ <Plug>(jplus-input)
+vmap gJ <Plug>(jplus-input)
+nmap <Space>J <Plug>(jplus-input)<Space><CR>
+vmap <Space>J <Plug>(jplus-input)<Space><CR>
+'''
+
+[[plugins]]
 repo = 'junegunn/vim-easy-align'
+on_map = {nxv = '<Plug>'}
+hook_add = '''
+nmap     ga <Plug>(LiveEasyAlign)
+xmap     ga <Plug>(LiveEasyAlign)
+vnoremap <Space><Space> <Plug>(LiveEasyAlign)
+'''
+
+[[plugins]]
+repo = 'kana/vim-smartchr'
+on_event = 'InsertCharPre'
+hook_source = '''
+  inoremap <expr> , smartchr#one_of(', ', ',')
+  inoremap <expr> =
+        \ search('\(&\<bar><bar>\<bar>+\<bar>-\<bar>/\<bar>>\<bar><\) \%#', 'bcn')? '<bs>= '
+        \ : search('\(*\<bar>!\)\%#', 'bcn') ? '= '
+        \ : smartchr#one_of(' = ', '=', ' == ')
+  augroup Myau
+    " Substitute .. into -> .
+    autocmd FileType c,cpp inoremap <buffer> <expr> .
+          \ smartchr#loop('.', '->', '...')
+    autocmd FileType vim inoremap <buffer> <expr> .
+          \ smartchr#loop('.', ' . ', '..', '...')
+    autocmd FileType lisp,scheme,clojure inoremap <buffer> <expr> = =
+  augroup END
+'''
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+depends = 'context_filetype.vim'
+on_event = 'InsertEnter'
+hook_source = '''
+call deoplete#enable()
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+depends = ['neosnippet-snippets', 'context_filetype.vim']
+on_event = 'InsertCharPre'
+on_ft = 'snippet'
+hook_source = '''
+    imap <silent>L     <Plug>(neosnippet_jump_or_expand)
+    smap <silent>L     <Plug>(neosnippet_jump_or_expand)
+xmap <silent>L     <Plug>(neosnippet_expand_target)
+    let g:neosnippet#enable_snipmate_compatibility = 1
+    let g:neosnippet#enable_completed_snippet = 1
+    " let g:neosnippet#enable_complete_done = 1
+    let g:neosnippet#expand_word_boundary = 1
+    " let g:snippets_dir = '~/.vim/snippets/,~/.vim/bundle/snipmate/snippets/'
+    let g:neosnippet#snippets_directory = '~/.vim/snippets'
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = 'context_filetype'
+
+[[plugins]]
+repo = 'LeafCage/yankround.vim'
+on_map = {nx = '<Plug>'}
+hook_add = '''
+nmap p <Plug>(yankround-p)
+xmap p <Plug>(yankround-p)
+nmap P <Plug>(yankround-P)
+nmap gp <Plug>(yankround-gp)
+xmap gp <Plug>(yankround-gp)
+nmap gP <Plug>(yankround-gP)
+xmap gP <Plug>(yankround-gp)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
+'''
+hook_source = '''
+let g:yankround_max_history = 100
+let g:yankround_use_region_hl = 1
+'''
+
+[[plugins]]
+repo = 'simeji/winresizer'
+on_map = {nv = '<Plug>'}
+hook_add = '''
+nnoremap <C-e> :<C-u>WinResizerStartMove<CR>
+vnoremap <C-e> :<C-u>WinResizerStartMove<CR>
+'''
+hook_source = '''
+let g:winresizer_finish_with_escape = 1
+let g:winresizer_keycode_finish = 32 " <Space>
+'''
+
+[[plugins]]
+repo = 'osyo-manga/vim-anzu'
+on_map = {n = '<Plug>'}
+hook_add = '''
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
+
+nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
+'''
+
+# statusline
+# set statusline=%{anzu#search_status()}
+
+# can't recognize on * or # with echo no match pattern
+# map n nzzzv with anzu mode
+# nnoremap <expr> n anzu#mode#mapexpr("n", "", "zzzv")
+# map N Nzzzv with anzu mode
+# nnoremap <expr> N anzu#mode#mapexpr("N", "", "zzzv")
 
 # [[plugins]]
 # repo = 'thinca/vim-quickrun'
+# hook_source = '''
+# let g:quickrun_no_default_key_mappings = 1
+# " convert markdown to html with pandoc and open it
+# let g:quickrun_config = {}
+# let g:quickrun_config.markdown = {
+#             \ 'type': 'markdown/pandoc',
+#             \ 'cmdopt': '-s --toc -f markdown_github -w html5 -c ..\.vim\css\origin.css -c ..\vim\css\github.css -T Preview',
+#             \ 'outputter': 'browser'
+#             \ }
+# let g:quickrun_config.java = {
+#             \ 'exec' : 'javarun -encoding=UTF8 %s',
+#             \ }
+# nnoremap <Space>r :<C-u>QuickRun<CR>
+# '''
 
 [[plugins]]
 repo = 'jiangmiao/auto-pairs'
 on_i = 1
-
-[[plugins]]
-repo = 'nathanaelkane/vim-indent-guides'
-on_i = 1
+# hook_source = '''
+# let g:AutoPairs = {'(':')', '[':']', '{':'}', '<':'>', "'":"'", '"':'"', '```':'```', '"""':'"""', "'''":"'''", "`":"`"}
+# '''
 
 [[plugins]]
 repo = 'rhysd/vim-gfm-syntax'
@@ -29,8 +182,28 @@ repo = 'alvan/vim-closetag'
 on_ft = ['html','markdown']
 
 [[plugins]]
+repo = 'dhruvasagar/vim-table-mode'
+on_ft = 'markdown'
+hook_source = '''
+let g:table_mode_map_prefix = '<Space>,'
+let g:table_mode_corner_corner = '|'
+let g:table_mode_corner='|'
+let g:table_mode_auto_align = 1
+'''
+
+[[plugins]]
+repo = 'nora75/markdowntable'
+on_ft = 'markdown'
+
+[[plugins]]
 repo = 'fatih/vim-go'
 on_ft = 'go'
+hook_add = '''
+let g:go_fmt_command = "goimports"
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['vet']
+let g:go_def_mapping_enabled = 0
+'''
 
 [[plugins]]
 repo = 'cespare/vim-toml'
@@ -55,6 +228,27 @@ on_map = {n = '<Plug>'}
 repo = 'kana/vim-operator-replace'
 depends = 'vim-operator-user'
 on_map = {n = '<Plug>'}
+hook_add = '''
+map _  <Plug>(operator-replace)
+if hasmapto('<C-p>')
+    nunmap <C-p>
+    vunmap <C-p>
+endif
+if hasmapto('<C-S-p>')
+    nunmap <C-S-p>
+    vunmap <C-S-p>
+endif
+'''
+
+[[plugins]]
+repo = 'osyo-manga/vim-operator-stay-cursor'
+on_map = {n = '<Plug>'}
+# hook_add = '''
+# map y <Plug>(operator-stay-cursor-yank)
+# map gu <Plug>(operator-stay-cursor-gu)
+# map gU <Plug>(operator-stay-cursor-gU)
+# map g~ <Plug>(operator-stay-cursor-g~)
+# '''
 
 [[plugins]]
 repo = 'sgur/vim-textobj-parameter'
@@ -67,10 +261,28 @@ repo = 'thinca/vim-scouter'
 [[plugins]]
 repo = 'vimtaku/hl_matchit.vim'
 depends = 'matchit'
+on_source = 'mathcit'
 
-[[plugins]]
-repo = 'nora75/DatabaseTerminal'
-on_cmd = 'DbTerminal'
+# [[plugins]]
+# repo = 'nora75/DatabaseTerminal'
+# on_cmd = 'DbTerminal'
+# hook_source = ```
+# let g:DatabaseTerminal_dbName = 'MySQL'
+# let g:DatabaseTerminal_dbRunCom = 'mysql'
+# let g:DatabaseTerminal_dbRunArgs = '-u root -p'
+# let g:DatabaseTerminal_folder = 'D:\Users\NORA\Documents\学校\DB\DB応用\提出\'
+# let g:DatabaseTerminal_fileName = 'k017c1066平野'
+# let g:DatabaseTerminal_outputFormat = 'docx'
+# let g:DatabaseTerminal_outputExtens = 'docx'
+# let g:DatabaseTerminal_autodate = 1
+# let g:DatabaseTerminal_autoOutput = 1
+# let g:DatabaseTerminal_dontStop = 1
+# aug Dbterminal
+#     au!
+#     au FileType DbTerminal SubUnmap
+#     au FileType DbTerminal au BufWinLeave <buffer> SubRemap
+# aug END
+# ```
 
 # [[plugins]]
 # repo = 'h1mesuke/textobj-wiw'

@@ -3,16 +3,29 @@ repo = 'Shougo/dein.vim'
 
 [[plugins]]
 repo = 'mhinz/vim-startify'
+hook_add = 'source ~/.vim/rc/plugin/startify.vim'
 
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
-hook_add = '''
-  set background=dark
-  au Myau VimEnter * nested colorscheme iceberg
+hook_source = '''
+set background=dark
+colorscheme iceberg
+'''
+
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+hook_source = '''
+if !has("gui")
+    let g:indent_guides_auto_colors = 0
+    hi Normal ctermfg=252 ctermbg=234 guifg=#c6c8d1 guibg=#161821
+    hi IndentGuidesOdd  ctermbg=DarkGray
+    hi IndentGuidesEven ctermbg=Gray
+endif
 '''
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
+hook_source = 'source ~/.vim/rc/plugin/lightline.vim'
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
@@ -22,24 +35,34 @@ repo = 'Shougo/neomru.vim'
 
 [[plugins]]
 repo = 'scrooloose/nerdtree'
+on_cmd = 'NERDTreeToggle'
+hook_add = '''
+nnoremap [nerd] <Nop>
+nmap <Space>f [nerd]
+nnoremap <silent>[nerd]t :<C-u>NERDTreeToggle<CR>
+nnoremap <silent>[nerd]f :<C-u>NERDTreeFocus<CR>
+nnoremap <silent>[nerd]j :<C-u>NERDTreeCWD<CR>
+nnoremap <silent>[nerd]c :<C-u>NERDTreeClose<CR>
+nnoremap <silent>[nerd]x :<C-u>NERDTreeClose<CR>
+'''
+hook_source = '''
+let g:NERDTreeDirArrowExpandable = '+'
+let g:NERDTreeDirArrowCollapsible = '-'
+let g:NERDTreeShowBookmarks = 1
+'''
 
 [[plugins]]
 repo = 'tpope/vim-surround'
-
-[[plugins]]
-repo = 'LeafCage/yankround.vim'
+hook_add = '''
+set ve=onemore
+'''
 
 [[plugins]]
 repo = 'tpope/vim-commentary'
 
 [[plugins]]
-repo = 'tpope/vim-repeat'
-
-[[plugins]]
 repo = 'kana/vim-submode'
-
-[[plugins]]
-repo = 'simeji/winresizer'
+hook_source = 'source ~/.vim/rc/plugin/submode.vim'
 
 [[plugins]]
 repo = 'kana/vim-operator-user'
@@ -48,23 +71,51 @@ repo = 'kana/vim-operator-user'
 repo = 'kana/vim-textobj-user'
 
 [[plugins]]
-repo = 'osyo-manga/vim-jplus'
-on_map = {n = '<Plug>'}
-hook_add = '''
-  nmap J <Plug>(jplus)
-'''
+repo = 'vim-jp/vimdoc-ja'
 
 [[plugins]]
-repo = 'osyo-manga/vim-operator-stay-cursor'
+repo = 'rcmdnk/vim-markdown'
 
 [[plugins]]
-repo = 'tmhedberg/matchit'
+repo = 'thinca/vim-ft-diff_fold'
 
 [[plugins]]
-repo = 'osyo-manga/vim-anzu'
+repo = 'thinca/vim-ft-help_fold'
 
 [[plugins]]
 repo = 'mattn/webapi-vim'
+
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+on_if = '!has("nvim")'
+
+[[plugins]]
+repo = 'roxma/nvim-yarp'
+
+[[plugins]]
+repo = 'tmhedberg/matchit'
+hook_source = '''
+if !exists(':ReloadVimrc')
+    command! -nargs=0 ReloadVimrc exe g:ReloadVimrc.ret()
+else
+    if exists('g:ReloadVimrc')
+        let i = 0
+        while i < len(g:ReloadVimrc.data)
+            if g:ReloadVimrc.data[i] =~? 'MYVIMRC'
+                call insert(g:ReloadVimrc.data,'exe "HiMatchOff"',i)
+                call insert(g:ReloadVimrc.data,'exe "NoHiMatch"',i)
+                break
+            endif
+            let i += 1
+        endwhile
+    else
+        let g:ReloadVimrc = {'data':['let g:ReloadVimrc.save_cuwinid = win_getid()','exe "NoHiMatch"','exe "HiMatchOff"','source $MYVIMRC','exe "HiMatchOn"','set nohlsearch','call win_gotoid(g:ReloadVimrc.save_cuwinid)'],'save_winid':''}
+        func! g:ReloadVimrc.ret() abort
+            return join(self.data,'|')
+        endfunc
+    endif
+endif
+'''
 
 [[plugins]]
 repo = 'Shougo/vimproc'
@@ -80,15 +131,3 @@ hook_post_update = '''
   endif
   let g:dein#plugin.build = cmd
 '''
-
-[[plugins]]
-repo = 'rcmdnk/vim-markdown',
-on_ft = 'markdown'
-
-[[plugins]]
-repo = 'nora75/markdowntable',
-on_ft = 'markdown'
-
-[[plugins]]
-repo = 'dhruvasagar/vim-table-mode',
-on_ft = 'markdown'

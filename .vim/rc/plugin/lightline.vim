@@ -1,6 +1,3 @@
-if !dein#is_sourced('lightline.vim')
-    finish
-endif
 " options {{{2
 set laststatus=2
 let g:unite_force_overwrite_statusline = 0

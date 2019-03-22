@@ -23,4 +23,3 @@ if has('vim_starting')
 endif
 
 runtime! rc/default/*.vim
-runtime! rc/plugin/*.vim

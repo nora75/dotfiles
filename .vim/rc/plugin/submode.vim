@@ -1,6 +1,3 @@
-if !dein#is_sourced('vim-submode')
-    finish
-endif
 " options {{{1
 let g:submode_always_show_submode = 1
 let g:submode_keep_leaving_key = 1

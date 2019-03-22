@@ -742,50 +742,53 @@ func! s:saveState()
     let tmp = []
     let infolines = readfile(s:tmpn)
     let i = 0
-    while i < len(infolines)
-        if infolines[i] =~? 'レジスタ'
-            let i += 1
-            while infolines[i] !~ '\M^#\s\{1}' && i < len(infolines)
-                call add(tmp,infolines[i])
+    try
+        while i < len(infolines)
+            if infolines[i] =~? 'レジスタ'
                 let i += 1
-            endwhile
-            let ret[4] = 'call writefile('.string(tmp).',s:tmpn)|rv! '.s:tmpn.'|call delete(s:tmpn)'
-            let tmp = []
-        elseif infolines[i] =~? 'ファイルマーク'
-            let i += 1
-            while infolines[i] !~ '\M^#\s\{1}' && i < len(infolines)
-                call add(tmp,infolines[i])
+                while infolines[i] !~ '\M^#\s\{1}' && i < len(infolines)
+                    call add(tmp,infolines[i])
+                    let i += 1
+                endwhile
+                let ret[4] = 'call writefile('.string(tmp).',s:tmpn)|rv! '.s:tmpn.'|call delete(s:tmpn)'
+                let tmp = []
+            elseif infolines[i] =~? 'ファイルマーク'
                 let i += 1
-            endwhile
-            let ret[5] = 'call writefile('.string(tmp).',s:tmpn)|rv! '.s:tmpn.'|call delete(s:tmpn)'
-            let tmp = []
-        elseif infolines[i] =~? 'ジャンプ'
-            let i += 1
-            while infolines[i] !~ '\M^#\s\{1}' && i < len(infolines)
-                call add(tmp,infolines[i])
+                while infolines[i] !~ '\M^#\s\{1}' && i < len(infolines)
+                    call add(tmp,infolines[i])
+                    let i += 1
+                endwhile
+                let ret[5] = 'call writefile('.string(tmp).',s:tmpn)|rv! '.s:tmpn.'|call delete(s:tmpn)'
+                let tmp = []
+            elseif infolines[i] =~? 'ジャンプ'
                 let i += 1
-            endwhile
-            let ret[6] = 'call writefile('.string(tmp).',s:tmpn)|rv! '.s:tmpn.'|call delete(s:tmpn)'
-            let tmp = []
-        elseif infolines[i] =~? 'コマンドライン'
-            let i += 1
-            while infolines[i] !~ '\M^#\s\{1}' && i < len(infolines)
-                call add(tmp,infolines[i])
+                while infolines[i] !~ '\M^#\s\{1}' && i < len(infolines)
+                    call add(tmp,infolines[i])
+                    let i += 1
+                endwhile
+                let ret[6] = 'call writefile('.string(tmp).',s:tmpn)|rv! '.s:tmpn.'|call delete(s:tmpn)'
+                let tmp = []
+            elseif infolines[i] =~? 'コマンドライン'
                 let i += 1
-            endwhile
-            let ret[7] = 'call writefile('.string(tmp).',s:tmpn)|rv! '.s:tmpn.'|call delete(s:tmpn)'
-            let tmp = []
-        elseif infolines[i] =~? '検索'
-            let i += 1
-            while infolines[i] !~ '\M^#\s\{1}' && i < len(infolines)
-                call add(tmp,infolines[i])
+                while infolines[i] !~ '\M^#\s\{1}' && i < len(infolines)
+                    call add(tmp,infolines[i])
+                    let i += 1
+                endwhile
+                let ret[7] = 'call writefile('.string(tmp).',s:tmpn)|rv! '.s:tmpn.'|call delete(s:tmpn)'
+                let tmp = []
+            elseif infolines[i] =~? '検索'
                 let i += 1
-            endwhile
-            let ret[8] = 'call writefile('.string(tmp).',s:tmpn)|rv! '.s:tmpn.'|call delete(s:tmpn)'
-            let tmp = []
-        endif
-        let i += 1
-    endwhile
+                while infolines[i] !~ '\M^#\s\{1}' && i < len(infolines)
+                    call add(tmp,infolines[i])
+                    let i += 1
+                endwhile
+                let ret[8] = 'call writefile('.string(tmp).',s:tmpn)|rv! '.s:tmpn.'|call delete(s:tmpn)'
+                let tmp = []
+            endif
+            let i += 1
+        endwhile
+    catch /.*/
+    endtry
     return ret
 endfunction
 
