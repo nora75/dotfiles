@@ -14,14 +14,18 @@ colorscheme iceberg
 
 [[plugins]]
 repo = 'nathanaelkane/vim-indent-guides'
-hook_source = '''
-if !has("gui")
+hook_add = '''
+if !has('gui')
     let g:indent_guides_auto_colors = 0
-    hi Normal ctermfg=252 ctermbg=234 guifg=#c6c8d1 guibg=#161821
     hi IndentGuidesOdd  ctermbg=DarkGray
     hi IndentGuidesEven ctermbg=Gray
 endif
 '''
+
+[[plugins]]
+repo = 'mattn/vim-textobj-url'
+depends = 'vim-textobj-user'
+on_source = 'vim-textobj-user'
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
@@ -75,6 +79,9 @@ repo = 'vim-jp/vimdoc-ja'
 
 [[plugins]]
 repo = 'rcmdnk/vim-markdown'
+hook_add = '''
+source ~/.vim/rc/plugin/markdown.vim
+'''
 
 [[plugins]]
 repo = 'thinca/vim-ft-diff_fold'
@@ -94,40 +101,18 @@ repo = 'roxma/nvim-yarp'
 
 [[plugins]]
 repo = 'tmhedberg/matchit'
-hook_source = '''
-if !exists(':ReloadVimrc')
-    command! -nargs=0 ReloadVimrc exe g:ReloadVimrc.ret()
-else
-    if exists('g:ReloadVimrc')
-        let i = 0
-        while i < len(g:ReloadVimrc.data)
-            if g:ReloadVimrc.data[i] =~? 'MYVIMRC'
-                call insert(g:ReloadVimrc.data,'exe "HiMatchOff"',i)
-                call insert(g:ReloadVimrc.data,'exe "NoHiMatch"',i)
-                break
-            endif
-            let i += 1
-        endwhile
-    else
-        let g:ReloadVimrc = {'data':['let g:ReloadVimrc.save_cuwinid = win_getid()','exe "NoHiMatch"','exe "HiMatchOff"','source $MYVIMRC','exe "HiMatchOn"','set nohlsearch','call win_gotoid(g:ReloadVimrc.save_cuwinid)'],'save_winid':''}
-        func! g:ReloadVimrc.ret() abort
-            return join(self.data,'|')
-        endfunc
-    endif
-endif
-'''
 
 [[plugins]]
 repo = 'Shougo/vimproc'
 hook_post_update = '''
-  if dein#util#_is_windows()
+if dein#util#_is_windows()
     let cmd = 'tools\\update-dll-mingw'
-  elseif dein#util#_is_cygwin()
+elseif dein#util#_is_cygwin()
     let cmd = 'make -f make_cygwin.mak'
-  elseif executable('gmake')
+elseif executable('gmake')
     let cmd = 'gmake'
-  else
+else
     let cmd = 'make'
-  endif
-  let g:dein#plugin.build = cmd
+endif
+let g:dein#plugin.build = cmd
 '''

@@ -1,6 +1,3 @@
-if !dein#tap('vim-markdown')
-    finish
-endif
 " markdown option {{{1
 " let g:vim_markdown_folding_disabled = 1
 " let g:vim_markdown_toc_autofit = 1
@@ -113,10 +110,6 @@ func! MarkToc()
     return
 endfunc
 
-" Create Markdown Hyperlink Automatically {{{1
-if !dein#tap('vim-surround') || !dein#tap('vim-textobj-user') || !dein#tap('vim-textobj-url') || !dein#tap('webapi-vim')
-    finish
-endif
 " Create Markdown Hyperlink Automatically
 " Requires mattn/webapi-vim (or vital.vim), tpope/vim-surround,
 " kana/vim-textobj-user, mattn/vim-textobj-url
@@ -169,7 +162,6 @@ func! s:remove(...) abort
     endif
     return curline
 endfunc
-
 
 aug markdown
     autocmd FileType markdown call Marklink()

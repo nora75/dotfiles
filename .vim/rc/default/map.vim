@@ -122,13 +122,14 @@ vnoremap x                  "_x
 
 " command mode {{{2
 " ] {{{3
-cnoreabbre w]      w
-cnoreabbre we      w
-cnoreabbre q]      q
-cnoreabbre qa]     qa
-cnoreabbre tabnew] tabnew
-cnoreabbre new]    new
+" cnoreabbre w]      w
+" cnoreabbre we      w
+" cnoreabbre q]      q
+" cnoreabbre qa]     qa
+" cnoreabbre tabnew] tabnew
+" cnoreabbre new]    new
 cnoreabbre qq q
+cnoreabbre q1 q!
 
 " insert mode {{{2
 inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
