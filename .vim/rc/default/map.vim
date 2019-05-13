@@ -5,10 +5,10 @@
 " nnoremap :                  ;
 " nmap     q;                 q:<C-u>
 " movement {{{3
-nnoremap j                  gj
-nnoremap k                  gk
-nnoremap gj                 j
-nnoremap gk                 k
+nnoremap <silent> j                  gj
+nnoremap <silent> k                  gk
+nnoremap <silent> gj                 j
+nnoremap <silent> gk                 k
 nnoremap <S-Space>          gt
 nnoremap <C-Space>          gt
 nmap     gl                 gt
@@ -39,9 +39,9 @@ nnoremap <silent> <Space>cd          :<C-u>CdCurrent<CR>
 nnoremap <Space>e           :<C-u>echo<Space>
 nnoremap <Space>r           :<C-u>Comcap<Space>
 " map to <Space>o + j,k
-nmap     <Space>o           [AppendLine]
-nnoremap <silent>           [AppendLine]j       :<C-u>for i in range(1, v:count1)<Bar>call append(line('.'),'')<Bar>endfor<CR>
-nnoremap <silent>           [AppendLine]k       :<C-u>for i in range(1, v:count1)<Bar>call append(line('.')-1,'')<Bar>endfor<CR>
+nmap     <Space>o           [AddLine]
+nnoremap <silent>           [AddLine]j       :<C-u>for i in range(1, v:count1)<Bar>call append(line('.'),'')<Bar>endfor<CR>
+nnoremap <silent>           [AddLine]k       :<C-u>for i in range(1, v:count1)<Bar>call append(line('.')-1,'')<Bar>endfor<CR>
 " LineMove {{{3
 nmap     <Space>l           [LineMove]
 nnoremap <silent> [LineMove]j        :<C-u>call <SID>lineMove('j')<CR>
@@ -51,6 +51,7 @@ nnoremap <silent> [LineMove]    <Nop>
 nmap <Space>d [BlankLine]
 nnoremap <silent> [BlankLine] :<C-u>set opfunc=<SID>blankLineOp<CR>g@
 nnoremap <silent> [BlankLine]d :<C-u>call <SID>blankLineOp('visual',line('.'),line('.'))<CR>
+nnoremap <silent> [BlankLine]l :<C-u>call <SID>blankLineOp('visual',line('.'),line('.'))<CR>
 vnoremap <silent> <Space>d :<C-u>call <SID>blankLineOp('visual',line("'<"),line("'>"))<CR>
 nnoremap <silent> [BlankLine]    <Nop>
 " search {{{3
@@ -75,10 +76,14 @@ vnoremap <Space>w           :<C-u>w<CR>
 " nnoremap dl                d2l
 nnoremap yy                 y$
 " nnoremap cc                 :<C-u>for i in range(1,v:count1)<Bar>call setline(line('.'),'')<Bar>endfor<CR>
-nnoremap <silent> <C-p>     "0p
-nnoremap <silent> <C-S-p>   "0P
-nnoremap J gJ
-nnoremap gJ J
+if empty(maparg('<C-P>'))
+    nnoremap <silent> <C-p>     "0p
+    nnoremap <silent> <C-S-p>   "0P
+endif
+if empty(maparg('<C-P>'))
+    nnoremap J gJ
+    nnoremap gJ J
+endif
 " funcion key
 nnoremap <silent> <F11>              :<C-u>tabnew<bar>e $vim\file1<bar>silent! exe 'vs $vim\file2'<bar>windo setl bt=nofile noswf noma nobl bh=wipe<bar>windo au WinEnter <bufer> silent! e!<CR>
 vnoremap <silent> <F11>              :<C-u>tabnew<bar>e $vim\file1<bar>silent! exe 'vs $vim\file2'<bar>windo setl bt=nofile noswf noma nobl bh=wipe<bar>windo au WinEnter <bufer> silent! e!<CR>
@@ -104,15 +109,17 @@ augroup END
 " vnoremap :        ;
 " vmap     q;       q:
 " move {{{3
-vnoremap j        gj
-vnoremap k        gk
-vnoremap gj       j
-vnoremap gk       k
+vnoremap <silent> j        gj
+vnoremap <silent> k        gk
+vnoremap <silent> gj       j
+vnoremap <silent> gk       k
 " switch move {{{4
 vnoremap <silent> <Space>sm  :<C-u>call SwitchMoves()<CR>gv
 " else {{{3
-vnoremap <silent> <C-p>   "0p
-vnoremap <silent> <C-S-p> "0P
+if empty(maparg('<C-P>'))
+    vnoremap <silent> <C-p>     "0p
+    vnoremap <silent> <C-S-p>   "0P
+endif
 " don't show message and don't set v:errmsg
 try
     vunmap <C-X>

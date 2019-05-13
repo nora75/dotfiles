@@ -1,0 +1,99 @@
+# [[plugins]] # yes
+# repo = 'Shougo/neosnippet.vim'
+# depends = ['neosnippet-snippets', 'context_filetype.vim']
+# on_event = 'InsertCharPre'
+# on_ft = 'snippet'
+# hook_source = '''
+#     imap <silent>L     <Plug>(neosnippet_jump_or_expand)
+#     smap <silent>L     <Plug>(neosnippet_jump_or_expand)
+#     xmap <silent>L     <Plug>(neosnippet_expand_target)
+#     let g:neosnippet#enable_snipmate_compatibility = 1
+#     let g:neosnippet#enable_completed_snippet = 1
+#     " let g:neosnippet#enable_complete_done = 1
+#     let g:neosnippet#expand_word_boundary = 1
+#     " let g:snippets_dir = '~/.vim/snippets/,~/.vim/bundle/snipmate/snippets/'
+#     let g:neosnippet#snippets_directory = '~/.vim/snippets'
+# '''
+
+# [[plugins]] # ?
+# repo = 'Shougo/neosnippet-snippets'
+
+# [[plugins]]
+# repo = 'thinca/vim-quickrun'
+# hook_source = '''
+# let g:quickrun_no_default_key_mappings = 1
+# " convert markdown to html with pandoc and open it
+# let g:quickrun_config = {}
+# let g:quickrun_config.markdown = {
+#             \ 'type': 'markdown/pandoc',
+#             \ 'cmdopt': '-s --toc -f markdown_github -w html5 -c ..\.vim\css\origin.css -c ..\vim\css\github.css -T Preview',
+#             \ 'outputter': 'browser'
+#             \ }
+# let g:quickrun_config.java = {
+#             \ 'exec' : 'javarun -encoding=UTF8 %s',
+#             \ }
+# nnoremap <Space>r :<C-u>QuickRun<CR>
+# '''
+
+# [[plugins]]
+# repo = 'nora75/DatabaseTerminal'
+# on_cmd = 'DbTerminal'
+# hook_source = ```
+# let g:DatabaseTerminal_dbName = 'MySQL'
+# let g:DatabaseTerminal_dbRunCom = 'mysql'
+# let g:DatabaseTerminal_dbRunArgs = '-u root -p'
+# let g:DatabaseTerminal_folder = 'D:\Users\NORA\Documents\学校\DB\DB応用\提出\'
+# let g:DatabaseTerminal_fileName = 'k017c1066平野'
+# let g:DatabaseTerminal_outputFormat = 'docx'
+# let g:DatabaseTerminal_outputExtens = 'docx'
+# let g:DatabaseTerminal_autodate = 1
+# let g:DatabaseTerminal_autoOutput = 1
+# let g:DatabaseTerminal_dontStop = 1
+# aug Dbterminal
+#     au!
+#     au FileType DbTerminal SubUnmap
+#     au FileType DbTerminal au BufWinLeave <buffer> SubRemap
+# aug END
+# ```
+
+# [[plugins]]
+# repo = 'h1mesuke/textobj-wiw'
+# depends = 'vim-textobj-user'
+# on_map = {n = '<Plug>'}
+
+# [[plugins]]
+# repo = 'osyo-manga/vim-textobj-blockwise'
+# depends = 'vim-textobj-user'
+# on_source = 'vim-textobj-user'
+
+# [[plugins]]
+# repo = 'kana/vim-textobj-function'
+# depends = 'vim-textobj-user'
+# on_source = 'vim-textobj-user'
+
+# [[plugins]]
+# repo = 'junegunn/goyo.vim'
+
+# [[plugins]]
+# repo = 'junegunn/limelight.vim'
+
+# [[plugins]]
+# repo = 'vim-scripts/AdvancedSorters'
+
+# [[plugins]]
+# repo = 'gyim/vim-boxdraw'
+
+# [[plugins]]
+# repo = 'osyo-manga/vim-sound'
+
+# [[plugins]]
+# repo = 'skywind3000/vim-keysound'
+
+# [[plugins]]
+# repo = 'kshenoy/vim-signature'
+
+# [[plugins]]
+# repo = 'mbbill/undotree'
+
+# [[plugins]]
+# repo = 'tyru/stoptypofile.vim'

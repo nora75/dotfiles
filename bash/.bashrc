@@ -120,13 +120,20 @@ fi
 
 set -o vi
 export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$PATH
+export PATH="$PATH:$GOPATH/bin"
+export DARTPATH=$HOME/dart
+export FLUTTERPATH=$HOME/dart/flutter
+export PATH="$PATH:$FLUTTERPATH/bin"
 export EDITOR=nvim
 alias sl='ls'
 alias vim='nvim'
+alias n='nvim'
 
 if [ "`id -u`" -eq 0 ]; then
     export PS1="\[\033[1;32m\]\D{%m/%d %H:%m} (｡･ω･)<\uだよー。 \[\033[0m\]\w # "
 else
     export PS1="\[\033[1;36m\]\D{%m/%d %H:%m} (*'-')<\uだよー。\[\033[0m\]\[\033[37m\]\w\[\033[0m\] $ "
 fi
+export PATH="~/.rbenv/bin:$PATH"
+export PATH="~/metasploit-framework:$PATH"
+eval "$(rbenv init -)"

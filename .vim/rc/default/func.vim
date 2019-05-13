@@ -79,11 +79,30 @@ call add(g:DontFull,['）',')'])
 call add(g:DontFull,['：',':'])
 call add(g:DontFull,['　',' '])
 call add(g:DontFull,['−','-'])
+call add(g:DontFull,['，',','])
 " call add(g:DontFull,[÷,\/])
 let g:DontFullDel = []
 call add(g:DontFullDel,'「')
 call add(g:DontFullDel,'」')
+call add(g:DontFullDel,'＜')
+call add(g:DontFullDel,'＞')
 " Use {{{1
+" AddLastDoubleSpaces() {{{2
+" The funciton for markdown
+" Add double spaces to line's last
+func! AddLastDoubleSpaces()
+    if &ft != 'markdown' || &ft != 'md' || &ft != 'mdown'
+        return
+    endif
+    let save = s:saveState()
+    let line = getline(line('.'))
+    if line !~ '\M^#\+\s\*' && line !~ '\M^\(\(\[+*-]\{1}\)\|\(\d\+.\)\s\)\+' && line !~ '\M^|\.\*|$' && line !~ '\M^>' && line !~ '\M^`\{3}' && line !~ '\M</\?details>'
+        substitute/\M\s\*$/  /
+    endif
+    call s:restoreState()
+    return
+endfunc
+
 " AppendBlankLine() {{{2
 " append blank line at all selected lines
 func! AppendBlankLine(l1,l2,apl)
@@ -96,6 +115,80 @@ func! AppendBlankLine(l1,l2,apl)
         exe 'norm' ';append'.repeat("\<CR>",apline)."\<ESC>"
         exe 'norm' apline+1.'j'
     endfor
+    return
+endfunc
+
+" Apchar() {{{2
+" Append Included between the specified characters end of line
+function! Apchar(st,en,...) abort
+    let startpoint = match(getline(line('.')),a:st)
+    let length = match(getline(line('.')),a:en) - startpoint
+    let line = getline(line('.'))
+    let string = strcharpart(getline(line('.')),startpoint,lenght)
+    if a:0
+        let line .= string
+    else
+        let line = string . line
+    endif
+    call setline(line('.'),line)
+endfunc
+" ChangeAlp(case,text) {{{2
+" function for :ChangeUpper and ChangeLower
+" change all argument text in current buffer to uppercase 
+func! ChangeAlp(case,text,...) abort
+    let backsearch = @/
+    if a:1 != a:2
+        let line1 = a:1
+        let line2 = a:2
+    else
+        let line1 = 1
+        let line2 = line('$')
+    endif
+    let text = split(a:text,'\s')
+    if len(text) > 1
+        let text = map(text,'"\\(".v:val."\\)"')
+        let text = join(text,'\|')
+    else
+        let text = join(text)
+    endif
+    if a:case ==# 'u'
+        let to = 'upper'
+    else
+        let to = 'lower'
+    endif
+    exe line1.','.line2.'s/'.text.'/\=to'.to.'(submatch(0))/g'
+    let @/ = backsearch 
+    return
+endfunc
+
+"  ComcapOut(com) {{{2
+" function for debugging
+" do command and catch output in commandline
+func! ComcapOut(com) abort
+    let result = GetComOut(a:com)
+    if result == -1
+        echo 'No such a command'
+        return
+    endif
+    new
+    let fname = 'output:'.a:com
+    silent file`=fname`
+    silent put =result
+    silent 1d_
+    setl nonu bt=nofile noswf nobl bh=wipe ft=vim
+    return
+endfunc
+
+" DoBuffer(ncom) {{{2
+" do normal comamnd and restore window view and last search if buffer isn't
+" null
+func! DoBuffer(ncom)
+    let save = s:saveState()
+    let lines = getline(0,line('$'))
+    if lines != ['']
+        call DoNormal(a:ncom)
+    endif
+    call s:restoreState(save,'se')
     return
 endfunc
 
@@ -113,53 +206,25 @@ func! DoNormal(ncom)
     return
 endfunction
 
-" DoBuffer(ncom) {{{2
-" do normal comamnd and restore window view and last search if buffer isn't
-" null
-func! DoBuffer(ncom)
+" DontFullWidth() {{{2
+" function for :DontFullWidth
+" substitute full width(em) characters to half width characters
+fun! DontFullWidth()
+    let change = []
+    let del = []
     let save = s:saveState()
-    let lines = getline(0,line('$'))
-    if lines != ['']
-        call DoNormal(a:ncom)
-    endif
+    for c in g:DontFull
+        call add(change,c[0])
+        exe 'silent! %substitute/'.c[0].'/'.c[1].'/g'
+    endfor
+    for c in g:DontFullDel
+        call add(del,c)
+        exe 'silent! %substitute/'.c.'//g'
+    endfor
+    silent! w
     call s:restoreState(save,'se')
-    return
-endfunc
-
-" SwitchMoves() {{{2
-" move mode switch over buffer
-" use error occuer when don't map yet
-func! SwitchMoves()
-    try
-        nunmap j
-        nunmap k
-        nunmap gj
-        nunmap gk
-        vunmap j
-        vunmap k
-        vunmap gj
-        vunmap gk
-    catch
-        nnoremap j gj
-        nnoremap k gk
-        nnoremap gj j
-        nnoremap gk k
-        vnoremap j gj
-        vnoremap k gk
-        vnoremap gj j
-        vnoremap gk k
-    endtry
-    return
-endfunc
-
-" SwitchASave {{{2
-" switch auto save
-func! SwitchASave() abort
-    if !exists('#Myau#ASave')
-        au! Myau CursorHold
-    else
-        au Myau CursorHold <buffer> if !&ro|silent! w|endif
-    endif
+    echo 'change' join(map(change,'"''".v:val."''"'),',') 'to half width'
+    echo 'delete' join(map(del,'"''".v:val."''"'),',')
     return
 endfunc
 
@@ -187,45 +252,6 @@ func! Effc()
     catch
         exe 'e '.fi
     endtry
-    return
-endfunc
-
-" Windo({command}...) {{{2
-" function to :Windom
-" separate all args with bar
-func! WinDo(...) abort
-    let cuwinid = win_getid()
-    windo let b:saved_state = s:saveState()
-    let do = ''
-    for cm in a:000
-        let do .= ' '.cm
-    endfor
-    exe 'silent! windo '.do
-    redraw!
-    windo exe 'if do!~#''\Mnorm\[^z]\*z\[^hjkl]''|call s:restoreState(b:saved_state,''sf'')|endif'
-    try
-        echom b:saved_state
-        windo unlet b:saved_state
-    catch
-    endtry
-    call win_gotoid(cuwinid)
-endfunc
-
-"  ComcapOut(com) {{{2
-" function for debugging
-" do command and catch output in commandline
-func! ComcapOut(com) abort
-    let result = GetComOut(a:com)
-    if result == -1
-        echo 'No such a command'
-        return
-    endif
-    new
-    let fname = 'output:'.a:com
-    silent file`=fname`
-    silent put =result
-    silent 1d_
-    setl nonu bt=nofile noswf nobl bh=wipe ft=vim
     return
 endfunc
 
@@ -265,17 +291,6 @@ func! GetScNum(scname) abort
     endif
     redraw
     return result[0]
-endfunc
-
-" NewScratch() {{{2
-" function for memo
-" make new buffer for memo
-" you can select open buffer command
-func! NewScratch(type,line1,line2,...) abort
-    let lines = getline(line1,line2)
-    exe a:type.'new'
-    silent file \#MEMO
-    setl nonu bt=nofile noswf nobl bh=wipe ft=vim
 endfunc
 
 " GetComCont(com) {{{2
@@ -321,201 +336,41 @@ func! GetComOut(com) abort
     return result
 endfunc
 
-" g:ReloadVimrc.ret() {{{2
-" save current window and restore current winodow after reloading .vimrc
-let g:ReloadVimrc = {'data':['let g:ReloadVimrc.save_winid = win_getid()','source $MYVIMRC','set nohlsearch','call win_gotoid(g:ReloadVimrc.save_winid)'],'save_winid':''}
-func! g:ReloadVimrc.ret() abort
-    return join(self.data,'|')
-endfunc
-
-" ChangeAlp(case,text) {{{2
-" function for :ChangeUpper
-" change all argument text in current buffer to uppercase 
-func! ChangeAlp(case,text,...) abort
-    let backsearch = @/
-    if a:1 != a:2
-        let line1 = a:1
-        let line2 = a:2
-    else
-        let line1 = 1
-        let line2 = line('$')
+" Kud() {{{2
+" function of make new tabbuffer of kudryavka
+function! Kud() abort
+    if &ft != 'kud'
+        tabe
+        silent file \#Kudryavka
+        setl nonu bt=nofile noswf nobl bh=wipe ft=vim nobackup noundofile
+        set ft=kud
+        call append(0,s:Kudo)
+        d_
     endif
-    let text = split(a:text,'\s')
-    if len(text) > 1
-        let text = map(text,'"\\(".v:val."\\)"')
-        let text = join(text,'\|')
-    else
-        let text = join(text)
-    endif
-    if a:case ==# 'u'
-        let to = 'upper'
-    else
-        let to = 'lower'
-    endif
-    exe line1.','.line2.'s/'.text.'/\=to'.to.'(submatch(0))/g'
-    let @/ = backsearch 
+    13
+    norm zt
     return
 endfunc
 
-" DontFullWidth() {{{2
-" function for :DontFullWidth
-" substitute full width(em) characters to half width characters
-fun! DontFullWidth()
-    let change = []
-    let del = []
-    let save = s:saveState()
-    for c in g:DontFull
-        call add(change,c[0])
-        exe 'silent! %substitute/'.c[0].'/'.c[1].'/g'
-    endfor
-    for c in g:DontFullDel
-        call add(del,c)
-        exe 'silent! %substitute/'.c.'//g'
-    endfor
-    silent! w
-    call s:restoreState(save,'se')
-    echo 'change' join(map(change,'"''".v:val."''"'),',') 'to half width'
-    echo 'delete' join(map(del,'"''".v:val."''"'),',')
-    return
+" NewScratch() {{{2
+" function for memo
+" make new buffer for memo
+" you can select open buffer command
+func! NewScratch(type,line1,line2,...) abort
+    let lines = getline(line1,line2)
+    exe a:type.'new'
+    silent file \#MEMO
+    setl nonu bt=nofile noswf nobl bh=wipe ft=vim
 endfunc
 
-" AddLastDoubleSpaces() {{{2
-" The funciton for markdown
-" Add double spaces to line's last
-func! AddLastDoubleSpaces()
-    if &ft != 'markdown' || &ft != 'md' || &ft != 'mdown'
-        return
-    endif
-    let save = s:saveState()
-    let line = getline(line('.'))
-    if line !~ '\M^#\+\s\*' && line !~ '\M^\(\(\[+*-]\{1}\)\|\(\d\+.\)\s\)\+' && line !~ '\M^|\.\*|$' && line !~ '\M^>' && line !~ '\M^`\{3}' && line !~ '\M</\?details>'
-        substitute/\M\s\*$/  /
-    endif
-    call s:restoreState()
+" Rel() {{{2
+" Reload current file and restore window view
+function! Rel() abort
+    let view = winsaveview()
+    silent! e!
+    call winrestview(view)
     return
 endfunc
-
-" SortFold(line1,line2) {{{2
-" get lines of selected area and sort by fold header
-" only support marker
-" func! SortFold(line1,line2,bang) abort
-"     if a:line1 ==# a:line2 || &fdm !=# 'marker'
-"         return
-"     endif
-"     let marks = matchstr(&fmr,'\M\.\+\ze,')
-"     let marke = matchstr(&fmr,'\M,\zs\.\+')
-"     let lines = getline(a:line1,a:line2)
-"     let back_lines = deepcopy(lines)
-"     call append(line('$'),marks.marke)
-"     call append(line('$'),lines)
-"     call append(line('$'),back_lines)
-"     call filter(lines,'v:val =~# "\\M'.marks.'\\d\\*"')
-"     " call filter(lines,'v:val =~# "\\M'.marks.'\\d\\*" || v:val =~# "\\M'.marke.'"')
-"     let back_sortlines = deepcopy(lines)
-"     let sortlist = {}
-"     let i = 0
-"     let k = 0
-"     let foldcount = { 1 : 0 , 2 : 0 , 3 : 0 , 4 : 0 , 5 : 0 , 6 : 0 , 7 : 0 , 8 : 0 , 9 : 0 , 10 : 0 , 11 : 0 , 12 : 0 , 13 : 0 , 14 : 0 , 15 : 0 , 16 : 0 , 17 : 0 , 18 : 0 , 19 : 0 , 20 : 0 }
-"     let t = ''
-"     while i < len(lines)
-"         let n = matchstr(lines[i],'M'.marks.'\(\d\*\)')
-"         while v:true
-"             if lines[i] =~# '\M'.marks.'\d\*'
-"                 if n >= matchstr(lines[i],'M'.marks.'\(\d\*\)')
-"                     let k += 1
-"                     if k > 0
-"                         continue
-"                     else
-"                         break
-"                     endif
-"                 endif
-"             elseif lines[i] =~# '\M'.marks
-"             endif
-"             let i += 1
-"         endwhile
-"     endwhile
-"     for d in lines
-"         try
-"             exe 'call extend(sortlist.'.matchstr(d,'\d').',[d])'
-"         catch
-"             exe 'call extend(sortlist,{'.matchstr(d,'\d').':[d]})'
-"         endtry
-"     endfor
-" let i = 0
-" let list = []
-" let innerlist = []
-" while i < len(back_lines)
-"     if lines[i] !~ '{{{\d'
-"         let i += 1
-"         continue
-"     else
-"         let n = matchstr(lines[i],mark.'\(\d\)')
-"         while true
-"             if lines[i] =~# mark.'\d' || lines[i] =~# mark
-"                 if n >= matchstr(lines[i],mark.'\(\d\)')
-"                     let k -= 1
-"                     if k > 0
-"                         continue
-"                     else
-"                         break
-"                     endif
-"                 endif
-"             endif
-"             let i += 1
-"         endwhile
-"     endif
-" endwhile
-" if len()
-"     return
-" endif
-" return
-" endfunc
-
-" " GetCurrentFoldPath() abort
-" " get current fold line by directory style
-" func! GetCurrentFoldPath() abort
-"     if &fdm !=# 'marker'
-"         return
-"     endif
-"     let gcfp = ''
-"     let marks = matchstr(&fmr,'\M\.\+\ze,')
-"     let marke = matchstr(&fmr,'\M,\zs\.\+')
-"     let lines = getline(a:line1,a:line2)
-"     let back_lines = deepcopy(lines)
-"     call filter(lines,'v:val =~# "\\M'.marks.'\\d\\*" || v:val =~# "\\M'.marke.'"')
-"     let back_sortlines = deepcopy(lines)
-"     let sortlist = {}
-"     let i = 0
-"     let k = 0
-"     let count = { 1 : 0 , 2 : 0 , 3 : 0 , 4 : 0 , 5 : 0 , 6 : 0 , 7 : 0 , 8 : 0 , 9 : 0 , 10 : 0 , 11 : 0 , 12 : 0 , 13 : 0 , 14 : 0 , 15 : 0 , 16 : 0 , 17 : 0 , 18 : 0 , 19 : 0 , 20 : 0 }
-"     let t = ''
-"     while i < len(lines)
-"         let n = matchstr(lines[i],'M'.marks.'\(\d\*\)')
-"         while true
-"             if lines[i] =~# '\M'.marks.'\d\*'
-"                 if n >= matchstr(lines[i],'M'.marks.'\(\d\*\)')
-"                     let k += 1
-"                     if k > 0
-"                         continue
-"                     else
-"                         break
-"                     endif
-"                 endif
-"             elseif lines[i] =~# '\M'.marks
-"             endif
-"             let i += 1
-"         endwhile
-"     endwhile
-"     for d in lines
-"         try
-"             exe 'call extend(sortlist.'.matchstr(d,'\d').',[d])'
-"         catch
-"             exe 'call extend(sortlist,{'.matchstr(d,'\d').':[d]})'
-"         endtry
-"     endfor
-"     echo gcfp
-"     return
-" endfunc
 
 " Reformatmd(line1,line2) {{{2
 " reformat current buffer of markdown file
@@ -689,45 +544,193 @@ function! s:lastWindow()
 endfunction
 command! -nargs=0 LastWindow call s:lastWindow()
 
-" Kud() {{{2
-" function of make new tabbuffer of kudryavka
-function! Kud() abort
-    if &ft != 'kud'
-        tabe
-        silent file \#Kudryavka
-        setl nonu bt=nofile noswf nobl bh=wipe ft=vim nobackup noundofile
-        set ft=kud
-        call append(0,s:Kudo)
-        d_
-    endif
-    13
-    norm zt
+" SortFold(line1,line2) {{{2
+" get lines of selected area and sort by fold header
+" only support marker
+" func! SortFold(line1,line2,bang) abort
+"     if a:line1 ==# a:line2 || &fdm !=# 'marker'
+"         return
+"     endif
+"     let marks = matchstr(&fmr,'\M\.\+\ze,')
+"     let marke = matchstr(&fmr,'\M,\zs\.\+')
+"     let lines = getline(a:line1,a:line2)
+"     let back_lines = deepcopy(lines)
+"     call append(line('$'),marks.marke)
+"     call append(line('$'),lines)
+"     call append(line('$'),back_lines)
+"     call filter(lines,'v:val =~# "\\M'.marks.'\\d\\*"')
+"     " call filter(lines,'v:val =~# "\\M'.marks.'\\d\\*" || v:val =~# "\\M'.marke.'"')
+"     let back_sortlines = deepcopy(lines)
+"     let sortlist = {}
+"     let i = 0
+"     let k = 0
+"     let foldcount = { 1 : 0 , 2 : 0 , 3 : 0 , 4 : 0 , 5 : 0 , 6 : 0 , 7 : 0 , 8 : 0 , 9 : 0 , 10 : 0 , 11 : 0 , 12 : 0 , 13 : 0 , 14 : 0 , 15 : 0 , 16 : 0 , 17 : 0 , 18 : 0 , 19 : 0 , 20 : 0 }
+"     let t = ''
+"     while i < len(lines)
+"         let n = matchstr(lines[i],'M'.marks.'\(\d\*\)')
+"         while v:true
+"             if lines[i] =~# '\M'.marks.'\d\*'
+"                 if n >= matchstr(lines[i],'M'.marks.'\(\d\*\)')
+"                     let k += 1
+"                     if k > 0
+"                         continue
+"                     else
+"                         break
+"                     endif
+"                 endif
+"             elseif lines[i] =~# '\M'.marks
+"             endif
+"             let i += 1
+"         endwhile
+"     endwhile
+"     for d in lines
+"         try
+"             exe 'call extend(sortlist.'.matchstr(d,'\d').',[d])'
+"         catch
+"             exe 'call extend(sortlist,{'.matchstr(d,'\d').':[d]})'
+"         endtry
+"     endfor
+" let i = 0
+" let list = []
+" let innerlist = []
+" while i < len(back_lines)
+"     if lines[i] !~ '{{{\d'
+"         let i += 1
+"         continue
+"     else
+"         let n = matchstr(lines[i],mark.'\(\d\)')
+"         while true
+"             if lines[i] =~# mark.'\d' || lines[i] =~# mark
+"                 if n >= matchstr(lines[i],mark.'\(\d\)')
+"                     let k -= 1
+"                     if k > 0
+"                         continue
+"                     else
+"                         break
+"                     endif
+"                 endif
+"             endif
+"             let i += 1
+"         endwhile
+"     endif
+" endwhile
+" if len()
+"     return
+" endif
+" return
+" endfunc
+
+" " GetCurrentFoldPath() abort
+" " get current fold line by directory style
+" func! GetCurrentFoldPath() abort
+"     if &fdm !=# 'marker'
+"         return
+"     endif
+"     let gcfp = ''
+"     let marks = matchstr(&fmr,'\M\.\+\ze,')
+"     let marke = matchstr(&fmr,'\M,\zs\.\+')
+"     let lines = getline(a:line1,a:line2)
+"     let back_lines = deepcopy(lines)
+"     call filter(lines,'v:val =~# "\\M'.marks.'\\d\\*" || v:val =~# "\\M'.marke.'"')
+"     let back_sortlines = deepcopy(lines)
+"     let sortlist = {}
+"     let i = 0
+"     let k = 0
+"     let count = { 1 : 0 , 2 : 0 , 3 : 0 , 4 : 0 , 5 : 0 , 6 : 0 , 7 : 0 , 8 : 0 , 9 : 0 , 10 : 0 , 11 : 0 , 12 : 0 , 13 : 0 , 14 : 0 , 15 : 0 , 16 : 0 , 17 : 0 , 18 : 0 , 19 : 0 , 20 : 0 }
+"     let t = ''
+"     while i < len(lines)
+"         let n = matchstr(lines[i],'M'.marks.'\(\d\*\)')
+"         while true
+"             if lines[i] =~# '\M'.marks.'\d\*'
+"                 if n >= matchstr(lines[i],'M'.marks.'\(\d\*\)')
+"                     let k += 1
+"                     if k > 0
+"                         continue
+"                     else
+"                         break
+"                     endif
+"                 endif
+"             elseif lines[i] =~# '\M'.marks
+"             endif
+"             let i += 1
+"         endwhile
+"     endwhile
+"     for d in lines
+"         try
+"             exe 'call extend(sortlist.'.matchstr(d,'\d').',[d])'
+"         catch
+"             exe 'call extend(sortlist,{'.matchstr(d,'\d').':[d]})'
+"         endtry
+"     endfor
+"     echo gcfp
+"     return
+" endfunc
+
+" SwitchMoves() {{{2
+" move mode switch over buffer
+" use error occuer when don't map yet
+func! SwitchMoves()
+    try
+        nunmap j
+        nunmap k
+        nunmap gj
+        nunmap gk
+        vunmap j
+        vunmap k
+        vunmap gj
+        vunmap gk
+    catch
+        nnoremap j gj
+        nnoremap k gk
+        nnoremap gj j
+        nnoremap gk k
+        vnoremap j gj
+        vnoremap k gk
+        vnoremap gj j
+        vnoremap gk k
+    endtry
     return
 endfunc
 
-" Rel() {{{2
-" Reload current file and restore window view
-function! Rel() abort
-    let view = winsaveview()
-    silent! e!
-    call winrestview(view)
-    return
-endfunc
-
-" Apchar() {{{2
-" Append Included between the specified characters end of line
-function! Apchar(st,en,...) abort
-    let startpoint = match(getline(line('.')),a:st)
-    let length = match(getline(line('.')),a:en) - startpoint
-    let line = getline(line('.'))
-    let string = strcharpart(getline(line('.')),startpoint,lenght)
-    if a:0
-        let line .= string
+" SwitchASave {{{2
+" switch auto save
+func! SwitchASave() abort
+    if !exists('#Myau#ASave')
+        au! Myau CursorHold
     else
-        let line = string . line
+        au Myau CursorHold <buffer> if !&ro|silent! w|endif
     endif
-    call setline(line('.'),line)
+    return
 endfunc
+
+" Windo({command}...) {{{2
+" function to :Windom
+" separate all args with bar
+func! WinDo(...) abort
+    let cuwinid = win_getid()
+    windo let b:saved_state = s:saveState()
+    let do = ''
+    for cm in a:000
+        let do .= ' '.cm
+    endfor
+    exe 'silent! windo '.do
+    redraw!
+    windo exe 'if do!~#''\Mnorm\[^z]\*z\[^hjkl]''|call s:restoreState(b:saved_state,''sf'')|endif'
+    try
+        echom b:saved_state
+        windo unlet b:saved_state
+    catch
+    endtry
+    call win_gotoid(cuwinid)
+endfunc
+
+" g:ReloadVimrc.ret() {{{2
+" save current window and restore current winodow after reloading .vimrc
+let g:ReloadVimrc = {'data':['let g:ReloadVimrc.save_winid = win_getid()','source $MYVIMRC','set nohlsearch','call win_gotoid(g:ReloadVimrc.save_winid)'],'save_winid':''}
+func! g:ReloadVimrc.ret() abort
+    return join(self.data,'|')
+endfunc
+
 " base functions{{{1
 " s:saveState() {{{2
 " save current buffer's state and return it
@@ -838,44 +841,6 @@ function! s:mapfunc(key,val)
     return { a:key : matchstr(a:val,'\M^\s\*\d\+:\s\(\.\+\\\)\+\zs\.\+$') }
 endfunc
 
-" don't use{{{1
-" misc {{{2
-" move mode switch only current buffer with augroup {{{3
-" augroup SwitchMoves
-"     au!
-"     au BufEnter * call SwitchMoves()
-" augroup END
-
-" fu! SwitchMoves()
-"     try
-"         call exists(b:SwitchMoves)
-"     catch
-"         let b:SwitchMoves = 0
-"     finally
-"         if b:SwitchMoves == 0
-"             nnoremap j gj
-"             nnoremap k gk
-"             nnoremap gj j
-"             nnoremap gk k
-"             vnoremap j gj
-"             vnoremap k gk
-"             vnoremap gj j
-"             vnoremap gk k
-"             let b:SwitchMoves = 1
-"         else
-"             nunmap j
-"             nunmap k
-"             nunmap gj
-"             nunmap gk
-"             vunmap j
-"             vunmap k
-"             vunmap gj
-"             vunmap gk
-"             let b:SwitchMoves = 0
-"         endif
-"     endtry
-" endfunc
-" }}}
 " }}}
 
 " vim: set fdm=marker fdl=1 fmr={{{,}}} : }}}

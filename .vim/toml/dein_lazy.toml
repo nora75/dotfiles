@@ -1,0 +1,310 @@
+[[plugins]] # yes
+repo = 'tpope/vim-repeat'
+on_event = 'CursorHold'
+
+[[plugins]] # yes
+repo = 'Shougo/echodoc.vim'
+on_event = 'CompleteDone'
+hook_post_source = '''
+let g:echodoc#type = 'virtual'
+call echodoc#enable()
+'''
+
+[[plugins]] # yes
+repo = 'vimtaku/hl_matchit.vim'
+depends = 'matchit'
+on_event = 'CursorHold'
+hook_post_source = '''
+source ~/.vim/rc/plugin/hl_matchit.vim
+HiMatchOn
+'''
+
+[[plugins]] # yes
+repo = 'kana/vim-smartchr'
+on_event = 'InsertCharPre'
+hook_source = '''
+  inoremap <expr> , smartchr#loop(',', ', ',' , ')
+  inoremap <expr> =
+        \ search('\(&\<bar><bar>\<bar>+\<bar>-\<bar>/\<bar>>\<bar><\) \%#', 'bcn')? '<bs>= '
+        \ : search('\(*\<bar>!\)\%#', 'bcn') ? '= '
+        \ : smartchr#loop('=', ' = ', ' == ')
+  augroup Myau
+    " Substitute .. into -> .
+    autocmd FileType c,cpp inoremap <buffer> <expr> .
+          \ smartchr#loop('.', '->', '...')
+    autocmd FileType vim inoremap <buffer> <expr> .
+          \ smartchr#loop('.', ' . ', '..', '...')
+    autocmd FileType lisp,scheme,clojure inoremap <buffer> <expr> = =
+  augroup END
+'''
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+on_cmd = 'Denite'
+hook_add = 'source ~/.vim/rc/plugin/denite.vim'
+
+[[plugins]] # yes
+repo = 'Shougo/deoplete.nvim'
+depends = 'context_filetype.vim'
+on_event = 'InsertEnter'
+hook_source = '''
+call deoplete#enable()
+'''
+
+[[plugins]] # yes
+repo  = 'Shougo/neco-vim'
+on_source = 'deoplete.nvim'
+
+[[plugins]] # yes
+repo = 'Shougo/neco-syntax'
+on_source = 'deoplete.nvim'
+
+[[plugins]] # yes
+repo  = 'ujihisa/neco-look'
+on_source = 'deoplete.nvim'
+
+[[plugins]] # yes
+repo = 'simeji/winresizer'
+on_map = {nv = '<Plug>'}
+hook_add = '''
+nnoremap <C-e> :<C-u>WinResizerStartMove<CR>
+vnoremap <C-e> :<C-u>WinResizerStartMove<CR>
+'''
+hook_source = '''
+let g:winresizer_finish_with_escape = 1
+let g:winresizer_keycode_finish = 32 " <Space>
+'''
+
+[[plugins]] # yes
+repo = 'osyo-manga/vim-anzu'
+on_map = {n = '<Plug>'}
+hook_add = '''
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap \# <Plug>(anzu-sharp-with-echo)
+nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
+'''
+
+# statusline
+# set statusline=%{anzu#search_status()}
+
+# can't recognize on * or # with echo no match pattern
+# map n nzzzv with anzu mode
+# nnoremap <expr> n anzu#mode#mapexpr("n", "", "zzzv")
+# map N Nzzzv with anzu mode
+# nnoremap <expr> N anzu#mode#mapexpr("N", "", "zzzv")
+
+[[plugins]] # yes
+repo = 'kannokanno/previm'
+on_cmd = 'PrevimOpen'
+depends = 'open-browser.vim'
+
+[[plugins]] # yes
+repo = 'tyru/open-browser.vim'
+
+[[plugins]] # yes
+repo = 'alvan/vim-closetag'
+on_ft = ['html','markdown']
+hook_add = '''
+" filenames like *.xml, *.html, *.xhtml, ...
+" These are the file extensions where this plugin is enabled.
+"
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.md,'
+
+" filenames like *.xml, *.xhtml, ...
+" This will make the list of non-closing tags self-closing in the specified files.
+"
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
+
+" filetypes like xml, html, xhtml, ...
+" These are the file types where this plugin is enabled.
+"
+let g:closetag_filetypes = 'html,xhtml,phtml,markdown'
+
+" filetypes like xml, xhtml, ...
+" This will make the list of non-closing tags self-closing in the specified files.
+"
+let g:closetag_xhtml_filetypes = 'xhtml,jsx'
+
+" integer value [0|1]
+" This will make the list of non-closing tags case-sensitive (e.g. `<Link>` will be closed while `<link>` won't.)
+"
+let g:closetag_emptyTags_caseSensitive = 1
+
+" dict
+" Disables auto-close if not in a "valid" region (based on filetype)
+"
+let g:closetag_regions = {
+    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+    \ 'javascript.jsx': 'jsxRegion',
+    \ }
+
+" Shortcut for closing tags, default is '>'
+"
+let g:closetag_shortcut = '>'
+
+" Add > at current position without closing the current tag, default is ''
+"
+let g:closetag_close_shortcut = '<leader>>'
+'''
+
+[[plugins]] # yes
+repo = 'dhruvasagar/vim-table-mode'
+on_ft = 'markdown'
+hook_add = '''
+let g:table_mode_map_prefix = '<Space>,'
+let g:table_mode_corner_corner = '|'
+let g:table_mode_corner='|'
+let g:table_mode_auto_align = 1
+'''
+
+[[plugins]] # yes
+repo = 'nora75/markdowntable'
+on_ft = 'markdown'
+on_map = {nv = '<Plug>'}
+hook_add = '''
+nmap <Space>tm <Plug>(markdowntable_tablemake)
+vmap <Space>tm <Plug>(markdowntable_tablemake)
+nmap <Space>ta <Plug>(markdowntable_totableall)
+vmap <Space>ta <Plug>(markdowntable_totableall)
+nmap <Space>tt <Plug>(markdowntable_toggletable)
+vmap <Space>tt <Plug>(markdowntable_toggletable)
+'''
+
+[[plugins]] # yes
+repo = 'fatih/vim-go'
+on_ft = 'go'
+hook_add = '''
+let g:go_fmt_command = "goimports"
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['vet']
+let g:go_def_mapping_enabled = 0
+'''
+
+[[plugins]] # yes
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+[[plugins]] # yes
+repo = 'kana/vim-operator-replace'
+depends = 'vim-operator-user'
+on_map = '<Plug>'
+hook_add = '''
+map _  <Plug>(operator-replace)
+'''
+
+[[plugins]] # yes
+repo = 'jiangmiao/auto-pairs'
+on_event = 'InsertEnter'
+
+[[plugins]] # maybe yes
+repo = 'thosakwe/vim-flutter'
+on_ft = 'dart'
+
+[[plugins]] # yes
+repo = 'dart-lang/dart-vim-plugin'
+on_ft = 'dart'
+
+[[plugins]] # yes
+repo = 'rhysd/vim-operator-surround'
+depends = 'vim-operator-user'
+on_map = {'nv' = '<Plug>'}
+hook_add = '''
+nmap <silent>sa <Plug>(operator-surround-append)
+nmap <silent>sd <Plug>(operator-surround-delete)
+nmap <silent>sr <Plug>(operator-surround-replace)
+nmap <silent>sc <Plug>(operator-surround-replace)
+vmap <silent>sa <Plug>(operator-surround-append)
+vmap <silent>sd <Plug>(operator-surround-delete)
+vmap <silent>sr <Plug>(operator-surround-replace)
+vmap <silent>sc <Plug>(operator-surround-replace)
+let g:operator#surround#blocks =
+                \ {
+                \   '-' : [
+                \       { 'block' : ['(', ')'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['(', ')', 'b'] },
+                \       { 'block' : ['[', ']'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['[', ']'] },
+                \       { 'block' : ['{', '}'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['{', '}'] },
+                \       { 'block' : ['<', '>'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['<', '>'] },
+                \       { 'block' : ['"', '"'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['"'] },
+                \       { 'block' : ["'", "'"], 'motionwise' : ['char', 'line', 'block'], 'keys' : ["'"] },
+                \       { 'block' : ['`', '`'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['`'] },
+                \       { 'block' : ["```\n", "\n```"], 'motionwise' : ['line'], 'keys' : ['`'] },
+                \       { 'block' : ['( ', ' )'], 'motionwise' : ['char', 'line', 'block'], 'keys' : [' (', ' )'] },
+                \       { 'block' : ['{ ', ' }'], 'motionwise' : ['char', 'line', 'block'], 'keys' : [' {', ' }'] },
+                \       { 'block' : ['  ', '  '], 'motionwise' : ['char', 'line', 'block'], 'keys' : [' '] },
+                \   ],
+\ }
+'''
+
+[[plugins]] # yes
+repo = 'Shougo/context_filetype.vim'
+on_event = 'CursorHold'
+
+[[plugins]] # yes
+repo = 'osyo-manga/vim-precious'
+depends = 'context_filetype.vim'
+on_source = 'context_filetype.vim'
+hook_source = '''
+aug precious
+    au!
+    au User PreciousFileType :echo precious#context_filetype()
+aug END
+let g:context_filetype#search_offset = 300
+'''
+
+[[plugins]] # yes
+repo = 'LeafCage/yankround.vim'
+on_map = {nx = '<Plug>'}
+hook_add = '''
+nmap p <Plug>(yankround-p)
+xmap p <Plug>(yankround-p)
+nmap P <Plug>(yankround-P)
+nmap gp <Plug>(yankround-gp)
+xmap gp <Plug>(yankround-gp)
+nmap gP <Plug>(yankround-gP)
+xmap gP <Plug>(yankround-gp)
+if !empty(maparg('<C-P>'))
+    try
+        nunmap <C-p>
+        vunmap <C-p>
+        nunmap <C-S-p>
+        vunmap <C-S-p>
+        nunmap <C-P>
+        vunmap <C-P>
+    catch
+    endtry
+endif
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
+'''
+hook_source = '''
+let g:yankround_max_history = 100
+let g:yankround_use_region_hl = 1
+'''
+
+[[plugins]] # yes
+repo = 'osyo-manga/vim-operator-stay-cursor'
+depends = 'vim-operator-user'
+on_map = '<Plug>'
+hook_add = '''
+map y <Plug>(operator-stay-cursor-yank)
+map gu <Plug>(operator-stay-cursor-gu)
+map gU <Plug>(operator-stay-cursor-gU)
+map g~ <Plug>(operator-stay-cursor-g~)
+'''
+
+[[plugins]] # yes
+repo = 'osyo-manga/vim-jplus'
+on_map = {'nv' = '<Plug>'}
+hook_add = '''
+nmap J <Plug>(jplus-input)<CR>
+nmap gJ <Plug>(jplus-input)
+nmap g<Space>J <Plug>(jplus-input-with-space)
+nmap <Space>J <Plug>(jplus-input)<Space><CR>
+vmap J <Plug>(jplus-input)<CR>
+vmap gJ <Plug>(jplus-input)
+vmap g<Space>J <Plug>(jplus-input-with-space)
+vmap <Space>J <Plug>(jplus-input)<Space><CR>
+'''
+

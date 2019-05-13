@@ -130,15 +130,15 @@ function! CreateMarkdownHyperLinkWithTitle()
     try
         let title = GetWebPageTitle(url)
     catch
-        echo "Can't get title.Please input title by yourself."
+        echo "Can't get url title.Please input by yourself."
         call <SID>createMarkdownHyperLink()
         return
     endtry
-    execute 'normal viuS)i['.title.']'
+    execute 'normal viusa(i['.title.']'
     let @a = areg
 endfunction
 function! s:createMarkdownHyperLink()
-    execute 'normal viuS)i[]'
+    execute 'normal viusa(i[]'
     startinsert
 endfunction
 " mappings {{{2
