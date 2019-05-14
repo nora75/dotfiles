@@ -1,6 +1,6 @@
 " Author: NORA(nora75)
 " Since: 2017 SEP 1?
-" Last Changes: 2018 Feb 27
+" Last Changes: 2019 May 14
 
 if has('vim_starting')
     if &rtp !~ expand('~/.vim/') && &rtp !~? '\~/\.vim/'

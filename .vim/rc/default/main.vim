@@ -19,11 +19,7 @@ set backspace=2
 set ignorecase
 set smartcase
 set whichwrap=b,s,h,l
-if has('unnamed')
-    set clipboard=unnamed
-elseif has('unnamedplus')
-    set clipboard=unnamed,unnamedplus
-endif
+set clipboard=unnamed,unnamedplus
 set wrapscan
 set linebreak
 set nobackup
