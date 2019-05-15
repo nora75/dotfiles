@@ -1,8 +1,8 @@
-[[plugins]] # yes
+[[plugins]]
 repo = 'tpope/vim-repeat'
 on_event = 'CursorHold'
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'Shougo/echodoc.vim'
 on_event = 'CompleteDone'
 hook_post_source = '''
@@ -10,7 +10,7 @@ let g:echodoc#type = 'virtual'
 call echodoc#enable()
 '''
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'vimtaku/hl_matchit.vim'
 depends = 'matchit'
 on_event = 'CursorHold'
@@ -19,7 +19,7 @@ source ~/.vim/rc/plugin/hl_matchit.vim
 HiMatchOn
 '''
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'kana/vim-smartchr'
 on_event = 'InsertCharPre'
 hook_source = '''
@@ -43,7 +43,7 @@ repo = 'Shougo/denite.nvim'
 on_cmd = 'Denite'
 hook_add = 'source ~/.vim/rc/plugin/denite.vim'
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'Shougo/deoplete.nvim'
 depends = 'context_filetype.vim'
 on_event = 'InsertEnter'
@@ -51,19 +51,19 @@ hook_source = '''
 call deoplete#enable()
 '''
 
-[[plugins]] # yes
+[[plugins]]
 repo  = 'Shougo/neco-vim'
 on_source = 'deoplete.nvim'
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'Shougo/neco-syntax'
 on_source = 'deoplete.nvim'
 
-[[plugins]] # yes
+[[plugins]]
 repo  = 'ujihisa/neco-look'
 on_source = 'deoplete.nvim'
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'simeji/winresizer'
 on_map = {nv = '<Plug>'}
 hook_add = '''
@@ -75,7 +75,7 @@ let g:winresizer_finish_with_escape = 1
 let g:winresizer_keycode_finish = 32 " <Space>
 '''
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'osyo-manga/vim-anzu'
 on_map = {n = '<Plug>'}
 hook_add = '''
@@ -95,15 +95,15 @@ nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
 # map N Nzzzv with anzu mode
 # nnoremap <expr> N anzu#mode#mapexpr("N", "", "zzzv")
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'kannokanno/previm'
 on_cmd = 'PrevimOpen'
 depends = 'open-browser.vim'
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'tyru/open-browser.vim'
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'alvan/vim-closetag'
 on_ft = ['html','markdown']
 hook_add = '''
@@ -149,7 +149,7 @@ let g:closetag_shortcut = '>'
 let g:closetag_close_shortcut = '<leader>>'
 '''
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'dhruvasagar/vim-table-mode'
 on_ft = 'markdown'
 hook_add = '''
@@ -159,7 +159,7 @@ let g:table_mode_corner='|'
 let g:table_mode_auto_align = 1
 '''
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'nora75/markdowntable'
 on_ft = 'markdown'
 on_map = {nv = '<Plug>'}
@@ -172,7 +172,7 @@ nmap <Space>tt <Plug>(markdowntable_toggletable)
 vmap <Space>tt <Plug>(markdowntable_toggletable)
 '''
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'fatih/vim-go'
 on_ft = 'go'
 hook_add = '''
@@ -182,11 +182,11 @@ let g:go_metalinter_autosave_enabled = ['vet']
 let g:go_def_mapping_enabled = 0
 '''
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'kana/vim-operator-replace'
 depends = 'vim-operator-user'
 on_map = '<Plug>'
@@ -194,7 +194,7 @@ hook_add = '''
 map _  <Plug>(operator-replace)
 '''
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'jiangmiao/auto-pairs'
 on_event = 'InsertEnter'
 
@@ -202,11 +202,11 @@ on_event = 'InsertEnter'
 repo = 'thosakwe/vim-flutter'
 on_ft = 'dart'
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'dart-lang/dart-vim-plugin'
 on_ft = 'dart'
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'rhysd/vim-operator-surround'
 depends = 'vim-operator-user'
 on_map = {'nv' = '<Plug>'}
@@ -237,11 +237,11 @@ let g:operator#surround#blocks =
 \ }
 '''
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'Shougo/context_filetype.vim'
 on_event = 'CursorHold'
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'osyo-manga/vim-precious'
 depends = 'context_filetype.vim'
 on_source = 'context_filetype.vim'
@@ -253,7 +253,7 @@ aug END
 let g:context_filetype#search_offset = 300
 '''
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'LeafCage/yankround.vim'
 on_map = {nx = '<Plug>'}
 hook_add = '''
@@ -283,7 +283,7 @@ let g:yankround_max_history = 100
 let g:yankround_use_region_hl = 1
 '''
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'osyo-manga/vim-operator-stay-cursor'
 depends = 'vim-operator-user'
 on_map = '<Plug>'
@@ -294,7 +294,7 @@ map gU <Plug>(operator-stay-cursor-gU)
 map g~ <Plug>(operator-stay-cursor-g~)
 '''
 
-[[plugins]] # yes
+[[plugins]]
 repo = 'osyo-manga/vim-jplus'
 on_map = {'nv' = '<Plug>'}
 hook_add = '''
