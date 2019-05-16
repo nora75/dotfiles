@@ -21,8 +21,8 @@ nnoremap <Space>            <Nop>
 vnoremap <Space>            <Nop>
 nnoremap <BS>               <Nop>
 vnoremap <BS>               <Nop>
-" nnoremap <CR>               <Nop>
-" vnoremap <CR>               <Nop>
+nnoremap <CR>               <Nop>
+vnoremap <CR>               <Nop>
 " double <Space>
 " nnoremap <silent> <Space><Space>     :<C-u>echo SwitchColorScheme()<CR>
 " vnoremap <silent> <Space><Space>     :<C-u>echo SwitchColorScheme()<CR>
@@ -53,7 +53,6 @@ nnoremap <silent> [BlankLine] :<C-u>set opfunc=<SID>blankLineOp<CR>g@
 nnoremap <silent> [BlankLine]d :<C-u>call <SID>blankLineOp('visual',line('.'),line('.'))<CR>
 nnoremap <silent> [BlankLine]l :<C-u>call <SID>blankLineOp('visual',line('.'),line('.'))<CR>
 vnoremap <silent> <Space>d :<C-u>call <SID>blankLineOp('visual',line("'<"),line("'>"))<CR>
-nnoremap <silent> [BlankLine]    <Nop>
 " search {{{3
 nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
 nnoremap /          :<C-u>set hlsearch<CR>/

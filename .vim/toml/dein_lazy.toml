@@ -250,7 +250,7 @@ aug precious
     au!
     au User PreciousFileType :echo precious#context_filetype()
 aug END
-let g:context_filetype#search_offset = 300
+let g:context_filetype#search_offset = 100
 '''
 
 [[plugins]]
