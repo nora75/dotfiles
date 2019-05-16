@@ -2,6 +2,10 @@
 repo = 'w0rp/ale'
 
 [[plugins]]
+repo = 'rhysd/committia.vim'
+on_ft = 'gitcommit'
+
+[[plugins]]
 repo = 'airblade/vim-gitgutter'
 
 [[plugins]]
@@ -72,7 +76,7 @@ repo = 'vim-jp/vimdoc-ja'
 
 [[plugins]]
 repo = 'rcmdnk/vim-markdown'
-hook_source = '''
+hook_add = '''
 source ~/.vim/rc/plugin/markdown.vim
 '''
 
