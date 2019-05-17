@@ -187,7 +187,7 @@ repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
 [[plugins]]
-repo = 'udalov/kotlin.vim'
+repo = 'udalov/kotlin-vim'
 on_ft = 'kotlin'
 
 [[plugins]]
