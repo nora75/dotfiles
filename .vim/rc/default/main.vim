@@ -74,5 +74,9 @@ if has('multi_byte_ime') || has('xim')
     "set imactivatekey=s-space
     " endif
 endif
+if has('nvim') && has('win32')
+    let g:python_host_prog='C:\Python27\python.exe'
+    let g:python3_host_prog='C:\Python37\python.exe'
+endif
 
 " vim: set fdm=marker fdl=1 fmr={{{,}}} :
