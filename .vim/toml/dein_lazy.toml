@@ -3,6 +3,12 @@ repo = 'tpope/vim-repeat'
 on_event = 'CursorHold'
 
 [[plugins]]
+repo = 'glidenote/memolist.vim'
+on_hook = '''
+let g:memolist_path = "/home/g-admin/wiki/memo"
+'''
+
+[[plugins]]
 repo = 'Shougo/echodoc.vim'
 on_event = 'CompleteDone'
 hook_post_source = '''
@@ -201,6 +207,9 @@ map _  <Plug>(operator-replace)
 [[plugins]]
 repo = 'jiangmiao/auto-pairs'
 on_event = 'InsertEnter'
+# '''
+# let g:AutoPairs = {'```', '`': '`', '"': '"', '{': '}', '''': '''', '(': ')', '''''''': '''''''', '[': ']', '"""': '"""'}
+# '''
 
 [[plugins]] # maybe yes
 repo = 'thosakwe/vim-flutter'
@@ -255,6 +264,8 @@ aug precious
     au User PreciousFileType :echo precious#context_filetype()
 aug END
 let g:context_filetype#search_offset = 100
+omap ip <Plug>(textobj-precious-i)
+vmap ip <Plug>(textobj-precious-i)
 '''
 
 [[plugins]]

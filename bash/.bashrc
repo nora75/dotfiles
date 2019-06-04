@@ -120,6 +120,7 @@ fi
 
 set -o vi
 export GOPATH=$HOME/go
+export GO111MODULE=on
 export PATH="$PATH:$GOPATH/bin"
 export DARTPATH=$HOME/dart
 export FLUTTERPATH=$HOME/dart/flutter

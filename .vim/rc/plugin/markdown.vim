@@ -15,6 +15,7 @@ let g:vim_markdown_folding_level = 2
 func! Mmap() abort
     let bid = win_getid(winnr())
     Toc
+    echom 'Mmap'
     exe 'nnoremap <buffer><silent> <Space>mt :<C-u>call win_gotoid('.bid.')<CR>'
     exe 'vnoremap <buffer><silent> <Space>mt :<C-u>call win_gotoid('.bid.')<CR>'
     call win_gotoid(bid)
@@ -27,6 +28,7 @@ func! s:toc() abort
     nnoremap <buffer><silent> [Markdown]t :<C-u>Toc<CR>
     vnoremap <buffer><silent> [Markdown]t :<C-u>Toc<CR>
     let b:Markdown_IsToc = Mmap()
+    echom 's:toc'
     return
 endfunc
 
@@ -89,6 +91,7 @@ func! Markd()
     vnoremap <buffer><silent> [Markdown]d :HeaderDecrease<CR>
     let b:Markdown_AuToc = 0
     let b:Markdown_IsToc = 0
+    echom 'Markd'
 endfunc
 
 " TocToggle {{{ 2
@@ -107,6 +110,7 @@ func! MarkToc()
         aug END
         let b:Markdown_AuToc = 1
     endif
+    echom 'MarkToc'
     return
 endfunc
 

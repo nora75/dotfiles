@@ -21,8 +21,8 @@ nnoremap <Space>            <Nop>
 vnoremap <Space>            <Nop>
 nnoremap <BS>               <Nop>
 vnoremap <BS>               <Nop>
-nnoremap <CR>               <Nop>
-vnoremap <CR>               <Nop>
+" nnoremap <CR>               <Nop>
+" vnoremap <CR>               <Nop>
 " double <Space>
 " nnoremap <silent> <Space><Space>     :<C-u>echo SwitchColorScheme()<CR>
 " vnoremap <silent> <Space><Space>     :<C-u>echo SwitchColorScheme()<CR>

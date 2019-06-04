@@ -55,7 +55,7 @@ repo = 'tpope/vim-commentary'
 
 [[plugins]]
 repo = 'kana/vim-submode'
-hook_source = 'source ~/.vim/rc/plugin/submode.vim'
+hook_add = 'source ~/.vim/rc/plugin/submode.vim'
 
 [[plugins]]
 repo = 'kana/vim-operator-user'
