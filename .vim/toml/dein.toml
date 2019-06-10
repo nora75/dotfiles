@@ -35,7 +35,7 @@ repo = 'Shougo/neomru.vim'
 [[plugins]]
 repo = 'scrooloose/nerdtree'
 on_cmd = 'NERDTreeToggle'
-hook_source = '''
+hook_add = '''
 nnoremap [nerd] <Nop>
 nmap <Space>f [nerd]
 nnoremap <silent>[nerd]t :<C-u>NERDTreeToggle<CR>
@@ -55,6 +55,7 @@ repo = 'tpope/vim-commentary'
 
 [[plugins]]
 repo = 'kana/vim-submode'
+on_func = 'submode#enter_with()'
 hook_add = 'source ~/.vim/rc/plugin/submode.vim'
 
 [[plugins]]

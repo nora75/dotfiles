@@ -62,7 +62,7 @@ augroup markdown " {{{2
     " auto update when modified
     " maybe use timer is better(best)
     " an error occured!!
-    " autocmd BufRead *.markdown au CursorHold <buffer><silent> if &modified|echom 'mod'|call <SID>updateToc()|endif
+    autocmd BufRead *.markdown au CursorHold <buffer><silent> if &modified|echom 'mod'|call <SID>updateToc()|endif
 
     " preview by OpenBrowser
     " mapping on html files
@@ -75,23 +75,26 @@ augroup END
 " mapping function {{{1
 " Markd() {{{3
 func! Markd()
-    " normal {{{3
-    nnoremap <buffer> [Markdown]  <Nop>
-    nmap     <buffer> <Space>m    [Markdown]
-    nnoremap <buffer><silent> [Markdown]t :<C-u>call <SID>toc()<CR>
-    nnoremap <buffer><silent> [Markdown]i :<C-u>HeaderIncrease<CR>
-    nnoremap <buffer><silent> [Markdown]d :<C-u>HeaderDecrease<CR>
-    nnoremap <buffer><silent> [Markdown]w :<C-u>call MarkToc()<CR>
-    nnoremap <buffer> <Space>p    :<C-u>PrevimOpen<CR>
-    " visual {{{3
-    vnoremap <buffer> [Markdown]  <Nop>
-    vmap     <buffer> <Space>m    [Markdown]
-    vnoremap <buffer><silent> [Markdown]t :<C-u>call <SID>toc()<CR>
-    vnoremap <buffer><silent> [Markdown]i :HeaderIncrease<CR>
-    vnoremap <buffer><silent> [Markdown]d :HeaderDecrease<CR>
-    let b:Markdown_AuToc = 0
-    let b:Markdown_IsToc = 0
-    echom 'Markd'
+    " Don't map when already mapped
+    if exists('b:Markdown_AuToc')
+        " normal {{{3
+        nnoremap <buffer> [Markdown]  <Nop>
+        nmap     <buffer> <Space>m    [Markdown]
+        nnoremap <buffer><silent> [Markdown]t :<C-u>call <SID>toc()<CR>
+        nnoremap <buffer><silent> [Markdown]i :<C-u>HeaderIncrease<CR>
+        nnoremap <buffer><silent> [Markdown]d :<C-u>HeaderDecrease<CR>
+        nnoremap <buffer><silent> [Markdown]w :<C-u>call MarkToc()<CR>
+        nnoremap <buffer> <Space>p    :<C-u>PrevimOpen<CR>
+        " visual {{{3
+        vnoremap <buffer> [Markdown]  <Nop>
+        vmap     <buffer> <Space>m    [Markdown]
+        vnoremap <buffer><silent> [Markdown]t :<C-u>call <SID>toc()<CR>
+        vnoremap <buffer><silent> [Markdown]i :HeaderIncrease<CR>
+        vnoremap <buffer><silent> [Markdown]d :HeaderDecrease<CR>
+        let b:Markdown_AuToc = 0
+        let b:Markdown_IsToc = 0
+        echom 'Markd'
+    endif
 endfunc
 
 " TocToggle {{{ 2

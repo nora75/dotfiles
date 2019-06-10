@@ -104,7 +104,7 @@ command! -nargs=0 ReloadVimrc exe g:ReloadVimrc.ret()
 
 " :Renamefn {{{3
 " rename current file
-command! -nargs=1 Renamefn exe 'file '.<f-args>.'.'.expand('%:t:e')|call delete(expand('#'))|filetype detect|w
+command! -nargs=1 Renamefn exe 'file '.expand('%:h/').<f-args>.'.'.expand('%:t:e')|call delete(expand('#'))|filetype detect|w
 
 " :Renamefe {{{3
 " change current filename entension
@@ -112,7 +112,7 @@ command! -nargs=1 Renamefe exe 'file '.expand('%:r').'.'.<f-args>|call delete(ex
 
 " :Renamefa {{{3
 " change current filename entension
-command! -nargs=1 Renamefa exe 'file '.<f-args>|call delete(expand('#'))|filetype detect|w
+command! -nargs=1 Renamefa exe 'file '.expand('%:h/').<f-args>|call delete(expand('#'))|filetype detect|w
 
 " :SortFold cant use {{{2
 " sort folded texts of selected area
