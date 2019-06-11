@@ -76,7 +76,7 @@ augroup END
 " Markd() {{{3
 func! Markd()
     " Don't map when already mapped
-    if exists('b:Markdown_AuToc')
+    if !exists('b:Markdown_AuToc')
         " normal {{{3
         nnoremap <buffer> [Markdown]  <Nop>
         nmap     <buffer> <Space>m    [Markdown]

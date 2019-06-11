@@ -1,5 +1,11 @@
 [[plugins]]
 repo = 'w0rp/ale'
+hook_add = '''
+aug my_ale
+    au!
+    au FileType markdown let b:ale_enabled = 0
+aug END
+'''
 
 [[plugins]]
 repo = 'rhysd/committia.vim'

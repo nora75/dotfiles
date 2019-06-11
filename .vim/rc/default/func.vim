@@ -80,6 +80,7 @@ call add(g:DontFull,['：',':'])
 call add(g:DontFull,['　',' '])
 call add(g:DontFull,['−','-'])
 call add(g:DontFull,['，',','])
+call add(g:DontFull,['／','/'])
 " call add(g:DontFull,[÷,\/])
 let g:DontFullDel = []
 call add(g:DontFullDel,'「')
