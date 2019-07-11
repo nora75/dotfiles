@@ -219,6 +219,9 @@ on_ft = 'dart'
 repo = 'dart-lang/dart-vim-plugin'
 on_ft = 'dart'
 
+# [[plugins]]
+# repo = 'sheerun/vim-polyglot'
+# 
 [[plugins]]
 repo = 'rhysd/vim-operator-surround'
 depends = 'vim-operator-user'

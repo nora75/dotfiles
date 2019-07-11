@@ -24,7 +24,11 @@ set wrapscan
 set linebreak
 set nobackup
 set modeline
-set showtabline=2
+if &lines > 2
+    set showtabline=2
+else
+    set showtabline=0
+endif
 set fdm=marker
 set noswf
 set noshowmode
