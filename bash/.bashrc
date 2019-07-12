@@ -145,3 +145,6 @@ fi
 export PATH="~/.rbenv/bin:$PATH"
 export PATH="~/metasploit-framework:$PATH"
 eval "$(rbenv init -)"
+
+[[ $- != *i* ]] && return
+[[ -z "$TMUX" ]] && exec tmux
