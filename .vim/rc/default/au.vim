@@ -28,7 +28,7 @@ endfunc
 " s:unlock(co) abort {{{2
 " unlock current tmp file
 func! s:unlock(co) abort
-    %d_
+    " %d_
     exe 'let s:tmpn.file'.a:co.'.lock = v:false'
     return
 endfunc
@@ -95,6 +95,7 @@ func! s:Pdftxt() abort
     exe 'silent call string(system('.string(vexe).'))'
     try
         exe 'silent e' tmpn
+        au Myau VimLeavePre call s:delalltmp()
     catch
         return -1
     endtry
@@ -136,9 +137,8 @@ aug Myau " {{{2
     au!
     " read pdf {{{3
     au FileType pdf call s:rec()
-    au VimLeavePre call s:delalltmp()
     au FileType vim au BufWritePre <buffer> call DoBuffer('gg=G')
-    au VimEnter cd ~
+    " au VimEnter cd ~
     au BufWrite *.bat if &ff != 'dos' | setl ff=dos fenc=sjis | endif
     au BufWrite *.sh if &ff != 'unix' | setl ff=unix fenc=utf-8 | endif
 aug END
