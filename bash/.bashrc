@@ -16,8 +16,10 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
+HISTSIZE=10000
 HISTFILESIZE=2000
+HISTIGNORE="fg*:bg*:history*:cd*"
+HISTTIMEFORMAT='%Y%m%d %T'
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -136,6 +138,11 @@ export EDITOR=nvim
 alias sl='ls'
 alias vim='nvim'
 alias n='nvim'
+alias nv='nvim'
+alias nvi='nvim'
+alias neov='nvim'
+alias neovi='nvim'
+alias neovim='nvim'
 
 if [ "`id -u`" -eq 0 ]; then
     export PS1="\[\033[1;32m\]\D{%m/%d %H:%m} (｡･ω･)<\uだよー。 \[\033[0m\]\w # "
