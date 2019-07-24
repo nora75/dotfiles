@@ -1,0 +1,18 @@
+[user]
+	username = nora75
+	email = k017c1066@it-neec.jp
+	name = Hirano Tatsuya
+[alias]
+	st = status
+	ch = checkout
+	br = branch
+	cm = commit
+	co = commit
+	df = diff
+	gr = grep
+	pl = pull
+	ps = push
+	fe = fetch
+[core]
+	editor = nvim
+	quotepath = false
