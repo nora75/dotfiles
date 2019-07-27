@@ -140,4 +140,6 @@ else
 fi
 export PATH="~/.rbenv/bin:$PATH"
 export PATH="~/metasploit-framework:$PATH"
-eval "$(rbenv init -)"
+if type "rbenv" > /dev/null 2>&1; then
+    eval "$(rbenv init -)"
+fi
