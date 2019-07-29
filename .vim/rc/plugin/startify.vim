@@ -107,12 +107,12 @@ let g:startify_session_before_save = [
   \ 'echo "Cleaning up before saving.."',
   \ 'let g:session_backup_tabpagenr = tabpagenr()',
   \ 'silent! tabdo NERDTreeClose',
-  \ 'tabdo windo exe "ccl | lcl"',
+  \ 'tabdo windo if &buftype == "quickfix" || &buftype == "locationlist" | lclose | endif',
   \ 'exe "tabn" g:session_backup_tabpagenr'
   \ ]
-let g:startify_session_savecmds = [
-  \ 'silent! NERDTreeFocus'
-  \ ]
+" let g:startify_session_savecmds = [
+"   \ 'silent! NERDTreeFocus'
+"   \ ]
 
 " custom header {{{2
 let s:StartifyHeader = { 'data' : [
