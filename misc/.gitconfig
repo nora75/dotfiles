@@ -4,15 +4,26 @@
 	name = Hirano Tatsuya
 [alias]
 	st = status
+	ts = status
+	sta = status
+	stat = status
+	statu = status
 	ch = checkout
+	check = checkout
 	br = branch
 	cm = commit
 	co = commit
+	com = commit
+	comm = commit
+	commi = commit
 	df = diff
+	di = diff
 	gr = grep
 	pl = pull
 	ps = push
+	pu = push
 	fe = fetch
+	fet = fetch
 [core]
 	editor = nvim
 	quotepath = false
