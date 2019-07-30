@@ -186,6 +186,7 @@ let g:go_fmt_command = "goimports"
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_autosave_enabled = ['golint','errcheck']
 let g:go_def_mapping_enabled = 0
+let g:go_jump_to_error = 0
 '''
 
 [[plugins]]
@@ -219,36 +220,13 @@ on_ft = 'dart'
 repo = 'dart-lang/dart-vim-plugin'
 on_ft = 'dart'
 
+# [[plugins]]
+# repo = 'sheerun/vim-polyglot'
+# 
+
 [[plugins]]
-repo = 'rhysd/vim-operator-surround'
-depends = 'vim-operator-user'
-on_map = {'nv' = '<Plug>'}
-hook_add = '''
-nmap <silent>sa <Plug>(operator-surround-append)
-nmap <silent>sd <Plug>(operator-surround-delete)
-nmap <silent>sr <Plug>(operator-surround-replace)
-nmap <silent>sc <Plug>(operator-surround-replace)
-vmap <silent>sa <Plug>(operator-surround-append)
-vmap <silent>sd <Plug>(operator-surround-delete)
-vmap <silent>sr <Plug>(operator-surround-replace)
-vmap <silent>sc <Plug>(operator-surround-replace)
-let g:operator#surround#blocks =
-                \ {
-                \   '-' : [
-                \       { 'block' : ['(', ')'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['(', ')', 'b'] },
-                \       { 'block' : ['[', ']'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['[', ']'] },
-                \       { 'block' : ['{', '}'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['{', '}'] },
-                \       { 'block' : ['<', '>'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['<', '>'] },
-                \       { 'block' : ['"', '"'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['"'] },
-                \       { 'block' : ["'", "'"], 'motionwise' : ['char', 'line', 'block'], 'keys' : ["'"] },
-                \       { 'block' : ['`', '`'], 'motionwise' : ['char', 'line', 'block'], 'keys' : ['`'] },
-                \       { 'block' : ["```\n", "\n```"], 'motionwise' : ['line'], 'keys' : ['`'] },
-                \       { 'block' : ['( ', ' )'], 'motionwise' : ['char', 'line', 'block'], 'keys' : [' (', ' )'] },
-                \       { 'block' : ['{ ', ' }'], 'motionwise' : ['char', 'line', 'block'], 'keys' : [' {', ' }'] },
-                \       { 'block' : ['  ', '  '], 'motionwise' : ['char', 'line', 'block'], 'keys' : [' '] },
-                \   ],
-\ }
-'''
+repo = 'tpope/vim-surround'
+on_event = 'CursorHold'
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'

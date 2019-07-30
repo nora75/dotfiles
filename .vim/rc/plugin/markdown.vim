@@ -141,11 +141,11 @@ function! CreateMarkdownHyperLinkWithTitle()
         call <SID>createMarkdownHyperLink()
         return
     endtry
-    execute 'normal viusa(i['.title.']'
+    execute 'normal viuS(i['.title.']'
     let @a = areg
 endfunction
 function! s:createMarkdownHyperLink()
-    execute 'normal viusa(i[]'
+    execute 'normal viuS(i[]'
     startinsert
 endfunction
 " mappings {{{2

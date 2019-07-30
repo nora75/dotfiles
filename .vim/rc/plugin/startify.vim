@@ -103,10 +103,16 @@ let g:startify_change_to_dir = 1
 " let g:startify_session_number = 10
 " let g:startify_session_sort = 1
 " let g:startify_session_persistence = 1
-" let g:startify_session_before_save = [
-" \ 'echo "Cleaning up before saving.."',
-" \ 'silent! NERDTreeTabsClose'
-" \ ]
+let g:startify_session_before_save = [
+  \ 'echo "Cleaning up before saving.."',
+  \ 'let g:session_backup_tabpagenr = tabpagenr()',
+  \ 'silent! tabdo NERDTreeClose',
+  \ 'tabdo windo exe "ccl | lcl"',
+  \ 'exe "tabn" g:session_backup_tabpagenr'
+  \ ]
+let g:startify_session_savecmds = [
+  \ 'silent! NERDTreeFocus'
+  \ ]
 
 " custom header {{{2
 let s:StartifyHeader = { 'data' : [

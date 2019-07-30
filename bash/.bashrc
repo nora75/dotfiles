@@ -16,8 +16,10 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
+HISTSIZE=10000
 HISTFILESIZE=2000
+HISTIGNORE="fg*:bg*:history*:cd*"
+HISTTIMEFORMAT='%Y%m%d %T'
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -118,6 +120,10 @@ fi
 
 # my config
 
+# transfer.sh
+transfer() { if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi
+tmpfile=$( mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile; else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; } 
+
 set -o vi
 export GOPATH=$HOME/go
 export GO111MODULE=on
@@ -132,6 +138,11 @@ export EDITOR=nvim
 alias sl='ls'
 alias vim='nvim'
 alias n='nvim'
+alias nv='nvim'
+alias nvi='nvim'
+alias neov='nvim'
+alias neovi='nvim'
+alias neovim='nvim'
 
 if [ "`id -u`" -eq 0 ]; then
     export PS1="\[\033[1;32m\]\D{%m/%d %H:%m} (｡･ω･)<\uだよー。 \[\033[0m\]\w # "
@@ -143,3 +154,6 @@ export PATH="~/metasploit-framework:$PATH"
 if type "rbenv" > /dev/null 2>&1; then
     eval "$(rbenv init -)"
 fi
+export DISPALY=localhost:0.0
+[[ $- != *i* ]] && return
+[[ -z "$TMUX" ]] && exec tmux
