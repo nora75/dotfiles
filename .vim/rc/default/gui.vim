@@ -22,7 +22,7 @@ if has('gui') " options for gvim {{2
     " Maximize when starting gui vim
     augroup gui
         au!
-        au GUIEnter * simalt ~x
+        au GUIEnter * silent! simalt ~x
     augroup END
 
     syntax enable
