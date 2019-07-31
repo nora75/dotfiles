@@ -155,5 +155,7 @@ if type "rbenv" > /dev/null 2>&1; then
     eval "$(rbenv init -)"
 fi
 export DISPALY=localhost:0.0
-[[ $- != *i* ]] && return
-[[ -z "$TMUX" ]] && exec tmux
+if type "tmux" > /dev/null 2>&1; then
+    [[ $- != *i* ]] && return
+    [[ -z "$TMUX" ]] && exec tmux
+fi
