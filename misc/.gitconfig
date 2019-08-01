@@ -3,6 +3,7 @@
 	email = k017c1066@it-neec.jp
 	name = Hirano Tatsuya
 [alias]
+    ad = add
 	st = status
 	ts = status
 	sta = status
