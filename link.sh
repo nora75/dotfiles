@@ -2,7 +2,7 @@
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 cd
 ln -fs $SCRIPT_DIR/.vimrc ~/.vimrc
-ln -fs $SCRIPT_DIR/.vim ~/.vIm
+ln -fs $SCRIPT_DIR/.vim ~/.vim
 ln -fs $SCRIPT_DIR/misc/.tmux.conf ~/.tmux.conf
 ln -fs $SCRIPT_DIR/misc/.gitconfig ~/.gitconfig
 ln -fs $SCRIPT_DIR/bash/.bashrc ~/.bashrc

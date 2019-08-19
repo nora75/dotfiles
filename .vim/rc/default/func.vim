@@ -87,6 +87,16 @@ call add(g:DontFullDel,'「')
 call add(g:DontFullDel,'」')
 call add(g:DontFullDel,'＜')
 call add(g:DontFullDel,'＞')
+
+" test {{{1
+" return diff list of current git wiki dir's pages on wiki home
+func! Diff_list()
+    v/^-/d_
+    %s/^-\s\[\(.*\.md\)].*$/\1/g
+    %!sort
+    return
+endfunc
+
 " Use {{{1
 " AddLastDoubleSpaces() {{{2
 " The funciton for markdown

@@ -92,6 +92,7 @@ nnoremap <silent> <F3>               :<C-u>Windom norm zR<CR>
 vnoremap <silent> <F3>               :<C-u>Windom norm zR<CR>
 nnoremap <silent> <F5>               :<C-u>call Rel()<CR>
 vnoremap <silent> <F5>               :<C-u>call Rel()<CR>
+cnoremap  e!                         :<C-u>call Rel()<CR>
 nnoremap <silent> <F12>              :<C-u>tabe $MYVIMRC<CR>
 vnoremap <silent> <F12>              :<C-u>tabe $MYVIMRC<CR>
 
