@@ -301,3 +301,12 @@ vmap g<Space>J <Plug>(jplus-input-with-space)
 vmap <Space>J <Plug>(jplus-input)<Space><CR>
 '''
 
+[[plugins]]
+repo = 'pearofducks/ansible-vim'
+hook_add = '''
+augroup ansible
+  autocmd!
+  autocmd BufNewFile,BufRead */roles/*.yml setfiletype yaml.ansible
+  autocmd BufNewFile,BufRead */ansible/*/*.yml setfiletype yaml.ansible
+augroup END
+'''

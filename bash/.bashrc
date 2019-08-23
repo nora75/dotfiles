@@ -19,7 +19,7 @@ shopt -s histappend
 HISTSIZE=10000
 HISTFILESIZE=2000
 HISTIGNORE="fg*:bg*:history*:cd*"
-HISTTIMEFORMAT='%Y%m%d %T'
+#HISTTIMEFORMAT='%Y%m%d %T '
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -144,6 +144,7 @@ alias neov='nvim'
 alias neovi='nvim'
 alias neovim='nvim'
 alias eixt='exit'
+alias exti='exit'
 
 if [ "`id -u`" -eq 0 ]; then
     export PS1="\[\033[1;32m\]\D{%m/%d %H:%m} (｡･ω･)<\uだよー。 \[\033[0m\]\w # "
