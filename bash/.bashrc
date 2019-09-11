@@ -145,6 +145,7 @@ alias neovi='nvim'
 alias neovim='nvim'
 alias eixt='exit'
 alias exti='exit'
+alias ansible-palybook='ansible-playbook'
 
 if [ "`id -u`" -eq 0 ]; then
     export PS1="\[\033[1;32m\]\D{%m/%d %H:%m} (｡･ω･)<\uだよー。 \[\033[0m\]\w # "
