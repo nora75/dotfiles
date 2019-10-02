@@ -128,12 +128,12 @@ set -o vi
 export GOPATH=$HOME/go
 export GO111MODULE=on
 export PATH="$PATH:$GOPATH/bin"
-export DARTPATH=$HOME/dart
-export FLUTTERPATH=$DARTPATH/flutter
-export DARTSDKPATH=$FLUTTERPATH/bin/cache/dart-sdk
-export PATH="$PATH:$FLUTTERPATH/bin"
-export PATH="$PATH:$FLUTTERPATH/.pub-cache/bin"
-export PATH="$PATH:$DARTSDKPATH/bin"
+# export DARTPATH=$HOME/dart
+# export FLUTTERPATH=$DARTPATH/flutter
+# export DARTSDKPATH=$FLUTTERPATH/bin/cache/dart-sdk
+# export PATH="$PATH:$FLUTTERPATH/bin"
+# export PATH="$PATH:$FLUTTERPATH/.pub-cache/bin"
+# export PATH="$PATH:$DARTSDKPATH/bin"
 export EDITOR=nvim
 alias sl='ls'
 alias vim='nvim'
@@ -158,7 +158,20 @@ if type "rbenv" > /dev/null 2>&1; then
     eval "$(rbenv init -)"
 fi
 export DISPALY=localhost:0.0
-if type "tmux" > /dev/null 2>&1; then
-    [[ $- != *i* ]] && return
-    [[ -z "$TMUX" ]] && exec tmux
+
+if [ -n "SESSION_TYPE" ] ; then
+    if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ -n "$SSH_CONNECTION" ] ; then
+        SESSION_TYPE=remote/ssh
+    else
+        case $(ps -o comm= -p $PPID) in
+            sshd|*/sshd) SESSION_TYPE=remote/ssh;;
+        esac
+    fi
+fi
+
+if [ -z "$SESSION_TYPE" ] ; then
+    if type "tmux" > /dev/null 2>&1; then
+        [[ $- != *i* ]] && return
+        [[ -z "$TMUX" ]] && exec tmux
+    fi
 fi
