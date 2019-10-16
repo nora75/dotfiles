@@ -6,6 +6,7 @@ ln -fs $SCRIPT_DIR/.vim ~/.vim
 ln -fs $SCRIPT_DIR/misc/.tmux.conf ~/.tmux.conf
 ln -fs $SCRIPT_DIR/misc/.gitconfig ~/.gitconfig
 ln -fs $SCRIPT_DIR/bash/.bashrc ~/.bashrc
+ln -fs $SCRIPT_DIR/bash/.bash_aliases ~/.bash_aliases
 if [ -n "$XDG_CONFIG_HOME" ]; then
     ln -fs $SCRIPT_DIR/.vimrc $XDG_CONFIG_HOME/nvim/init.vim
 else

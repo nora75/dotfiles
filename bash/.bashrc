@@ -89,11 +89,6 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -135,17 +130,6 @@ export PATH="$PATH:$GOPATH/bin"
 # export PATH="$PATH:$FLUTTERPATH/.pub-cache/bin"
 # export PATH="$PATH:$DARTSDKPATH/bin"
 export EDITOR=nvim
-alias sl='ls'
-alias vim='nvim'
-alias n='nvim'
-alias nv='nvim'
-alias nvi='nvim'
-alias neov='nvim'
-alias neovi='nvim'
-alias neovim='nvim'
-alias eixt='exit'
-alias exti='exit'
-alias ansible-palybook='ansible-playbook'
 
 if [ "`id -u`" -eq 0 ]; then
     export PS1="\[\033[1;32m\]\D{%m/%d %H:%m} (｡･ω･)<\uだよー。 \[\033[0m\]\w # "
@@ -174,4 +158,9 @@ if [ -z "$SESSION_TYPE" ] ; then
         [[ $- != *i* ]] && return
         [[ -z "$TMUX" ]] && exec tmux
     fi
+fi
+
+FILE="~/.bash_local"
+if [ -f $FILE ] ; then
+    . $FILE
 fi
