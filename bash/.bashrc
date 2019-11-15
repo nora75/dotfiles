@@ -160,7 +160,7 @@ if [ -z "$SESSION_TYPE" ] ; then
     fi
 fi
 
-FILE="~/.bash_local"
-if [ -f $FILE ] ; then
-    . $FILE
+FILE=~/.bash_local
+if [ -f $FILE ]; then
+    source $FILE
 fi
