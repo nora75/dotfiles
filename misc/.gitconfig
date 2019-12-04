@@ -28,7 +28,7 @@
 [core]
 	editor = nvim
 	quotepath = false
-;[http]
-;	proxy = http://proxy.kmt.neec.ac.jp:8080
-;[https]
-;	proxy = https://proxy.kmt.neec.ac.jp:8080
+; [http]
+; 	proxy = http://proxy.kmt.neec.ac.jp:8080
+; [https]
+; 	proxy = https://proxy.kmt.neec.ac.jp:8080
