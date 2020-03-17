@@ -296,12 +296,9 @@ func! s:lineMove(type) abort
     endif
     let bline = getline(line1)
     let aline = getline(line2)
-    let old_undolevels = &undolevels
-    setl undolevels=-1
-    call setline(line2,bline)
-    call setline(line1,aline)
+    keepjumps call setline(line2,bline)
+    keepjumps call setline(line1,aline)
     exe 'keepjumps norm '.a:type
-    let &undolevels = old_undolevels
     return
 endfunc
 
