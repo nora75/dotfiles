@@ -13,6 +13,8 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias sl='ls'
+# mkdir
+alias mkdri='mkdir'
 # nvim/vim
 alias vim='nvim'
 alias n='nvim'

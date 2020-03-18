@@ -137,7 +137,10 @@ else
     export PS1="\[\033[1;36m\]\D{%m/%d %H:%m} (*'-')<\uだよー。\[\033[0m\]\[\033[37m\]\w\[\033[0m\] $ "
 fi
 export PATH="~/.rbenv/bin:$PATH"
-export PATH="~/metasploit-framework:$PATH"
+FILE=~/tool/metasploit-framework
+if [ -f $FILE ]; then
+    export PATH="~/metasploit-framework:$PATH"
+fi
 if type "rbenv" > /dev/null 2>&1; then
     eval "$(rbenv init -)"
 fi
