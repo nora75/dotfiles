@@ -70,9 +70,9 @@ command! -nargs=+ -complete=file_in_path GetScNum echo GetScNum(<f-args>)
 " go to last error of help file
 command! -nargs=0 GoError exe 'help' matchstr(v:errmsg,'\ME\d\+')
 
-" :Itimura {{{2
-" open .itimura
-command! -nargs=0 Itimura exe 'tabe C:\Users\NORA\test\Itimura\plugin\Itimura.vim'|vs
+" :InternMode {{{2
+" Set current buffer to Intern mode
+command! -nargs=0 InternMode call InternMode()
 
 " :Kud {{{2
 " open vuffer of kud

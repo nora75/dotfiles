@@ -141,6 +141,7 @@ aug Myau " {{{2
     " au VimEnter cd ~
     au BufWrite *.bat if &ff != 'dos' | setl ff=dos fenc=sjis | endif
     au BufWrite *.sh if &ff != 'unix' | setl ff=unix fenc=utf-8 | endif
+    au BufRead intern/*.md silent! InternMode()
 aug END
 
 " augroup backup take backup by name{{{1
