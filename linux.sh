@@ -3,6 +3,7 @@
 NVIM=nvim
 DEFXDG=~/.config
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
+MYHOST=$(hostname)
 # cd to home dir
 cd
 # link ~/hoge to dotfiles/hoge
@@ -25,4 +26,9 @@ if [ ! `which nvim` ]; then
         fi
         ln -fs $SCRIPT_DIR/.vimrc $DEFXDG/nvim/init.vim
     fi
+fi
+
+# link hostname's bash file to .bash_local
+if [ -f "$SCRIPT_DIR/$MYHOST" ]; then
+    ln -fs $SCRIPT_DIR/bash/local/$MYHOST ~/.bash_local
 fi
