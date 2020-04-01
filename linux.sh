@@ -9,6 +9,7 @@ S_BASH_DIR=$SCRIPT_DIR/bash
 S_VIM_DIR=$SCRIPT_DIR/vim
 S_MISC_DIR=$SCRIPT_DIR/misc
 DIR_NAMES=(BASH VIM MISC)
+BACK_DIR_HOME="$SCRIPT_DIR"/Backup
 BACK_DIR="$SCRIPT_DIR"/Backup/`date +%Y-%m-%d_%H-%M-%S`
 BASH_LOCAL_FILE=${S_BASH_DIR}/local/$MYHOST
 
@@ -17,7 +18,7 @@ BASH_LOCAL_FILE=${S_BASH_DIR}/local/$MYHOST
 # 2. Make neovim conifg
 # 3. Make .bach_local
 MakeLink () {
-    # For Debug and done message
+    PrintBar
     echo "Start link dotfiles to home dir"
     echo "Update all dotfiles that make link by this script"
     echo "Backup all dotfiles. If old one exists"
@@ -62,9 +63,14 @@ MakeLink () {
     echo "End link All Files"
     if [ -s $BACK_DIR ]; then
         rmdir $BACK_DIR
-	exit 0
+        if [ -s $BACK_DIR_HOME ]; then
+            rmdir $BACK_DIR_HOME
+        fi
+        echo "End with no Backup, there are no old files"
+	    exit 0
     fi
     echo "Old dotfiles move to $BACK_DIR"
+    PrintBar
 }
 
 # Renew link
@@ -75,7 +81,7 @@ MakeLink () {
 RenewLink () {
     echo "Backup old file and Renew $2"
     oldfile=`readlink -f $2`
-    if ["$1" -ne "$oldfile" ]; then
+    if [ "$1" != "$oldfile" ]; then
         mv $oldfile $BACK_DIR
     fi
     if [ -L $2 ]; then
