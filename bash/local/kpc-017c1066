@@ -1,0 +1,9 @@
+# /proc/version or /proc/sys/kernel/osrelease for the strings "Microsoft" or "WSL"
+# "$(< /proc/sys/kernel/osrelease)" == *Microsoft
+# /proc/sys/fs/binfmt_misc/WSLInterop
+if [ -e /proc/sys/fs/binfmt_misc/WSLInterop ]; then
+    # auto run vcxsrv
+    if [ -z "$(tasklist.exe | grep vcxsrv)"  ]; then
+        cd /mnt/c && cmd.exe /C C:\\Users\\NORA7\\Documents\\config.xlaunch &
+    fi
+fi

@@ -136,13 +136,17 @@ if [ "`id -u`" -eq 0 ]; then
 else
     export PS1="\[\033[1;36m\]\D{%m/%d %H:%m} (*'-')<\uだよー。\[\033[0m\]\[\033[37m\]\w\[\033[0m\] $ "
 fi
-export PATH="~/.rbenv/bin:$PATH"
+
 FILE=~/tool/metasploit-framework
 if [ -f $FILE ]; then
     export PATH="~/metasploit-framework:$PATH"
 fi
-if type "rbenv" > /dev/null 2>&1; then
-    eval "$(rbenv init -)"
+FILE=~/.rbenv/bin
+if [ -f $FILE ]; then
+    export PATH="~/.rbenv/bin:$PATH"
+    if type "rbenv" > /dev/null 2>&1; then
+        eval "$(rbenv init -)"
+    fi
 fi
 export DISPALY=localhost:0.0
 
@@ -164,6 +168,11 @@ if [ -z "$SESSION_TYPE" ] ; then
 fi
 
 FILE=~/.bash_local
+if [ -f $FILE ]; then
+    source $FILE
+fi
+
+FILE=~/.bash_aliases
 if [ -f $FILE ]; then
     source $FILE
 fi

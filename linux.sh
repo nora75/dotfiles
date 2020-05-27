@@ -61,16 +61,10 @@ MakeLink () {
     
     PrintBar
     echo "End link All Files"
-    if [ -s $BACK_DIR ]; then
-        rmdir $BACK_DIR
-        if [ -s $BACK_DIR_HOME ]; then
-            rmdir $BACK_DIR_HOME
-        fi
-        echo "End with no Backup, there are no old files"
-	    exit 0
-    fi
-    echo "Old dotfiles move to $BACK_DIR"
     PrintBar
+    CleanBackUpDir
+    PrintBar
+    exit 0
 }
 
 # Renew link
@@ -94,8 +88,49 @@ PrintBar () {
     printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
 }
 
+CleanBackUpDir () {
+    if [ $(DirEmptyCheck $BACK_DIR) ]; then
+        rmdir $BACK_DIR
+        echo "End with no Backup, there are no old files"
+    else
+        echo "Old dotfiles move to $BACK_DIR"
+    fi
+    # if [ $(DirEmptyCheck $BACK_DIR_HOME) ]; then
+    #     rmdir $BACK_DIR_HOME
+    # fi
+}
+
+DirEmptyCheck () {
+    if [ -n "$(ls -A $1)" ]; then
+        echo true
+    else
+        echo false
+    fi
+}
+
+function ConfirmExecution() {
+
+    PrintBar
+    echo  -n "Do you want to run the script?([Y]es/[N]o):"
+    read input
+
+   if [ $input = 'yes'  ] || [ $input = 'YES'  ] || [ $input = 'y'  ] || [ $input = 'Y' ] ; then
+        echo "Installing"
+    elif [ $input = 'no'  ] || [ $input = 'NO'  ] || [ $input = 'n'  ] || [ $input = 'N' ] ; then
+        echo "Install was not SUCCESSFULL"
+        exit 1
+    else
+        echo "Install was not SUCCESSFULL"
+        exit 1
+    fi
+    PrintBar
+
+}
+
 # Move to homedir
 cd
+# Confirm run script
+ConfirmExecution
 # Call function makelink
 # Make link of all contein dotfiles
 MakeLink
