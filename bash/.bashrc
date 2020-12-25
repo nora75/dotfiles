@@ -98,10 +98,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -119,7 +115,9 @@ fi
 transfer() { if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi
 tmpfile=$( mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile; else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; } 
 
+# vi mode
 set -o vi
+# export some path
 export GOPATH=$HOME/go
 export GO111MODULE=on
 export PATH="$PATH:$GOPATH/bin"
@@ -131,16 +129,20 @@ export PATH="$PATH:$GOPATH/bin"
 # export PATH="$PATH:$DARTSDKPATH/bin"
 export EDITOR=nvim
 
+# PS1 setting
 if [ "`id -u`" -eq 0 ]; then
     export PS1="\[\033[1;32m\]\D{%m/%d %H:%m} (｡･ω･)<\uだよー。 \[\033[0m\]\w # "
 else
     export PS1="\[\033[1;36m\]\D{%m/%d %H:%m} (*'-')<\uだよー。\[\033[0m\]\[\033[37m\]\w\[\033[0m\] $ "
 fi
 
+# for some commands
+# metasploit
 FILE=~/tool/metasploit-framework
 if [ -f $FILE ]; then
     export PATH="~/metasploit-framework:$PATH"
 fi
+# rbenv
 FILE=~/.rbenv/bin
 if [ -f $FILE ]; then
     export PATH="~/.rbenv/bin:$PATH"
@@ -148,8 +150,9 @@ if [ -f $FILE ]; then
         eval "$(rbenv init -)"
     fi
 fi
-export DISPALY=localhost:0.0
+export DISPALY=:0
 
+# detect ssh session for tmux
 if [ -n "SESSION_TYPE" ] ; then
     if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ -n "$SSH_CONNECTION" ] ; then
         SESSION_TYPE=remote/ssh
@@ -160,6 +163,7 @@ if [ -n "SESSION_TYPE" ] ; then
     fi
 fi
 
+# tmux
 if [ -z "$SESSION_TYPE" ] ; then
     if type "tmux" > /dev/null 2>&1; then
         [[ $- != *i* ]] && return
@@ -167,12 +171,29 @@ if [ -z "$SESSION_TYPE" ] ; then
     fi
 fi
 
+# detect file
+# anyenv
+if [ -d $HOME/.anyenv ]
+then
+    export PATH="$HOME/.anyenv/bin:$PATH"
+    eval "$(anyenv init -)"
+fi
+
+# bash local
 FILE=~/.bash_local
 if [ -f $FILE ]; then
     source $FILE
 fi
 
+# bash aliases
 FILE=~/.bash_aliases
 if [ -f $FILE ]; then
     source $FILE
+fi
+
+# detect commands
+# github cli
+if command -v gh &> /dev/null
+then
+    eval "$(gh completion -s bash)"
 fi

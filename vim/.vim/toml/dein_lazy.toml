@@ -29,19 +29,19 @@ HiMatchOn
 repo = 'kana/vim-smartchr'
 on_event = 'InsertCharPre'
 hook_source = '''
-  inoremap <expr> , smartchr#loop(',', ', ',' , ')
-  inoremap <expr> =
-        \ search('\(&\<bar><bar>\<bar>+\<bar>-\<bar>/\<bar>>\<bar><\) \%#', 'bcn')? '<bs>= '
-        \ : search('\(*\<bar>!\)\%#', 'bcn') ? '= '
-        \ : smartchr#loop('=', ' = ', ' == ')
-  augroup Myau
-    " Substitute .. into -> .
-    autocmd FileType c,cpp inoremap <buffer> <expr> .
-          \ smartchr#loop('.', '->', '...')
-    autocmd FileType vim inoremap <buffer> <expr> .
-          \ smartchr#loop('.', ' . ', '..', '...')
-    autocmd FileType lisp,scheme,clojure inoremap <buffer> <expr> = =
-  augroup END
+inoremap <expr> , smartchr#loop(',', ', ',' , ')
+inoremap <expr> =
+\ search('\(&\<bar><bar>\<bar>+\<bar>-\<bar>/\<bar>>\<bar><\) \%#', 'bcn')? '<bs>= '
+\ : search('\(*\<bar>!\)\%#', 'bcn') ? '= '
+\ : smartchr#loop('=', ' = ', ' == ')
+augroup Myau
+" Substitute .. into -> .
+autocmd FileType c,cpp inoremap <buffer> <expr> .
+\ smartchr#loop('.', '->', '...')
+autocmd FileType vim inoremap <buffer> <expr> .
+\ smartchr#loop('.', ' . ', '..', '...')
+autocmd FileType lisp,scheme,clojure inoremap <buffer> <expr> = =
+augroup END
 '''
 
 [[plugins]]
@@ -142,9 +142,9 @@ let g:closetag_emptyTags_caseSensitive = 1
 " Disables auto-close if not in a "valid" region (based on filetype)
 "
 let g:closetag_regions = {
-    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
-    \ 'javascript.jsx': 'jsxRegion',
-    \ }
+\ 'typescript.tsx': 'jsxRegion,tsxRegion',
+\ 'javascript.jsx': 'jsxRegion',
+\ }
 
 " Shortcut for closing tags, default is '>'
 "
@@ -238,8 +238,8 @@ depends = 'context_filetype.vim'
 on_source = 'context_filetype.vim'
 hook_source = '''
 aug precious
-    au!
-    au User PreciousFileType :echo precious#context_filetype()
+au!
+au User PreciousFileType :echo precious#context_filetype()
 aug END
 let g:context_filetype#search_offset = 100
 omap ip <Plug>(textobj-precious-i)
@@ -258,15 +258,15 @@ xmap gp <Plug>(yankround-gp)
 nmap gP <Plug>(yankround-gP)
 xmap gP <Plug>(yankround-gp)
 if !empty(maparg('<C-P>'))
-    try
-        nunmap <C-p>
-        vunmap <C-p>
-        nunmap <C-S-p>
-        vunmap <C-S-p>
-        nunmap <C-P>
-        vunmap <C-P>
-    catch
-    endtry
+try
+nunmap <C-p>
+vunmap <C-p>
+nunmap <C-S-p>
+vunmap <C-S-p>
+nunmap <C-P>
+vunmap <C-P>
+catch
+endtry
 endif
 nmap <C-p> <Plug>(yankround-prev)
 nmap <C-n> <Plug>(yankround-next)
@@ -305,8 +305,8 @@ vmap <Space>J <Plug>(jplus-input)<Space><CR>
 repo = 'pearofducks/ansible-vim'
 hook_add = '''
 augroup ansible
-  autocmd!
-  autocmd BufNewFile,BufRead */roles/*.yml setfiletype yaml.ansible
-  autocmd BufNewFile,BufRead */ansible/*/*.yml setfiletype yaml.ansible
+autocmd!
+autocmd BufNewFile,BufRead */roles/*.yml setfiletype yaml.ansible
+autocmd BufNewFile,BufRead */ansible/*/*.yml setfiletype yaml.ansible
 augroup END
 '''

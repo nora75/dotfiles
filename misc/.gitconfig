@@ -1,35 +1,35 @@
 [user]
-	username = nora75
-	email = k017c1066@it-neec.jp
-	name = Hirano Tatsuya
+    username = nora75
+    email = k017c1066@it-neec.jp
+    name = Hirano Tatsuya
 [alias]
     ad = add
-	st = status
-	ts = status
-	sta = status
-	stat = status
-	statu = status
-	ch = checkout
-	check = checkout
-	br = branch
-	cm = commit
-	co = commit
-	com = commit
-	comm = commit
-	commi = commit
-	df = diff
-	di = diff
-	gr = grep
-	pl = pull
-	ps = push
-	pu = push
-	fe = fetch
-	fet = fetch
+    st = status
+    ts = status
+    sta = status
+    stat = status
+    statu = status
+    ch = checkout
+    check = checkout
+    br = branch
+    cm = commit
+    co = commit
+    com = commit
+    comm = commit
+    commi = commit
+    df = diff
+    di = diff
+    gr = grep
+    pl = pull
+    ps = push
+    pu = push
+    fe = fetch
+    fet = fetch
 [core]
-	editor = nvim
-	quotepath = false
-	filemode = false
- ; [http]
- ; 	proxy = http://proxy.kmt.neec.ac.jp:8080
- ; [https]
- ; 	proxy = https://proxy.kmt.neec.ac.jp:8080
+    editor = nvim
+    quotepath = false
+    filemode = false
+;[http]
+;    proxy = http://proxy.kmt.neec.ac.jp:8080
+;[https]
+;    proxy = https://proxy.kmt.neec.ac.jp:8080
