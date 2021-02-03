@@ -150,7 +150,7 @@ if [ -f $FILE ]; then
         eval "$(rbenv init -)"
     fi
 fi
-export DISPALY=:0
+export DISPLAY=:0
 
 # detect ssh session for tmux
 if [ -n "SESSION_TYPE" ] ; then
